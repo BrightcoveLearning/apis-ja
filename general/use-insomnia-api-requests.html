@@ -1,24 +1,24 @@
 ---
-title:  'APIリクエストに不眠症を使用する'
-description:  'このトピックでは、人気のあるInsomniaHTTPクライアントをセットアップしてBrightcoveRESTfulAPIにリクエストを送信する方法を学習します。'
+title:  'APIリクエストにInsomniaを使用する'
+description:  'このトピックでは、人気のあるInsomniaHTTPクライアントをセットアップしてBrightcove RESTful APIにリクエストを送信する方法を学習します。'
 parent: General Information
 ---
  <h1>{{ page.title }}</h1>
 <article class="bcls-article">
   <summary>{{ page.description }}</summary>
   <section class="bcls-section">
-    <h2 id="introduction">入門</h2>
-    <p>プラットフォームAPIドキュメントの多くの例で使用されているcurlステートメントとコマンドラインは、難しくて威圧的であると感じる人もいます。このような場合、ほとんどのBrightcove API を含む REST ベースのサービスに HTTP リクエストを送信するためのツールが多数用意されています。このドキュメントでは、人気のあるツールの1つである<a href="https://insomnia.rest"><span translate="No">不眠症</span>アプリ</a>。</p>
+    <h2 id="introduction">はじめに</h2>
+    <p>プラットフォームAPIドキュメントの多くの例で使用されているcurlステートメントとコマンドラインは、難しくて威圧的であると感じる人もいます。このような場合、Brightcove API のほとんどを含む REST ベースのサービスに HTTP リクエストを送信するためのツールが多数用意されています。このドキュメントでは、人気のあるツールの1つである<a href="https://insomnia.rest"><span translate="No">Insomnia</span>アプリ</a>の使用方法を説明します。</p>
   </section>
   <section class="bcls-section">
-    <h2 id="Install_insomnia">インストール<span translate="No">不眠症</span></h2>
-    <p>取得する<span translate="No">不眠症</span>から<a href="https://insomnia.rest"><span translate="No">https://insomnia.rest</span></a>。<span translate="No">不眠症</span> Mac、Linux、またはWindowsシステムにインストールできます。</p>
+    <h2 id="Install_insomnia"><span translate="No">Insomnia</span>のインストール</h2>
+    <p><a href="https://insomnia.rest"><span translate="No">https://insomnia.rest</span></a>から<span translate="No">Insomnia</span>を入手して下さい。<span translate="No">Insomnia</span> は、Mac、Linux、またはWindowsシステムにインストールすることができます。</p>
 		</section>
 		<section class="bcls-section">
 			<h2 id="authentication">認証</h2>
-    <p><span translate="No">不眠症</span> BrightcoveのRESTfulAPIのいずれかにリクエストを送信するために使用できます。ほとんどのAPIは認証にOAuth2を使用しており、その設定方法をで説明します。<span translate="no">不眠症</span>このドキュメントの後半。ただし、適切なヘッダーを設定するだけで、OAuthを使用しないAPIにも使用できます。</p>
+    <p><span translate="No">Insomnia</span> は、BrightcoveのRESTfull APIへのリクエストに使用できます。ほとんどのAPIは認証にOAuth2を使用しており、このドキュメントの後半で<span translate="no">Insomnia</span>でそれを設定する方法を説明します。一方、適切なヘッダーを設定するだけで、OAuthを使用しないAPIにも使用できます。</p>
     <figure class="bcls-figure"><img class="bcls-image" alt="Set Header in Insomnia" src="/assets/images/general/insomnia/18462-set-header.png" />
-      <figcaption class="bcls-caption--image">ヘッダーを設定する<span translate="No">不眠症</span></figcaption>
+      <figcaption class="bcls-caption--image"><span translate="No">Insomnia</span>ヘッダーを設定する</figcaption>
     </figure>
     <p>Oauth2以外の認証方法を使用したリクエストのヘッダーは次のようになります。</p>
     <dl>
@@ -41,22 +41,22 @@ parent: General Information
   </section>
   <section class="bcls-section">
     <h2 id="getCredentials">クライアント認証情報を取得する</h2>
-    <p>ほとんどのBrightcoveAPIを使用するには、使用するアカウントとAPIのクライアント資格情報が必要です。「<a href="/general/managing-api-authentication-credentials.html"> API 認証資格情報の管理」の指示に従って、Studioでクライアントの認証情報を取得します</a>。以下の手順で、<span translate="No"> CMS API</span>を使用したリクエスト<span translate="No">不眠症</span>、したがって、資格情報には少なくとも次の権限が必要です。</p>
+    <p>大部分のBrightcove APIを使用するには、使用するアカウントとAPIのクライアント認証情報が必要です。<a href="/general/managing-api-authentication-credentials.html"> 「API 認証資格情報の管理」の説明に従って、Studioでクライアント認証情報を取得します</a>。以下の手順では、<span translate="No">Insomnia</span>を使用して<span translate="No"> CMS API</span>リクエストを作成するため、資格情報には少なくとも次の権限が必要です。</p>
     <ul>
-      <li><strong>ビデオ</strong>：<strong>読み書き</strong></li>
+      <li><strong>Video</strong>：<strong>Read/Write</strong></li>
     </ul>
-    <p>追加のアクセス許可をいくつでも追加して、より広い範囲の API リクエストに使用できる認証情報を取得できます。また、必要に応じて、複数のアカウントで機能する資格情報を取得できることにも注意してください。</p>
+    <p>より広い範囲の API リクエストに使用できる認証情報を取得するために、好きなだけ追加のパーミッションを追加することができます。また、複数のアカウントで使用できる認証情報を取得することもできます。</p>
     <aside class="bcls-aside bcls-aside--information">クライアントのクレデンシャルを生成するには、Studioの管理者権限を持っているか、組織内で管理者権限を持っている人にクレデンシャルを生成してもらう必要があります。</aside>
   </section>
   <section class="bcls-section">
-    <h2 id="usingInsomnia">使用する<span translate="No">不眠症</span></h2>
-    <p>クライアントのクレデンシャルを取得したら、使用を開始する準備ができています<span translate="No">不眠症</span>。<span translate="No">不眠症</span> CMS APIのOpenAPI仕様をインポートすると、多くのセットアップ作業が行われます。これは、私たちが利用できるようにします。以下の手順では、いくつかの作成について説明します。<strong> CMS API</strong>を使用したリクエスト<span translate="No">不眠症</span>。</p>
-    <h3>の設定<span translate="No">不眠症</span> CMS APIのコレクション</h3>
+    <h2 id="usingInsomnia"><span translate="No">Insomnia</span>の使用</h2>
+    <p>クライアントの認証情報を取得したら、<span translate="No">Insomnia</span>を使い始める準備ができています。CMS APIのOpenAPI仕様をインポートし、<span translate="No">Insomnia</span> で多くのセットアップ作業が行われます。以下の手順では、<span translate="No">Insomnia</span>を使っていくつかの<strong> CMS API</strong> リクエストを作成する手順を説明します。</p>
+    <h3>CMS APIコレクションの<span translate="No">Insomnia</span>のセットアップ</h3>
 		<h4>CMS APIのOpenAPI仕様を取得します</h4>
 		<ol class="bcls-tasklist-restart">
-			<li>を開きます<a href="/cms/references/reference.html">CMS APIリファレンス</a>。</li>
+			<li><a href="/cms/references/reference.html">CMS APIリファレンス</a>を開きます。</li>
 			<li>
-				クリック<strong>ダウンロード</strong>ボタンをクリックして保存します<code translate="no">openapi.yaml</code>あなたがそれを再び見つけることができる場所にファイルします：
+				<strong>ダウンロード</strong>ボタンをクリックして、<code translate="no">openapi.yaml</code>ファイルを再び見つけられる場所に保存して下さい：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/download-cms-api-openapi-spec.png" alt="Download Open API Specification">
 					<figcaption class="bcls-caption--image">OpenAPI仕様をダウンロードする</figcaption>
@@ -65,28 +65,28 @@ parent: General Information
 		</ol>
 		<h4>OpenAPI仕様をInsomniaにインポートします</h4>
     <ol class="bcls-tasklist-restart">
-      <li>を起動します<span translate="No">不眠症</span>アプリ。</li>
-      <li>横にあるドロップダウンをクリックします<span translate="No">不眠症</span>選択します<strong>インポート・エクスポート</strong>：
+      <li><span translate="No">Insomnia</span>アプリを起動します。</li>
+      <li><span translate="No">Insomnia</span>の横にあるドロップダウンをクリックし、<strong>Import/Export</strong>を選択します：
         <figure class="bcls-figure"><img class="bcls-image" alt="Import/Export" src="/assets/images/general/insomnia/import-export.png" />
           <figcaption class="bcls-caption--image">インポート・エクスポート</figcaption>
         </figure>
       </li>
 			<li>
-				開いたダイアログで、をクリックします<strong>データのインポート</strong>選択します<strong>ファイルから</strong>：
+				開いたダイアログで、<strong>Import Data</strong>から<strong>From File</strong>をクリックします：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/import-data-from-file.png" alt="Import Data from File">
 					<figcaption class="bcls-caption--image">ファイルからデータをインポートする</figcaption>
 				</figure>
 			</li>
 			<li>
-				を選択<code translate="no">openapi.yaml</code>ダウンロードしたファイルを選択してから、データを現在のワークスペースにインポートするか、新しいワークスペースを作成するかを選択します。どちらでも機能しますが、APIごとに新しいワークスペースを作成することをお勧めします。
+				ダウンロードした<code translate="no">openapi.yaml</code>ファイルを選択し、現在のワークスペースにインポートするか、新しいワークスペースを作成するかを選択します。どちらでも機能しますが、各APIごとに新しいワークスペースを作成することをお勧めします。
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/create-new-workspace.png" alt="Create New Workspace">
 					<figcaption class="bcls-caption--image">新しいワークスペースを作成する</figcaption>
 				</figure>
 			</li>
 			<li>
-				次に、データをリクエストコレクションとしてインポートするかデザインドキュメントとしてインポートするかを尋ねられます。選ぶ<strong>コレクションのリクエスト</strong>：
+				次に、データをリクエストコレクションとしてインポートするかデザインドキュメントとしてインポートするかを尋ねられます。<strong>Request Collection</strong>を選択します：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/import-request-collection.png" alt="Import as Request Collection">
 					<figcaption class="bcls-caption--image">リクエストコレクションとしてインポート</figcaption>
@@ -94,7 +94,7 @@ parent: General Information
 			</li>
 			<li>データがインポートされたことを確認するダイアログが表示されます。</li>
 			<li>
-				クリック<strong>ダッシュボード</strong>ワークスペースを表示するには、左上隅にあります。新しいワークスペースを作成した場合は、適切な名前で表示されます。
+				左上にある<strong>Dashboard</strong>をクリックすると、ワークスペースが表示されます。新しいワークスペースを作成した場合は、適切な名前で表示されます。
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/cms-api-workspace.png" alt="CMS API Workspace">
 					<figcaption class="bcls-caption--image">CMS APIワークスペース</figcaption>
@@ -112,27 +112,27 @@ parent: General Information
   </section>
 	<section class="bcls-section">
 		<h2 id="add_variables_to_environment">環境に変数を追加する</h2>
-		<p>これはオプションの手順ですが、後でリクエストの認証を簡単に設定できます。</p>
+		<p>これはオプションの手順ですが、後でリクエストの認証設定を簡略化することができます。</p>
 		<ol class="bcls-tasklist-restart">
 			<li>
-				クリックしてください<strong>OpenAPI環境</strong>ドロップダウンメニューを選択し、<strong>環境の管理</strong>：
+				<strong>OpenAPI env</strong>のドロップダウンメニューをクリックし、<strong>Manage Environments</strong>を選択します：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/" alt="Manage Environments">
 					<figcaption class="bcls-caption--image">環境の管理</figcaption>
 				</figure>
 			</li>
 			<li>
-				次のような環境変数が表示されます<span translate="no">不眠症</span> JSONの形式でOpenAPI仕様から作成されました：
+				<span translate="no">Insomnia</span> がOpenAPIの仕様から作成した環境変数がJSON形式で表示されます：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/environment-json.png" alt="Environment Variables">
 					<figcaption class="bcls-caption--image">環境変数</figcaption>
 				</figure>
 			</li>
 			<li>
-				これらの追加の変数をJSONに追加します（を参照）<a href="#getCredentials">クライアントの資格情報を取得する</a>上記の<code translate="no">クライアントID</code>と<code translate="no">client_secret</code>）：
+				これらの追加変数をJSONに追加します (<code translate="no">client_id</code>と<code translate="no">client_secret</code> については、上記の<a href="#getCredentials">クライアントの資格情報を取得する</a>を参照して下さい）：
 				<ul>
-					<li><code translate="no">"アカウントID"： " <span class="bcls-input"> your_account_id</span>「」</code></li>
-					<li><code translate="no">"クライアントID"： " <span class="bcls-input"> your_client_id</span>「」</code></li>
+					<li><code translate="no">"account_id"： " <span class="bcls-input"> your_account_id</span>「」</code></li>
+					<li><code translate="no">"client_id"： " <span class="bcls-input"> your_client_id</span>「」</code></li>
 					<li><code translate="no">"client_secret"： " <span class="bcls-input"> your_client_secret</span>「」</code></li>
 					<li><code translate="no">"access_token_url"： "https://oauth.brightcove.com/v4/access_token"</code></li>
 				</ul>
@@ -144,63 +144,63 @@ parent: General Information
 					<figcaption class="bcls-caption--image">追加された環境変数</figcaption>
 				</figure>
 			</li>
-			<li>クリック<strong>終わり</strong>ダイアログを終了するには、右下隅にあります。</li>
+			<li>右下の<strong>Done</strong>をクリックしてダイアログを終了します。</li>
 		</ol>
 	</section>
   <section class="bcls-section">
     <h2 id="Set_up_authentication">認証を設定する</h2>
     <p>これで、APIリクエストの認証を設定する準備が整いました。</p>
     <ol class="bcls-tasklist-restart">
-      <li>クリック<strong>ビデオ</strong>フォルダを選択し、<strong>ビデオを入手</strong>：
+      <li><strong>Video</strong>フォルダをクリックし、<strong>Get Videos</strong>を選択します：
         <figure class="bcls-figure"><img class="bcls-image" alt="New Request" src="/assets/images/general/insomnia/18462-new-request.png" />
           <figcaption class="bcls-caption--image">新しいリクエスト</figcaption>
         </figure>
       </li>
 			<li>
-				リクエストのURLにはすでに2つの変数が含まれていることに注意してください。これらをクリックすると、それらの値を表示（および変更）できます。<code translate="no"> base_url</code>によって自動的に生成されます<span class="”notranslate”">不眠症</span> OpenAPI仕様から。クリックすると<code translate="no">アカウントID</code>、値が前のセクションで環境変数として入力したものと一致することがわかります。</li>
+				リクエストのURLには既に2つの変数が含まれていることに注意してください。<code translate="no"> base_url</code>はOpenAPI仕様から<span class="”notranslate”">Insomnia</span>が自動的に生成したものです。<code translate="no">account_id</code>をクリックすると、前のセクションで環境変数として入力した値と一致することがわかります。</li>
       <li>
-				クリック<strong>認証</strong>タブと<strong>認証ドロップダウン</strong>メニューをクリックし、<strong> OAuth 2.0</strong>：
+				<strong>>Auth</strong>タブと<strong>Authドロップダウン</strong>メニューをクリックし、<strong> OAuth 2.0</strong>を選択します：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/select-auth-type.png" alt="Select Auth Type">
 					<figcaption class="bcls-caption--image">認証タイプを選択します</figcaption>
 				</figure>
 			</li>
       <li>
-				クリック<strong>付与タイプ</strong>ドロップダウンして選択します<strong>クライアントの資格情報</strong>：
+				<strong>Grant Type</strong>ドロップダウンをクリックし、<strong>Client Credentials</strong>を選択します：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/" alt="Select Grant Type">
-					<figcaption class="bcls-caption--image">付与タイプを選択</figcaption>
+					<figcaption class="bcls-caption--image">Grant Typeを選択</figcaption>
 				</figure>
       </li>
       <li>
-				の中に<strong>アクセストークンのURL</strong>フィールドに「access_token_url」と入力し始めます-オートコンプリートメニューが表示され、<code translate="no"> access_token_url</code>環境変数：
+				<strong>Access Token URL</strong>フィールドで、「access_token_url」と入力し始めます-オートコンプリートメニューが表示されますので、環境変数<code translate="no"> access_token_url</code>を選択して下さい：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/access-token-url.png" alt="Autocomplete for Variables">
 					<figcaption class="bcls-caption--image">変数のオートコンプリート</figcaption>
 				</figure>
       </li>
       <li>
-				前の手順を繰り返して、<strong>クライアントID</strong>と<strong>クライアントシークレット</strong>あなたのフィールド<code translate="no">クライアントID</code>と<code translate="no">client_secret</code>変数：
+				前の手順を繰り返して、<strong>Client ID</strong>と<strong>Client Secret</strong>フィールドに<code translate="no">client_id</code>と<code translate="no">client_secret</code>変数を入力します：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/auth-variables.png" alt="Auth Variables">
 					<figcaption class="bcls-caption--image">認証変数</figcaption>
 				</figure>
 			</li>
       <li>
-				下にスクロールして、<strong>トークンを取得する</strong>ボタンをクリックしてクリックします。[アクセストークン]フィールドにトークンが入力されていることを確認してください。
+				下にスクロールして、<strong>Fetch Token</strong>ボタンをクリックしてクリックします。[Access Token]フィールドにトークンが入力されていることを確認します。
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/access-token.png" alt="Access Token">
 					<figcaption class="bcls-caption--image">アクセストークン</figcaption>
 				</figure>
 			</li>
-      <li>クリック<strong>トークンを取得する</strong>これが機能することを確認します。次のような応答が表示されます。
+      <li><strong>Fetch Token</strong>をクリックして、これが機能することを確認します。次のような応答が表示されます。
         <figure class="bcls-figure"><img class="bcls-image" alt="Access Token" src="/assets/images/general/insomnia/18462-access-token.png" />
           <figcaption class="bcls-caption--image">アクセストークン</figcaption>
         </figure>
-        <aside class="bcls-aside bcls-aside--information">の優れた機能の1つ<span translate="No">不眠症</span>これを設定すると、<strong>いいえ</strong>トークンを手動で更新する必要があります- <span translate="No">不眠症</span>必要に応じて自動的に新しいものを取得します。</aside>
+        <aside class="bcls-aside bcls-aside--information"><span translate="No">Insomnia</span>の優れたところは、一度設定すると手動でトークンを更新する必要が<strong>ない</strong>ことです - <span translate="No">Insomnia</span>必要に応じて自動的に新しいものを取得します。</aside>
       </li>
 			<li>
-				に移動します<strong>ヘッダ</strong>タブをクリックして削除します<strong>承認</strong>ヘッダー（設定した認証でヘッドが処理されます-これでヘッドが壊れます）：
+				<strong>Header</strong>タブで<strong>Authorization</strong>ヘッダーを削除して下さい（先程設定した認証でheadが処理され-これでheaderは壊れています）：
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/remove-authorization-header.png" alt="Remove Authorization Header">
 					<figcaption class="bcls-caption--image">承認ヘッダーを削除する</figcaption>
@@ -209,25 +209,25 @@ parent: General Information
     </ol>
 		<aside class="bcls-aside bcls-aside--information">注意:
 			<ul>
-				<li><span class="”notranslate”">不眠症</span>認証設定を他のリクエストに複製しないため、テストするリクエストごとにこれらの手順を繰り返す必要があります。</li>
-				<li>の優れた機能の1つ<span class="”notranslate”">不眠症</span>ただし、OAuth 2認証を設定すると、必要に応じて新しいアクセストークンが自動的に取得されます。既存のものが期限切れになったときに、手動で新しいものをフェッチする必要はありません。</li>
+				<li><span class="”notranslate”">Insomnia</span>は認証設定を他のリクエストに複製しないため、テストしたい各リクエストで、この手順を繰り返す必要があります。</li>
+				<li><span class="”notranslate”">Insomnia</span>の良いところは、一度OAuth 2認証を設定すると、必要に応じて新しいアクセストークンを自動的に取得することです。既存のアクセストークンの有効期限が切れたときに、手動で新しいアクセストークンを取得する必要はありません。</li>
 			</ul>
 		</aside>
   </section>
 	<section class="bcls-section">
 		<h2 id="Make_a_request">リクエストする</h2>
-		<p>今、私たちは作る準備ができています<strong>ビデオを入手</strong>リクエスト。</p>
+		<p>これで<strong>Get Videos</strong>のリクエストをする準備が整いました。</p>
 		<ol class="bcls-tasklist-restart">
-			<li>これは<code translate="no">得る</code>リクエスト、あなたがしなければならないのはクリックするだけです<strong>送信</strong>。</li>
+			<li>これは<code translate="no">GET</code>リクエストなので、あとは<strong>Send</strong>をクリックするだけです。</li>
 			<li>
-				JSON応答が応答領域に表示されるはずです。
+				レスポンスエリアにJSONレスポンスが表示されるのが確認できるはずです。
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/get-response.png" alt="API Response">
 					<figcaption class="bcls-caption--image">API レスポンス</figcaption>
 				</figure>
 			</li>
 			<li>
-				を使用してさまざまな動画セットを取得できることに注意してください<strong>クエリ</strong> params。クリック<strong>クエリ</strong>リクエストのタブをクリックすると、<span class="”notranslate”">不眠症</span> OpenAPI仕様に基づいてデータを入力しました。使用するパラメータを確認して、値を設定するだけです。
+				<strong>Query</strong>パラメータを使用することで、異なる動画セットを取得できることに注意してください。リクエストの<strong>Query</strong>タブをクリックすると、<span class="”notranslate”">Insomnia</span>が、OpenAPI仕様に基づいたパラメータを設定していることがわかります。使いたいパラメータにチェックを入れて、値を設定するだけです。
 				<figure class="bcls-figure">
 					<img class="bcls-image" src="/assets/images/general/insomnia/query-params.png" alt="Query Params">
 					<figcaption class="bcls-caption--image">クエリパラメータ</figcaption>
@@ -236,12 +236,12 @@ parent: General Information
 	</ol>
 	</section>
   <section class="bcls-section">
-    <h2 id="postRequest">送る<code translate="No">POST</code>リクエスト</h2>
-    <p>今、私たちは送信します<code translate="No">POST</code>いくつかのデータを要求します。この場合、CMS APIを使用して新しいビデオオブジェクトを作成します。を選択することから始めます<strong>ビデオを作ろう</strong>でリクエスト<strong>ビデオ</strong>フォルダ。</p>
+    <h2 id="postRequest"><code translate="No">POST</code>リクエストの送信</h2>
+    <p>ここでは、いくつかのデータを含む<code translate="No">POST</code>リクエストを送信します。今回、CMS APIを使用して新しいビデオオブジェクトを作成します。<strong>Video</strong>フォルダにある<strong>Create Video</strong>リクエストを選択して開始します。</p>
     <ol class="bcls-tasklist-restart">
-			<li>のすべての手順を繰り返します<a href="#Set_up_authentication">認証を設定する</a>この新しいリクエストの認証を設定するには、上記のセクションをご覧ください。</li>
+			<li>上記の<a href="#Set_up_authentication">認証を設定</a>セクションの全ての手順を繰り返して、この新しいリクエストの認証を設定します。</li>
 			<li>
-				このリクエストにはリクエスト本文が必要なので、[JSON]タブをクリックし、このJSONコードを入力して<code translate="no">ヌル</code>：
+				このリクエストにはリクエスト本文が必要なので、[JSON]タブをクリックし、このJSONコードを入力して<code translate="no">null</code>を置き換えます：
 <pre class="line-numbers"><code class="language-json" translate="No">{
 	"name": "Insomnia Test"
 }</code></pre>
@@ -250,12 +250,12 @@ parent: General Information
   <figcaption class="bcls-caption--image">リクエスト本文</figcaption>
 </figure>
 			</li>
-			<li>クリック<strong>送信</strong>応答で返された新しいビデオオブジェクトが表示されます。</li>
+			<li><strong>送信</strong>をクリックすると、新しいビデオオブジェクトがレスポンスで表示されます。</li>
     </ol>
   </section>
   <section class="bcls-section">
     <h2 id="Using_the_code_generators">コードジェネレーターの使用</h2>
-    <p>のもう一つの素晴らしい機能<span class="”notranslate”">不眠症</span>それは多くの異なる言語でリクエストを行うためのコードを生成するということです。</p>
+    <p><span class="”notranslate”">Insomnia</span>のもう一つの素晴らしい特徴は、様々な言語でリクエストを行うためのコードを生成するということです。</p>
     <ol class="bcls-tasklist-restart">
       <li>
         リクエストのドロップダウンメニューにカーソルを合わせます。
@@ -265,21 +265,21 @@ parent: General Information
         </figure>
       </li>
       <li>
-        選択する<strong>コードを生成する</strong>メニューから：
+        メニューから<strong>Generate Code</strong>を選択します：
         <figure class="bcls-figure">
           <img class="bcls-image" src="/assets/images/general/insomnia/generate-code-option.png" alt="Select Generate Code">
           <figcaption class="bcls-caption--image">[コードの生成]を選択します</figcaption>
         </figure>
       </li>
       <li>
-        の中に<strong>クライアントコードを生成する</strong>開いたダイアログで、コードを作成する言語を選択します。
+        <strong>Generate Client Code</strong>ダイアログが表示されたら、コードを作成する言語を選択します。
         <figure class="bcls-figure">
           <img class="bcls-image" src="/assets/images/general/insomnia/choose-code-type.png" alt="Select the Language">
           <figcaption class="bcls-caption--image">言語を選択してください</figcaption>
         </figure>
       </li>
       <li>
-        多くの言語では、作成しているアプリの種類により適している可能性のある、選択可能なバリアントもあります。
+        多くの言語では、作成するアプリの種類に適した、選択可能なバリアントもあります。
         <figure class="bcls-figure">
           <img class="bcls-image" src="/assets/images/general/insomnia/choose-code-variants.png" alt="Select Code Variant">
           <figcaption class="bcls-caption--image">コードバリアントを選択</figcaption>
@@ -295,7 +295,7 @@ parent: General Information
     </ol>
   </section>
   <section class="bcls-section">
-    <h2 id="Conclusion">結論</h2>
-    <p>これで、使用の基本を理解できました<span translate="No">不眠症</span> BrightcoveAPIにリクエストを送信します。無料でアップグレードすることを選択した場合は注意してください<span translate="No">不眠症</span>アカウントをチームアカウントにすると、すべてのリクエストと環境を同期して、他のチームメンバーと共有することもできます。</p>
+    <h2 id="Conclusion">まとめ</h2>
+    <p><span translate="No">Insomnia</span> を使用してBrightcove APIにリクエストを行うための基本的な方法はご理解頂けたと思います。無料の<span translate="No">Insomnia</span>アカウントをチームアカウントにアップグレードすると、全てのリクエストと環境を同期して、他のチームメンバーと共有することもできますのでご注意ください。</p>
   </section>
 </article>
