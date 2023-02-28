@@ -3,19 +3,43 @@
   site_domain,
   filter,
   lang_filter,
+  tab_filters,
   lang = domain.split('.')[0],
-  lang_prefix = '';
-
+    lang_prefix = '',
+    this_site_filter = '',
+    all_bc_docs_filter = '';
+console.log('***lang', lang);
+// lang = 'ja';
   if (lang === 'ja' || lang === 'ko' || lang === 'es' || lang === 'fr' || lang === 'de' || lang === 'zh-tw') {
     lang_prefix = lang + '.';
   } else {
     lang = 'en-us';
   }
   site_domain = 'ja.apis.support.brightcove.com';
+  console.log('site domain', site_domain);
   filter = "domain='" + site_domain +  "'";
   lang_filter = "lang='" + lang + "'";
+  
+  if (lang === 'ja' || lang === 'ko' || lang === 'es' || lang === 'fr' || lang === 'de' || lang === 'zh-tw') {
+    console.log('lang in foreign language', lang);
+    all_bc_docs_filter = "domain  ~ '" + lang + ".'";
+    this_site_filter = "domain  ~ '" + site_domain + "'"
+  } else {
+    console.log('in US block');
+    all_bc_docs_filter = "domain  ~ '" + lang + ".'";
+    this_site_filter = "domain  ~ '" + site_domain + "'"
+}
+
   console.log('filter', filter);
   console.log('lang_filter', lang_filter);
+  console.log('this_site_filter: ', this_site_filter);
+  console.log('all_bc_docs_filter: ', all_bc_docs_filter);
+    
+  if (site_domain === 'support.brightcove.com') {
+    tab_filters = {defaultTab:"All Brightcove Documentation",tabs:[{title:"All Brightcove Documentation",filter:filter}]};
+  } else {
+    tab_filters = {defaultTab:"This Site",tabs:[{title:"This Site",filter:filter}, {title:"All Brightcove Documentation",filter:all_bc_docs_filter}]};
+  }
   
   var searchInterface = sajari.init({
       mode: "inline",
@@ -23,14 +47,13 @@
       collection: "brightcove-documenation", // Set this to your collection.
       pipeline: "website",     // Set the search pipeline.
       instantPipeline: "autocomplete", // Set the instant pipeline.
-      
-      attachSearchBox: document.getElementById("results-search-box"), // DOM element to render search box.
+      attachSearchBox: document.getElementById("nav-search-box"), // DOM element to render search box.
       attachSearchResponse: document.getElementById("results-search-response"), // DOM element to render search results.
       inputPlaceholder: "Search", // Placeholder text for the search box.
       inputAutoFocus: false, // Focus the input element on render.
       maxSuggestions: 5, // Maximum number of suggestions to show.
       results: {"showImages": false }, // Configure the results.
-      values: {"q.override": true, "resultsPerPage": "10","q": getUrlParam("q")}, // Set default values.
-      tabFilters: {defaultTab:"This Site",tabs:[{title:"This Site",filter:filter}, {title:"All Brightcove Documentation",filter:lang_filter}]}, // User selectable filters
+      values: {"q.override": true, "resultsPerPage": "10","q": getUrlParam("q")}, // Set default values
+      tabFilters: tab_filters, // User selectable filters
       styling: { theme: { colors: { brand: { primary: "#333" }}}}
   });
