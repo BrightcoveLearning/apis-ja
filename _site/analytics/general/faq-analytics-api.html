@@ -1304,7 +1304,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 <a id="open_new_tab" href="#" target="_blank" style="display: none;"><img src="/assets/images/feather/external-link.svg" alt="open in new tab" style="margin-top:4em;width: 1.5em;"></a> 
  <h1>よくある質問：Analytics API</h1>
 <article class="bcls-article">
-  <summary>以下は、Analytics APIに関してよく寄せられる質問です。Video Cloud Studio Analyticsモジュールに関する一般的な質問のいくつかに対する回答については、を参照してください。<a href="https://studio.support.brightcove.com/analytics/faq-analytics-module.html">よくある質問：分析モジュール</a>。</summary>
+  <summary>以下は、Analytics APIに関してよく寄せられる質問です。Video Cloud Studio Analyticsモジュールに関する一般的な質問のいくつかに対する回答については、<a href="https://studio.support.brightcove.com/analytics/faq-analytics-module.html">よくある質問：Analytics モジュール</a>を参照してください。</summary>
     <section class="bcls-section" id="dateRanges">
     <h2>日付範囲</h2>
     
@@ -1312,12 +1312,12 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       <!-- <dt class="bcls-question">How do I return data for all time in a <strong>Report</strong>?</dt>
       <dd class="bcls-answer">Set <code translate="No">from=alltime</code> in the request. You can also set <code translate="No">to=now</code>, but this isn't necessary, since <code translate="No">now</code> is the default value. Note: <code translate="No">alltime</code> does <em>not</em> work for a <strong>Rollup</strong> - instead you will need to set <code translate="No">from</code> to a date far enough in the past.</dd> -->
       <dt class="bcls-question">特定の日のデータを取得するにはどうすればよいですか？</dt>
-      <dd class="bcls-answer">両方を設定します<code translate="No">from</code>そして<code translate="No">to</code>その日付までの値。例: <code translate="No">from=2013-05-12&amp;to=2013-05-12</code>。さらに、次の方法でクエリを実行できます。<a href="/analytics/dimension-guides/dimension-date.html"><code translate="No">date</code>寸法</a>、他の寸法と組み合わせることができます。</dd>
-      <dt class="bcls-question">分析モジュールと<span translate="No">Analytics API</span>同じ日付範囲のIDデータを教えてください。</dt>
-      <dd class="bcls-answer">はい。ただし、比較的最近のデータを比較していて、StudioとAPIから異なる時間にデータを取得する場合は、異なる可能性があります。
+      <dd class="bcls-answer"><code translate="No">from</code> と <code translate="No">to</code> の両方の値をその日付に設定します。例: <code translate="No">from=2013-05-12&amp;to=2013-05-12</code> のようにします。さらに、<a href="/analytics/dimension-guides/dimension-date.html"><code translate="No">date</code>ディメンション</a>、でクエリを実行し、他のディメンションと組み合わせることもできます。</dd>
+      <dt class="bcls-question">Analytics モジュールと <span translate="No">Analytics API</span>は、同じ日付範囲について同じデータを提供してくれますか？</dt>
+      <dd class="bcls-answer">はい。しかし、比較的最近のデータを比較し、StudioとAPIから異なる時期にデータを取得した場合は、異なるかもしれません：
       <ol>
-        <li>データは3日未満です。3日未満の分析データは暫定的なものであり、いつでも変更される可能性があります。</li>
-        <li>同じ期間のデータは、32日未満のときと、32日後のデータを調べます。32日後、データは別の「履歴」リポジトリに移動され、その時点で一部のデータ、特に詳細なエンゲージメントデータが破棄されます。これは、計算がより詳細でないデータで行われているため、エンゲージメントスコアなどの計算フィールドがわずかに変化する可能性があることを意味します。</li>
+        <li>データが3日未満の場合。3日未満の分析データは暫定的なものであり、いつでも変更される可能性があります。</li>
+        <li>同じ期間のデータは、32 日未満の時と、32 日が経過した後に再度確認されます。 32 日後、データは別の「履歴」リポジトリに移動され、その時点で一部のデータ、特に詳細なエンゲージメント データは破棄されます。これは、計算が粒度の低いデータに基づいて行われるため、エンゲージメント スコアなどの計算フィールドがわずかに変化する可能性があることを意味します。</li>
       </ol>
       </dd>
     </dl>
@@ -1328,18 +1328,18 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     
     <dl>
       <dt class="bcls-question">最近のAnalyticsデータの粒度はどのくらいですか？</dt>
-      <dd class="bcls-answer">直近の32日間（当日を含む）、<span translate="No"> Analytics API</span>値を1時間ごとのバケットに保存するため、1時間の粒度を報告します。ただし、現在の時間はまだ埋められているため、これにより、現在の時間に該当するデータを要求したときに、APIが1時間よりも粒度が高いように見える可能性があります。
+      <dd class="bcls-answer">直近の32日間(当日を含む)については、<span translate="No"> Analytics API</span> は1時間ごとのバケットに保存するため、1時間ごとの粒度を報告します。ただし、現在の時間はまだ埋められているため、現在の時間に該当するデータを要求すると、APIが1時間よりも粒度が細いように見えることがあります。
       <p>例は次のとおりです。</p>
     
       <ol>
-        <li>3時間前の9:15と9:20のデータを要求した場合、それらが同じ時間バケットに含まれていれば、同じ値を取得できます。ただし、すべての分析データは暫定的なものであり、調整されるまで変更される可能性があるため、これらは異なる場合があります。</li>
+        <li>3時間前の9:15と9:20のデータを要求した場合、同じ時間バケットに含まれていれば、同じ値が得られるかもしれませんが、ただし、分析データは暫定的なものであり、調整されるまで変更される可能性があるため、異なる値になる可能性があります。</li>
         <li>10分前のデータを要求し、5分待ってからもう一度要求すると、同じバケット内であっても、そのバケットはまだ更新されているため、異なる値を取得する可能性があります。</li>
       </ol>
       </dd>
       <dt class="bcls-question">分析データの更新間隔はどのくらいですか？</dt>
-      <dd class="bcls-answer">/ dataエンドポイントは現在、クエリ間で5分間キャッシュされているため、過去1時間にトラフィックがあった動画のリストの場合、5分間隔が、作業のデルタを与える最小の遅延です。</dd>
+      <dd class="bcls-answer">現在、/dataエンドポイントは、クエリの間に3～4時間キャッシュされるため、直近1時間のトラフィックがある動画のリストでは、3～4時間の間隔が、作業するための差分を与える遅れとなります。</dd>
       <dt class="bcls-question">過去の分析データの粒度はどのくらいですか？</dt>
-      <dd class="bcls-answer">過去32日より前の日付の場合、<span translate="No"> Analytics API</span> 1日の値を報告します。これは、あなたが要求した場合<code translate="No">from=1368334306919&amp;to=1378446336919</code>（2013年5月12日日曜日04：51：46GMTから2013年9月6日金曜日05：45：36GMTまで）、リクエストした場合と同じ結果が得られます。<code translate="No">from=2013-05-12&amp;to=2013-09-06</code></dd>
+      <dd class="bcls-answer">直近の32日よりも前の日付については、<span translate="No"> Analytics API</span> は、1日の値を報告します。つまり、<code translate="No">from=1368334306919&amp;to=1378446336919</code>（2013年5月12日日曜日04：51：46GMTから2013年9月6日金曜日05：45：36GMTまで）をリクエストした場合 <code translate="No">from=2013-05-12&amp;to=2013-09-06</code> をリクエストした場合と同じ結果得られます。</dd>
     </dl>
     </section>
     
@@ -1347,34 +1347,33 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <h2>アイテムとフィールド</h2>
     
     <dl>
-      <dt class="bcls-question">1つまたは複数の動画の期間にストリームの開始がいくつあったかを知るための最良の方法は何ですか？</dt>
-      <dd class="bcls-answer">見てください<code translate="No">video_view</code>メトリック-これは常にストリームの開始と同じになります。この指標はすべてのレポートで確認でき、概要には、クエリされた日付範囲内のすべての動画のストリーミング開始が表示されます。アカウント内のすべての動画のストリーム開始を確認するには、次のリクエストを実行するだけです。
+      <dt class="bcls-question">1つまたは複数の動画について、ある期間に何回ストリームが開始されたかを知る最良の方法は何ですか？</dt>
+      <dd class="bcls-answer"><code translate="No">video_view</code>メトリックを見て下さい。これは常にストリームの開始数と同じになります。すべてのレポートでこのメトリックを見ることができ、サマリーには、クエリされた日付範囲のすべての動画のストリーム開始が表示されます。アカウント内のすべての動画のストリーム開始数を確認するには、次のリクエストを実行します。
       <pre>
     <code translate="No">https://analytics.api.brightcove.com/v1/data?accounts={account_ids}&amp;dimensions=video&amp;limit=all&amp;offset=0&amp;fields=all</code></pre>
       </dd>
-      <dt class="bcls-question">のすべてのアイテムを返品するにはどうすればよいですか<strong>報告する</strong>？</dt>
-      <dd class="bcls-answer">をセットする<code translate="No">limit</code>のパラメータ<strong>報告する</strong>に等しい<code translate="No">all</code>。</dd>
-      <dt class="bcls-question">どのようなデータ<code translate="No">fields</code>デフォルトでアイテムに対して返されますか？</dt>
-      <dd class="bcls-answer">デフォルトでは、<code translate="No">video_view</code>および要求されたディメンションに対応するフィールド（例：<code translate="No">destination_domain</code>）が返されます。追加のフィールドを取得するには、<code translate="No">fields=field_name1,field_name2</code>選択したフィールドを返します。</dd>
-      <dt class="bcls-question">フィールド値が次の場合はどういう意味ですか<code translate="No">null</code>？</dt>
-      <dd class="bcls-answer">A <code translate="No">null</code>データフィールドの値は、要求されたデータが処理されていないことを示します。最も可能性の高い理由は次のとおりです。
+      <dt class="bcls-question">すべてのアイテムを<strong>レポート</strong>に返すには、どうすればよいですか？</dt>
+      <dd class="bcls-answer"><strong>レポート</strong>の<code translate="No">limit</code> パラメータを<code translate="No">all</code>に等しく設定して下さい。</dd>
+      <dt class="bcls-question">どのようなデータ<code translate="No">fields</code> がデフォルトでアイテムに返されますか？</dt>
+      <dd class="bcls-answer">デフォルトでは、<code translate="No">video_view</code> と、要求されたディメンション（例：<code translate="No">destination_domain</code>）に対応するフィールドのみが返されます。その他のフィールドを取得するには、<code translate="No">fields=field_name1,field_name2</code> と設定して、選択されたフィールドを返します。</dd>
+      <dt class="bcls-question">フィールド値が<code translate="No">null</code>はどういう意味ですか？</dt>
+      <dd class="bcls-answer">データフィールドの<code translate="No">null</code>値は、要求されたデータが処理されていないことを示します。最も可能性の高い理由は次のとおりです。
       <ul>
-        <li>リクエストしたデータはごく最近のものであり、まだ処理されていません</li>
-        <li>リクエストしたデータは非常に古く、現在の分析システムにまだインポートされていません</li>
+        <li>リクエストされたデータはごく最近のものであり、まだ処理されていない場合。</li>
+        <li>リクエストされたデータは非常に古いもので、現在の分析システムにまだインポートされていない場合。</li>
       </ul>
       </dd>
-      <dt class="bcls-question">ビデオの1つの名前を変更しました-Analyticsデータに古い名前が表示されるのはなぜですか？</dt>
-      <dd class="bcls-answer">新しい名前は新しい分析イベントに記録されますが、履歴データの名前は変更されません。返されるビデオ名は、表示されたときの名前になります。</dd>
-      <dt class="bcls-question">エンゲージメント値の整数が常に表示されないのはなぜですか？</dt>
-      <dd class="bcls-answer">エンゲージメント番号が小数点で戻る可能性があります。その理由は、エンゲージメントが正規化されているためです。つまり、「video_percent_viewed *（video_engagement_25 / video_engagement_sum）」の比率であるため、クエリで選択した時間範囲に基づいて、正確に分割されていない場合に浮動小数点数が表示されることがあります。</dd>
-      <dt class="bcls-question">プレーヤーで結果をフィルタリングするにはどうすればよいですか？</dt>
+      <dt class="bcls-question">動画の名前を変更したのですが、Analyticsデータに古い名前が表示されるのはなぜですか？</dt>
+      <dd class="bcls-answer">新しい名前は新しい分析イベントに記録されますが、履歴データの名前は変更されません。返されるビデオ名は、表示された時の名前になります。</dd>
+      <dt class="bcls-question">エンゲージメント値に、いつも整数が表示されないのはなぜですか？</dt>
+      <dd class="bcls-answer">エンゲージメントの数値に小数点が付くことがあります。これは、エンゲージメントが正規化され、「video_percent_viewed * (video_engagement_25 / video_engagement_sum)」の比率になるためです。そのため、クエリで選択した時間範囲によっては、正確に割り切れない浮動小数点数が表示されることがあります。</dd>
+      <dt class="bcls-question">プレーヤー別に結果を絞り込むにはどうすればよいですか？</dt>
       <dd class="bcls-answer">
       <aside class="bcls-aside bcls-aside--warning">
-      <p>ご使用の際は、以下の点にご注意ください<code translate="No">where</code>プレーヤーのフィルター：</p>
+      <p>プレーヤーに対して<code translate="No">where</code>フィルターを使用する場合は、以下の点に注意して下さい：</p>
     
       <ul>
         <li><strong>Brightcoveプレーヤー</strong> -プレーヤーのURLを次の形式で入力します。<code translate="No">players.brightcove.com/account id/playerID<strong>_default</strong></code></li>
-        <li>スマートプレーヤー - プレーヤーIDを入力してください</li>
       </ul>
       </aside>
       </dd>
@@ -1382,20 +1381,20 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
     
     <section id="bandwidth" class="bcls-section">
-    <h2>報告</h2>
+    <h2>レポート</h2>
     
     <dl>
-      <dt class="bcls-question">プレーヤーによって使用される帯域幅をみると、なぜ0 GBとなっているのですか</dt>
-      <dd class="bcls-answer">過去にBrightcoveはプレーヤーごとに帯域幅を報告していたため、プレーヤーごとに分類したい顧客は、帯域幅コストを割り当てる手段としてこれらのメトリックを使用できました。しかし、よりマニフェスト主導の配信（現在はHLS、将来はDASH）に移行する中で、セグメント化という動画の性質によってプレーヤーごとの帯域幅の追跡が正確ではなくなります。したがって利用状況レポートにおいて、プレーヤー次元の帯域幅は重要視されなくなります。したがって、今後は、パフォーマンスレポートでプレーヤーが表示した秒数を使用して、プレーヤーごとにコストを割り当てることをお勧めします。</dd>
+      <dt class="bcls-question">プレーヤーが使用した帯域幅をみると、0 GBと表示されるのはなぜですか？</dt>
+      <dd class="bcls-answer">過去にBrightcoveはプレーヤーごとに帯域幅を報告していたため、プレーヤーごとに分類したいお客様は、帯域幅コストを配分する手段としてこれらのメトリックを使用できました。しかし、よりマニフェスト主導の配信（現在はHLS、将来はDASH）に移行するにつれて、セグメント化された動画の性質上、プレーヤーごとの帯域幅の追跡が正確ではなくなります。そのため、利用状況レポートにおいて、プレーヤーの帯域幅は重要視されなくなります。したがって、今後は、パフォーマンスレポートでプレーヤーが表示した秒数を使用して、プレーヤーごとにコストを割り当てることをお勧めします。</dd>
     </dl>
     </section>
     
     <section class="bcls-section" id="miscellaneous">
-    <h2>雑多</h2>
+    <h2>その他</h2>
     
     <dl>
-      <dt class="bcls-question">解析レポートから従業員視聴回数を除外できますか</dt>
-      <dd class="bcls-answer">これを行う簡単な方法はありません。高トラフィックの動画では従業員視聴回数は割合が小さいことが多いため、解析への影響は無視できるでしょう。ただし、これが重要だとお客様が考える低トラフィック動画では、実動プレーヤーを複写し、従業員はコピーで動画のテストや視聴を行うのが最も簡単な解決策です。次に、フィルターを使用して、実動プレーヤーだけに関するレポートを作成します。Analyticsモジュールでカスタムレポート機能を使用するか、Analytics APIを使用してください。</dd>
+      <dt class="bcls-question">分析レポートから従業員視聴回数を除外することはできますか？</dt>
+      <dd class="bcls-answer">これを行う簡単な方法はありませんし、トラフィックの多い動画では、従業員の視聴はおそらくごく一部で、アナリティクスへの影響はごくわずかと考えられます。しかし、トラフィックの少ない動画でこれを行うことが重要だと思われる場合、最も簡単な解決策は、本番用プレーヤーを複製し、従業員にそのコピーで動画をテスト/視聴させることです。その後、フィルタを使用して、Analytics モジュールのカスタム レポート機能または Analytics API を使用して、プロダクション プレーヤのみに関するレポートを作成できます。</dd>
     </dl>
     </section>
     </article>
