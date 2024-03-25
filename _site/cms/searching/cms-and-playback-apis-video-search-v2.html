@@ -1306,18 +1306,20 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 <article class="bcls-article">
   <summary>このトピックでは、CMS APIでサポートされているバージョン2のビデオ検索を使用するための構文について説明します。</summary>
     <section class="bcls-section">
-    <h2 id="introduction">入門</h2>
+    <h2 id="introduction">はじめに</h2>
 
-    <p >で使用されるビデオ検索のバージョン2 <span translate="No"> CMS API</span>構文を簡素化し、使いやすくします。</p>
+    <p ><span translate="No"> CMS API</span>で使用される動画検索のバージョン2では、構文が簡素化され、より使いやすくなっています。</p>
 
-    <aside class="bcls-aside bcls-aside--warning"><strong>ノート：</strong>
+    <aside class="bcls-aside bcls-aside--warning"><strong>注意：</strong>
       <ul>
-        <li>v2検索構文は、<span translate="No"> CMS API</span>あなただけ<strong>この構文をPlaybackAPIで使用することはできません</strong>。</li>
-        <li>元の検索構文は、CMS APIとPlaybackAPIの両方で引き続きサポートされています。</li>
+        <li>v2の検索構文は、<span translate="No"> CMS API</span>でのみサポートされています。<strong>この構文を Playback API で使用することはできません</strong>。</li>
+        <li>元の検索構文は、CMS APIとPlayback APIの両方で引き続きサポートされています。</li>
+        <li>CMS API は、フィールド内の NULL または空の値による検索をサポートしていません。これはカスタム フィールドに限らず、すべての動画メタデータに当てはまります。</li>
+        <li>検索文字列の中に <strong>URIエンコード</strong> されていないURLが壊れてしまい、CMS API で受信・処理されないものがあります。 URIエンコードは常に推奨されます。 文字列のエンコード方法が不明な場合は、<a href="/general/utilities/string-encoder.html">String Encoder</a>をご利用下さい。</li>
       </ul>
     </aside>
 
-    <p >使用する構文の選択は、適切なURLパラメーターを選択するだけです。</p>
+    <p >どの構文を使用するかは、適切なURLパラメーターを選択するだけです。</p>
 
     <ul>
       <li>新しいv2検索を使用するには：
@@ -1332,9 +1334,9 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
 
     <section class="bcls-section">
-    <h2 id="basics">基本</h2>
+    <h2 id="basics">ベーシック</h2>
 
-    <p >検索文字列の基本要素は <em>検索語</em>、フィールド名を前に付けることができます。フィールド名が含まれている場合、そのメタデータフィールドのみが検索されます。それ以外の場合は、いくつかのフィールド（以下にリスト）が検索されます。</p>
+    <p >検索文字列の基本要素は <em>検索語</em>であり、その前にフィールド名を付けることができます。フィールド名が含まれている場合、そのメタデータフィールドのみが検索されます。それ以外の場合は、いくつかのフィールド（以下に列挙）が検索されます。</p>
 
     <p >例は次のとおりです。</p>
 
@@ -1349,11 +1351,11 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       <tbody class="bcls-table__body">
         <tr>
           <td ><code translate="No">bird</code></td>
-          <td >その言葉が「<code translate="No">bird</code> "以下のフィールドに</td>
+          <td >以下のフィールドに "<code translate="No">bird</code>"という単語が含まれる動画。</td>
         </tr>
         <tr>
           <td ><code translate="No">name:bird</code></td>
-          <td >「」という言葉が含まれている動画<code translate="No">bird</code> " の中に<code translate="No">name</code>（タイトル）が返されます。</td>
+          <td ><code translate="No">name</code>(動画タイトル)に、"<code translate="No">bird</code>"という単語が入っている動画が返されます。</td>
         </tr>
       </tbody>
     </table>
@@ -1365,7 +1367,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       <li><code translate="No">name</code></li>
       <li><code translate="No">description</code></li>
       <li><code translate="No">long_description</code></li>
-      <li><code translate="No">text</code>（実際のメタデータフィールドではなく、検索に使用できる疑似フィールド<code translate="No">name</code>、<code translate="No">description</code>、および<code translate="No">long_description</code> -例：<code translate="No">text:bird</code>）</li>
+      <li><code translate="No">text</code>（実際のメタデータフィールドではなく、検索に使用できる <code translate="No">name</code>、<code translate="No">description</code>、および<code translate="No">long_description</code> を検索するのに使える擬似フィールド -例：<code translate="No">text:bird</code>）</li>
       <li><code translate="No">tags</code></li>
       <li><code translate="No">reference_id</code></li>
       <li><code translate="No">custom_fields</code> ( すべてのカスタムフィールドを検索します)</li>
@@ -1389,7 +1391,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td >テキスト</td>
-          <td >文字列または引用符で囲まれた文字列 (、<code translate="No">name</code><code translate="No">description</code>、およびを検索します<code translate="No">long_description</code> )</td>
+          <td >文字列または引用符で囲まれた文字列 (<code translate="No">name</code>、<code translate="No">description</code>および<code translate="No">long_description</code>を検索)</td>
         </tr>
         <tr>
           <td ><code translate="No">tags</code></td>
@@ -1397,11 +1399,11 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td ><code translate="No">custom_fields</code></td>
-          <td >文字列または引用符で囲まれた文字列（すべてのカスタムフィールドを検索します-特定のカスタムフィールドを使用することもできます <em>内部</em> 名前）</td>
+          <td >文字列または引用符で囲まれた文字列（すべてのカスタムフィールドを検索します-特定のカスタムフィールドの<em>内部名</em>を使用することも出来ます）</td>
         </tr>
         <tr>
           <td ><code translate="No">reference_id</code></td>
-          <td >文字列または引用符で囲まれた文字列</td>
+          <td >文字列または引用文字列</td>
         </tr>
         <tr>
           <td ><code translate="No">state</code></td>
@@ -1434,8 +1436,38 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       </tbody>
     </table>
 
-    <p >上記の両方の例で、「」という単語が含まれていない動画<code translate="No">bird</code>「関連するフィールドでは、引き続き返される可能性があります。次のセクションでは、検索結果を指定された用語を持つ動画のみに制限する方法について説明します。</p>
+    <p >上記のどちらの例でも、関連するフィールドに「<code translate="No">bird</code>」という単語が含まれていない動画が返される可能性があります。次のセクションでは、検索結果を指定した用語を持つ動画のみに制限する方法について説明します。</p>
     </section>
+
+    <section class="bcls-section">
+        <h2 id="Ignored_words">無視される単語</h2>
+    
+        <p>特定の単語は非常に一般的であるため、検索文字列では無視され、実際の検索内容とは関係のない多くの結果が返される可能性があります。以下は、検索で無視される単語のリストです。</p>
+    
+        <p>"a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"</p>
+    
+        <p>また、ハイフン、アンダースコア、改行、 "$"、 "&"、 "*" などの英数字以外の文字は、単語の区切り文字として扱われます。例えば、 <code translate="No">small-town</code> のような検索文字列は <code translate="No">small town</code> として扱われます。</p>
+      </section>
+  
+      <section class="bcls-section">
+        <h2 id="stemming">ステミングとは?</h2>
+        <p>ステミングをサポートするビデオフィールドは、検索語の語幹を共通に持つ単語を返します。また、ステミングでは、部分的な単語ではなく、単語全体の入力のみがサポートされます</p>
+        <ul>
+          <li>例 1: <code translate="No">running</code> を検索すると、<code translate="No">running</code>, <code translate="No">run</code>, <code translate="No">runs</code> を含む結果が返されます。</li>
+          <li>例 2: <code translate="No">vid</code> で検索しても、<code translate="No">video</code> を含む結果は返されません。</li>
+        </ul>
+        <p>ステミングを使った検索は、次のフィールドで機能します。</p>
+        <ul>
+          <li><code translate="no">custom_fields</code></li>
+          <li><code translate="no">description</code></li>
+          <li><code translate="no">name</code></li>
+          <li><code translate="no">long_description</code></li>
+          <li><code translate="no">tags</code></li>
+          <li><code translate="no">labels</code></li>
+        </ul>
+      </section>
+
+
 
     <section class="bcls-section">
     <h2 id="advanced_search">高度な検索</h2>
@@ -1454,21 +1486,21 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       <tbody class="bcls-table__body">
         <tr>
           <td ><strong><code translate="No">+</code></strong></td>
-          <td >検索語の前にプラス（+）記号を付けると、返された動画が<strong>しなければならない</strong>指定された用語を持っている</td>
+          <td >検索語の前にプラス（+）記号を付けると、返される動画に指定された用語が含まれて<strong>いなければならない</strong>ことを意味します。</td>
           <td >
           <ul>
-            <li><code translate="No">+bird</code>（戻り値 <em>それだけ</em> 「<code translate="No">bird</code> "上記のフィールドに）</li>
-            <li><code translate="No">+tags:bird</code>（戻り値 <em>それだけ</em> 「<code translate="No">bird</code> " の中に<code translate="No">tags</code>）</li>
+            <li><code translate="No">+bird</code>（上記のフィールドに"<code translate="No">bird</code>"が含まれる動画<em>のみ</em>を返す。</li>
+            <li><code translate="No">+tags:bird</code>（<code translate="No">tags</code> に"<code translate="No">bird</code>"が含まれる動画<em>のみ</em>を返す。</li>
           </ul>
           </td>
         </tr>
         <tr>
           <td ><strong><code translate="No">-</code></strong>または<strong><code translate="No">NOT</code></strong></td>
-          <td >検索語の前にマイナス（-）記号または<code translate="No">NOT</code>返されたビデオを意味します<strong>してはいけません</strong>指定された用語を持っている</td>
+          <td >検索語の前にマイナス（-）記号または<code translate="No">NOT</code>を付けると、返される動画に指定した用語が含まれ<strong>ない</strong>ことを意味します。</td>
           <td >
           <ul>
-            <li><code translate="No">-birds</code>または<code translate="No">NOT birds</code>（するビデオのみを返します<strong>ない</strong>持ってる " <code translate="No">bird</code> "上記のフィールドに）</li>
-            <li><code translate="No">-name:birds</code>または<code translate="No">NOT name:birds</code>（するビデオのみを返します<strong>ない</strong>持ってる " <code translate="No">bird</code> " の中に<code translate="No">name</code>）</li>
+            <li><code translate="No">-birds</code>または<code translate="No">NOT birds</code>（上記のフィールドに"<code translate="No">bird</code>"が<strong>ない</strong>動画のみを返す）</li>
+            <li><code translate="No">-name:birds</code>または<code translate="No">NOT name:birds</code>（<code translate="No">name</code>に"<code translate="No">bird</code>"が含まれてい<strong>ない</strong>動画のみを返す）</li>
           </ul>
           </td>
         </tr>
@@ -1476,12 +1508,12 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
           <td ><strong><code translate="No">(term)&nbsp;AND&nbsp;(term)</code></strong><br />
           または<br />
           <strong><code translate="No">(term)&nbsp;OR&nbsp;(term)</code></strong></td>
-          <td >論理的<code translate="No">AND</code>そして<code translate="No">OR</code>演算子を使用すると、複雑なクエリに対して複数の検索用語を組み合わせることができます</td>
+          <td >論理<code translate="No">AND</code>および<code translate="No">OR</code>演算子を使用すると、複雑なクエリに対して複数の検索用語を組み合わせることができます。</td>
           <td >
           <ul>
-            <li><code translate="No">(+name:heron) AND (+tags:bird)</code>（持っているビデオを返します<strong>どちらも</strong>「」<code translate="No">heron</code> " の中に<code translate="No">name</code>と「<code translate="No">bird</code> " の中に<code translate="No">tags</code>）</li>
-            <li><code translate="No">(+name:heron) OR (+tags:bird)</code>（持っているビデオを返します<strong>どちらか</strong>「」<code translate="No">heron</code> " の中に<code translate="No">name</code>と「<code translate="No">bird</code> " の中に<code translate="No">tags</code>）</li>
-            <li><code translate="No">((+name:heron) AND (+tags:bird)) AND (NOT tags:internal)</code>（持っているビデオを返します<strong>どちらも</strong>「」<code translate="No">heron</code> " の中に<code translate="No">name</code>と「<code translate="No">bird</code> " の中に<code translate="No">tags</code>、 だが<strong>ない</strong>タグ「<code translate="No">internal</code> "）</li>
+            <li><code translate="No">(+name:heron) AND (+tags:bird)</code>（<code translate="No">name</code>に"<code translate="No">heron</code>"、<code translate="No">tags</code>に"<code translate="No">bird</code>"の<strong>両方</strong>を含む動画を返す。）</li>
+            <li><code translate="No">(+name:heron) OR (+tags:bird)</code>（<code translate="No">name</code>に"<code translate="No">heron</code>"、<code translate="No">tags</code>に"<code translate="No">bird</code>"の<strong>いずれか</strong>を含む動画を返す。）</li>
+            <li><code translate="No">((+name:heron) AND (+tags:bird)) AND (NOT tags:internal)</code>（<code translate="No">name</code>に"<code translate="No">heron</code>"と<code translate="No">tags</code>に"<code translate="No">bird</code>"の<strong>両方</strong>を含むが、タグに"<code translate="No">internal</code>"を含ま<strong>ない</strong>動画を返す）</li>
           </ul>
           </td>
         </tr>
@@ -1492,12 +1524,20 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section">
     <h2 id="search_for_a_phrase">フレーズ検索</h2>
 
-    <p >引用符で囲むことにより、（単一の単語ではなく）フレーズを検索できます。</p>
+    <p >引用符で囲むことにより、（単一の単語ではなく）フレーズを検索することができます。</p>
 
     <ul>
       <li><code translate="No">"blue heron"</code></li>
       <li><code translate="No">name:"blue heron"</code></li>
     </ul>
+    <aside class="bcls-aside bcls-aside--information">注:
+        <ul>
+          <li>日本語のテキストには、ダブルクォテーションのシングルバイトとダブルバイトがあります。見た目はよく似ていますが、ダブルバイトのダブルクォテーションを使用すると、CMS API 検索に失敗します。</li>
+        </ul>
+        </aside>
+
+
+
     </section>
 
     <section class="bcls-section">
@@ -1507,18 +1547,18 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
     <p ><code translate="No">[{start} TO {end}]</code></p>
 
-    <p >単一の日時で検索するには、<code translate="No">start</code>そして<code translate="No">end</code>同じ値に：</p>
+    <p >単一の日時で検索するには、<code translate="No">start</code>(開始)と<code translate="No">end</code>(終了)を同じ値に設定します：</p>
 
     <p ><code translate="No">[2019-09-30T00:00:00.000Z TO 2019-09-30T00:00:00.000Z]</code></p>
 
-    <p >日時値は、ISO8601形式を使用して指定されます。</p>
+    <p >日付時刻値は、ISO8601形式を使用して指定されます。</p>
 
     <table class="bcls-table">
       <caption class="bcls-caption--table">日付/時刻形式</caption>
       <thead class="bcls-table__head">
         <tr>
           <th>日付/時刻</th>
-          <th>[ 形式] </th>
+          <th>形式</th>
           <th>例</th>
         </tr>
       </thead>
@@ -1541,9 +1581,15 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       </tbody>
     </table>
 
-    <aside class="bcls-aside bcls-aside--information">必要なことに注意してください<code translate="No">Z</code>タイムゾーンインジケーターで。現在、値は空白である必要があります（タイムゾーンとしてUTCを示します）。</aside>
+    <aside class="bcls-aside bcls-aside--information">注:
+        <ul>
+          <li>タイムゾーンインジケーターに必要な <code translate="No">Z</code>。現在、値は空白にする必要があります (タイムゾーンとして UTC を示す)。</li>
+          <li><code translate="No">NOW</code> 演算子および<code translate="No">..</code>を使用した日付範囲（オープンエンドの範囲を含む）は、このバージョンではサポートされていません。</li>
+          <li>この日付構文は、テキストとしてのみ検索できる日付のようなビーコン フィールド (終了日と開始日) には適用されません。</li>
+        </ul>
+        </aside>
 
-    <p >以下は、いくつかのサンプルの日付/時刻検索文字列です。</p>
+    <p >以下は、日付/時刻検索文字列のサンプルです。</p>
 
     <table class="bcls-table">
       <caption class="bcls-caption--table">サンプルデータ/時間検索</caption>
@@ -1556,7 +1602,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       <tbody class="bcls-table__body">
         <tr>
           <td ><code translate="No">+updated_at:[2019-09-30T00:00:00.000Z TO 2019-10-07T00:00:00.000Z]</code></td>
-          <td >2019年9月30日から2019年10月7日までに更新された動画</td>
+          <td >2019年9月30日から2019年10月7日の間に更新された動画</td>
         </tr>
         <tr>
           <td ><code translate="No">+created_at:[2019-09-30T00:00:00.000Z TO 2019-09-30T00:00:00.000Z]</code></td>
@@ -1572,7 +1618,24 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
       </tbody>
     </table>
-    </section>
+    <aside class="bcls-aside bcls-aside--information">
+        <code translate="no">Date/Time</code> のフォーマットが正しくない場合、空白[]レスポンスとともに200ステータスコードが返されることに注意してください。
+       </aside>
+       </section>
+       <section class="bcls-section">
+        <h2 id="Known Issues">既知の問題</h2>
+    
+        <ul>
+          <li><strong>検索結果の重複</strong>: 場合によっては、検索結果の一部の項目が複数回表示されることがあります。
+          <p><strong>回避策</strong>: 検索結果の重複を防ぐには、検索リクエストで常に <code translate="No">sort</code> パラメーターを使用します。</p>
+          </li>
+        </ul>
+        <aside class="bcls-aside bcls-aside--information">デフォルトのソート順は、<code translate="No">updated_at</code> であるため、アプリの実行中に追加または更新された動画を見逃す可能性があることに注意してください。これを避けたい場合は、<code translate="No">created_at</code> ソートを使用して下さい。</aside>
+      </section>
+
+
+
+
     </article>
 <!-- complete bootstrap layout -->
     </div>
