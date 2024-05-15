@@ -1306,9 +1306,9 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 <article class="bcls-article">
   <summary>このトピックでは、CMS APIを使用してプレイリストを作成、更新、または削除する方法について説明します。</summary>
     <section class="bcls-section">
-    <h2 id="intro">入門</h2>
+    <h2 id="intro">はじめに</h2>
     <img alt="Sample Playlist" style="float:right;" src="/assets/images/cms/managing-videos/sample-playlist.png" />
-    <p>再生リストを使用すると、関連する一連の動画をグループ化して、プレーヤーに読み込んでグループとして視聴することができます。NS <span translate="No"> CMS API</span>プレイリストの作成、更新、または削除に使用できる一連の書き込みメソッドが含まれています。</p>
+    <p>プレイリストを使用すると、関連する一連の動画をグループ化して、プレーヤーに読み込んでグループとして視聴することができます。<span translate="No"> CMS API</span> には、プレイリストの作成、更新、または削除に使用できる一連の書き込みメソッドが含まれています。</p>
     
     <ul>
       <li><a href="#create">プレイリストを作成する</a></li>
@@ -1316,28 +1316,34 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       <li><a href="#delete">プレイリストを削除する</a></li>
     </ul>
     
-    <aside class="bcls-aside bcls-aside--information">これらのタスクは、StudioMediaモジュールでも実行できます。</aside>
-    </section>
+    <aside class="bcls-aside bcls-aside--information">
+        注:
+        <ul>
+          <li>これらのタスクは、Studio Mediaモジュールでも実行できます。</li>
+          <li>プレイリストに含めるビデオ数は 1000 までに制限されています。</li>
+        </ul>
+      </aside>
+      </section>
     
     <section id="authentication" class="bcls-section">
     <h2>認証</h2>
     
-    <p class="BCL-aside">へのリクエスト<span translate="No">CMS API</span>アクセストークンを含む認証ヘッダーが必要です。クライアントクレデンシャルを取得してアクセストークンを取得する方法の詳細については、「<a href="/oauth/getting-started/overview-oauth-api-v4.html"> Brightcove OAuth の概要</a>」を参照してください。</p>
+    <p class="BCL-aside"><span translate="No">CMS API</span>へのリクエスには、アクセストークンを含む認証ヘッダーが必要です。クライアント認証情報を取得し、それを使用してアクセス トークンを取得する方法の詳細については、「<a href="/oauth/getting-started/overview-oauth-api-v4.html"> Brightcove OAuth の概要</a>」を参照してください。</p>
     </section>
     
     <section class="section">
-    <h2 id="GET_playlists">プレイリストを取得</h2>
+    <h2 id="GET_playlists">プレイリストの取得</h2>
     
-    <p>再生リストの作成に取り掛かる前に、VideoCloudアカウントの既存の再生リストのデータを取得する方法を見てみましょう。</p>
+    <p>プレイリストの作成に入る前に、Video Cloud アカウントにある既存のプレイリストのデータを取得する方法を見てみましょう。</p>
     
-    <h3>要求</h3>
+    <h3>リクエスト</h3>
     
     <pre class="line-numbers">
     <code class="language-http" translate="No">https://cms.api.brightcove.com/v1/accounts/<span class="bcls-input">{account_id}</span>/playlists</code></pre>
     
-    <h3>応答</h3>
+    <h3>レスポンス</h3>
     
-    <p>（私たちは<code translate="No">limit</code>このリクエストで<code translate="No">1</code>応答を小さく保つため。）</p>
+    <p>（レスポンスを小さく保つため、このリクエストの <code translate="No">limit</code> を <code translate="No">1</code> に設定しています。)</p>
     
     <pre class="line-numbers">
     <code class="language-json" translate="No">[
@@ -1365,13 +1371,13 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       }
     ]</code></pre>
     
-    <aside class="bcls-aside bcls-aside--information">追加することもできることに注意してください<a href="/cms/searching/cms-api-playlists-search.html">検索条件</a>プレイリストの特定のセットを取得し、<code translate="No">/counts/playlists</code>アカウントにあるプレイリストの数を取得するためのエンドポイント。を参照してください<a href="/cms/references/reference.html#api-playlistGroup-Get_Playlists">APIリファレンス</a>すべてのオプションを表示します。</aside>
+    <aside class="bcls-aside bcls-aside--information">また、<a href="/cms/searching/cms-api-playlists-search.html">検索条件</a>を追加して特定のプレイリストを取得したり、<code translate="No">/counts/playlists</code> エンドポイントを使ってアカウントにあるプレイリストの数を取得することもできます。全てのオプションについては<a href="/cms/references/reference.html#api-playlistGroup-Get_Playlists">APIリファレンス</a>をご覧下さい。</aside>
     </section>
     
     <section class="bcls-section">
     <h2 id="Playlist_types">プレイリストの種類</h2>
     
-    <p>ここに一つ<code translate="No">EXPLICIT</code>（手動）ビデオIDの配列として含めるビデオを指定するプレイリストタイプ。また、7つのスマートプレイリストタイプがあります。スマートプレイリストタイプは、検索文字列を使用して動的に選択される一連のビデオの順序が異なります。次の表に、すべてのプレイリストタイプを示します。</p>
+    <p>ここに一つの <code translate="No">EXPLICIT</code>（手動）プレイリストタイプがあります。ビデオIDの配列として含めるビデオを指定します。スマート プレイリスト タイプは、検索文字列を使用して動的に選択される一連のビデオの順序が異なります。次の表に、すべてのプレイリストタイプを示します。</p>
     
     <table class="bcls-table">
       <caption class="bcls-caption--table">プレイリストの種類</caption>
@@ -1388,11 +1394,11 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td><code translate="No">ACTIVATED_OLDEST_TO_NEWEST</code></td>
-          <td>選択した動画がアクティベーション日（昇順）で並べ替えられたスマートプレイリスト。</td>
+          <td>選択した動画がアクティブ化された日（昇順）で並べ替えられたスマートプレイリスト。</td>
         </tr>
         <tr>
           <td><code translate="No">ACTIVATED_NEWEST_TO_OLDEST</code></td>
-          <td>選択した動画がアクティベーション日（降順）で並べ替えられたスマートプレイリスト。</td>
+          <td>選択した動画がアクティブ化された日（降順）で並べ替えられたスマートプレイリスト。</td>
         </tr>
         <tr>
           <td><code translate="No">ALPHABETICAL</code></td>
@@ -1421,9 +1427,9 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section">
     <h2 id="Search_field">検索フィールド</h2>
     
-    <p>すべてのスマートプレイリストタイプについて、動画のコレクションは、<code translate="No">search</code>プレイリストのフィールド値。検索フィールドの値は、タグの有効な検索文字列である必要があります<a href="/cms/searching/cms-and-playback-apis-video-search-v2.html">検索文字列</a> CMS APIの場合。以下は、返されるビデオの説明を含むいくつかの例です。</p>
+    <p>すべてのスマート プレイリスト タイプについて、動画のコレクションは、プレイリストの <code translate="No">search</code> フィールド値に基づいて動的に組み立てられます。検索フィールド値は、CMS API にとって有効な検索文字列値でなければなりません。この検証は、プレイリストに設定された <code translate="No">search_syntax</code>値 (<code translate="no">v1</code> [デフォルト] または <code translate="no">v2</code>)に依存します。v2 プレイリストは、<a href="/cms/searching/cms-and-playback-apis-video-search-v2.html">search v2 syntax</a> を許可し、v1 プレイリストはタグ検索文字列のみを受け入れます。以下に、いくつかの例と、それらが返す動画の説明を示します。</p>
     
-    <aside class="bcls-aside bcls-aside--warning">現在、プレイリストは、1つ以上のタグ（コンマで区切る）の検索からのみ作成できます。また、そうするビデオを検索することはできません<strong>いいえ</strong>特定のタグがあります。</aside>
+    <aside class="bcls-aside bcls-aside--warning">現在、<strong>v1</strong>プレイリストは、1つまたは複数のタグ（カンマ区切り）の検索からのみ構築できます。また、特定のタグを持たない動画を検索することは<strong>できません</strong>。</aside>
     
     <table class="bcls-table">
       <caption class="bcls-caption--table">サンプル検索文字列</caption>
@@ -1436,7 +1442,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       <tbody class="bcls-table__body">
         <tr>
           <td><code translate="No">+tags:bird</code></td>
-          <td>「鳥」というタグが付いた動画を返します</td>
+          <td>「bird」というタグが付いた動画を返します</td>
         </tr>
         <tr>
           <td><code translate="No">+tags:bird,woodland</code></td>
@@ -1444,7 +1450,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td><code translate="No">tags:bird,woodland</code></td>
-          <td>を持っているビデオを返します<strong>どちらか</strong>タグ「鳥」または「森」の（注：<code translate="No">+</code>検索文字列からサインアウトすると違いが生じます）</td>
+          <td>「bird」または「woodland」の<strong>どちらか</strong>を含むビデオを返します。（注：検索文字列から <code translate="No">+</code> 記号を省略すると違いが生じます。）</td>
         </tr>
       </tbody>
     </table>
@@ -1453,27 +1459,31 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section">
     <h2 id="get_count_of_videos">ビデオの数を取得する</h2>
     
-    <p>プレイリスト（スマートまたは手動）の動画の数は、<code translate="No">counts</code>終点：</p>
+    <p><code translate="No">counts</code> エンドポイントを使用して、プレイリスト内の動画のカウントを取得できます（スマートまたは手動のいずれか）：</p>
     
     <pre class="line-numbers">
     <code class="language-http" translate="No">https://cms.api.brightcove.com/v1/accounts/<span class="bcls-input">account_id</span>/playlists/<span class="bcls-input">playlist_id</span>/videos</code></pre>
     
-    <aside class="bcls-aside bcls-aside--information">スマートプレイリストの場合、返される結果は、プレイリストに指定された検索条件によって現在返されるビデオの数を示します。</aside>
+    <aside class="bcls-aside bcls-aside--information">スマートプレイリストの場合、返される結果は、プレイリストに指定された検索条件によって現在返されているビデオの数を示します。</aside>
+
+    <p>プレイリスト内の<a href="/cms/references/reference.html#operation/GetVideosInPlaylist">ビデオの取得</a> リクエストを使用して、ビデオ自体を取得できます。1 回のリクエストで最大 100 個のビデオが返されるため、100 個を超えるビデオを取得するには、 <code translate="no">limit</code> パラメーターと <code translate="no">offset</code> パラメーターを使用して結果をページ分割する必要があることに注意して下さい。たとえば、2 番目の 100 を取得するには、次のようにします:</p>
+    <code class="language-http" translate="No">https://cms.api.brightcove.com/v1/accounts/<span class="bcls-input">{account_id}</span>/playlists/videos?limit=100&offset=100</code></pre>
+
     </section>
     
     <section class="bcls-section">
-    <h2 id="create">プレイリストを作成する</h2>
+    <h2 id="create">プレイリストの作成</h2>
     
-    <p>新しいプレイリストを作成するには、<code translate="No">POST</code>リクエスト先：</p>
+    <p>新しいプレイリストを作成するには、<code translate="No">POST</code>リクエストを行います：</p>
     
     <pre class="line-numbers">
     <code class="language-http" translate="No">https://cms.api.brightcove.com/v1/accounts/<span class="bcls-input">{account_id}</span>/playlists</code></pre>
     
     <h3>リクエスト本文</h3>
     
-    <p>リクエストには、ビデオメタデータフィールドの多く（すべてではありません！）を含めることができます。君は<strong>しなければならない</strong>少なくとも<code translate="No">name</code>そして<code translate="No">type</code>プレイリスト用。以下は2つの例です。1つはEXPLICITプレイリストを作成し、もう1つはタイプACTIVATED_NEWEST_TO_OLDESTのスマートプレイリストを作成します。これには2つのタグを持つビデオが含まれます。</p>
+    <p>リクエストには、動画のメタデータフィールドの多く（すべてではありません！）を含めることができます。少なくともプレイリストの <code translate="No">name</code> と <code translate="No">type</code> を含める<strong>必要があります</strong>。1つは EXPLICIT プレイリストを作成し、もう1つは ACTIVATED_NEWEST_TO_OLDEST タイプのスマートプレイリストを作成する例です:</p>
     
-    <h4>EXPLICITプレイリストの場合</h4>
+    <h4>EXPLICIT プレイリストの場合</h4>
     
     <pre class="line-numbers">
     <code class="language-json" translate="No">{
@@ -1487,48 +1497,58 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       ]
     }</code></pre>
     
-    <h4>スマートプレイリストの場合</h4>
+    <h4>スマート V1 プレイリスト</h4>
     
     <pre class="line-numbers">
-    <code class="language-json" translate="No">{
-      "type": "ACTIVATED_NEWEST_TO_OLDEST",
-      "name": "My smart playlist",
-      "search": "+tags:bird-tags:sea"
-    }</code></pre>
+<code class="language-json" translate="No">{
+  "type": "ACTIVATED_NEWEST_TO_OLDEST",
+  "name": "My smart playlist",
+  "search": "+tags:bird-tags:sea"
+}</code></pre>
     
-    <aside class="bcls-aside bcls-aside--information">すべての再生リストには100本の動画の制限がありますが、スマート再生リストの制限を低く設定するには、<code translate="No">limit</code>分野。</aside>
+    <h4>スマート V2 プレイリスト</h4>
     
-    <p>を参照してください<a href="/cms/references/reference.html#api-playlistGroup-Create_Playlist">APIリファレンス</a>プレイリストの作成に使用できるすべてのフィールド。</p>
+    <pre class="line-numbers">
+<code class="language-json" translate="No">{ 
+  "type": "ACTIVATED_NEWEST_TO_OLDEST", 
+  "name": "My smart playlist", 
+  "search": "+name:bird", 
+  <span class="bc-highlight">"search_syntax": "v2" </span>
+}</code></pre>
+    
+    <aside class="bcls-aside bcls-aside--information">すべての再生リストには1000本の動画の制限がありますが、スマートプレイリストでは、<code translate="No">limit</code> フィールドを使って、その制限を低く設定することができます。</aside>
+    
+    <p>プレイリストの作成に使用できるすべてのフィールドについては、<a href="/cms/references/reference.html#api-playlistGroup-Create_Playlist">APIリファレンス</a>をご覧下さい。</p>
     </section>
     
     <section class="bcls-section">
-    <h2 id="update">プレイリストを更新する</h2>
+    <h2 id="update">プレイリストの更新</h2>
     
-    <p>プレイリストの更新は、プレイリストの作成と非常によく似ています。唯一の違いはリクエスト方法です（<code translate="No">PATCH</code> POSTの代わりに）そしてプレイリストIDがURLに追加されます。リクエスト本文のフィールドはまったく同じです。</p>
+    <p>プレイリストの更新は、プレイリストの作成と非常によく似ています。唯一の違いはリクエスト方法です（POSTの代わりに<code translate="No">PATCH</code>）とURLに付加されるプレイリストIDです。リクエスト本文のフィールドはまったく同じです。</p>
     
-    <aside class="bcls-aside bcls-aside--information">あなたが<strong>できません</strong>変更する<code translate="No">EXPLICIT</code>プレイリストを別のタイプに変更するか、別のタイプのプレイリストを次のように変更します<code translate="No">EXPLICIT</code>。</aside>
+    <aside class="bcls-aside bcls-aside--information"><code translate="No">EXPLICIT</code>プレイリストを別のタイプに変更したり、他のタイプのプレイリストを<code translate="No">EXPLICIT</code>に変更することは<strong>できません</strong>。</aside>
     
-    <h3>URL をリクエスト</h3>
+    <h3>リクエスト URL</h3>
     
     <pre class="line-numbers">
     <code class="language-http" translate="No">https://cms.api.brightcove.com/v1/accounts/<span class="bcls-input">account_id</span>/playlists/<span class="bcls-input">playlist_id</span></code></pre>
     
-    <p>で完全な詳細を見つけてください<a href="/cms/references/reference.html#api-playlistGroup-Update_Playlist">APIリファレンス</a>。</p>
+    <p>詳細は<a href="/cms/references/reference.html#api-playlistGroup-Update_Playlist">APIリファレンス</a>をご覧下さい。</p>
     </section>
     
     <section class="bcls-section">
-    <h2 id="delete">プレイリストを削除する</h2>
+    <h2 id="delete">プレイリストの削除</h2>
     
-    <p>プレイリストを削除するには、<code translate="No">DELETE</code>方法：</p>
+    <p>プレイリストを削除するには、<code translate="No">DELETE</code>メソッドを使って次のようにリクエストする：</p>
     
     <pre class="line-numbers">
     <code class="language-http" translate="No">https://cms.api.brightcove.com/v1/accounts/<span class="bcls-input">account_id</span>/playlists/<span class="bcls-input">playlist_id</span></code></pre>
     
     <p>（これは、プレイリストの更新に使用されるのと同じURLです。）</p>
     
-    <aside class="bcls-aside bcls-aside--warning">削除することに注意してください<strong>できません</strong>元に戻す-そのリクエストを送信する前によく考えてください！プレイリストを削除すると<strong>いいえ</strong>再生リストに含まれる動画に影響します。</aside>
+    <aside class="bcls-aside bcls-aside--warning">削除を取り消すことが<strong>できない</strong>ことに注意して下さい - そのリクエストを送信する前によく考えてください！プレイリストを削除しても、プレイリストに含まれるビデオには影響<strong>しません</strong>。</aside>
     
-    <p>で完全な詳細を見つけてください<a href="/cms/references/reference.html#api-playlistGroup-Delete_Playlists">APIリファレンス</a>。</p>
+    <p>詳細は、<a href="/cms/references/reference.html#api-playlistGroup-Delete_Playlists">APIリファレンス</a>を参照して下さい。</p>
     </section>
     </article>
  
