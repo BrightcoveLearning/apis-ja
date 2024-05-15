@@ -1304,11 +1304,11 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 <a id="open_new_tab" href="#" target="_blank" style="display: none;"><img src="/assets/images/feather/external-link.svg" alt="open in new tab" style="margin-top:4em;width: 1.5em;"></a> 
  <h1>概要：Dynamic Ingest API</h1>
  <article class="bcls-article">
-  <summary>このトピックでは、<span translate="No">Dynamic Ingest API</span>の使用して、動画を取り込み、Dynamic Deliveryを通じて配信する方法について説明します。このガイドは、Dynamic Deliveryインジェストシステム上にあるほとんどの Video Cloud アカウントを対象としています。</summary>
+  <summary>このトピックでは、<span translate="No">Dynamic Ingest API</span>を使用して、動画を取り込み、Dynamic Deliveryを通じて配信する方法について説明します。このガイドは、Dynamic Delivery インジェスト システム上にあるほとんどの Video Cloud アカウントを対象としています。</summary>
     <section class="bcls-section">
     <h2 id="Introduction">はじめに</h2>
 
-    <p>Brightcove の<span translate="No">Dynamic Ingest API</span>は、ビデオソースファイルが顧客の保管場所からダウンロードされ、ソースファイルの指定されたレンディションが作成される機能に基づいています。（<a href="/dynamic-ingest/getting-started/source-file-upload-api-dynamic-ingest.html">Dynamic Ingestがファイルにアクセスできる一時的な場所にソースファイルをアップロードするオプションもあります</a>）。このプラットフォームは、クラウド中心で、グローバルに分散しており、最新のプラクティスに基づき、クラス最高の一貫性と速度を実現します。</p>
+    <p>Brightcove の<span translate="No">Dynamic Ingest API</span>は、ビデオ ソースファイルがお客様の保管場所からダウンロードされ、ソースファイルの指定されたレンディションが作成される機能に基づいています。（<a href="/dynamic-ingest/getting-started/source-file-upload-api-dynamic-ingest.html">Dynamic Ingestがファイルにアクセスできる一時的な場所にソースファイルをアップロードするオプションもあります</a>）。このプラットフォームは、クラウド中心で、グローバルに分散しており、最新のプラクティスに基づき、クラス最高の一貫性と速度を実現する最新の手法に基づいています。</p>
 
     <p>「<a href="/dynamic-ingest/references/reference.html"> API リファレンス</a>」も参照してください。</p>
     </section>
@@ -1316,19 +1316,19 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section">
     <h2 id="workflowoverview">ワークフローの概要</h2>
 
-    <p>メディア全体のトランスコーディングと保存には、多くのシステム/テクノロジーが使用されています。それらは:</p>
+    <p>メディア全体のトランスコーディングと保存には、多くのシステム/テクノロジーが使用されています。それらは以下の通りです:</p>
 
     <ul>
       <li><strong>CMS API</strong>：DI API で使用するビデオオブジェクトを作成します。</li>
-      <li><strong>Zencoder </strong> :複数のレンディションを作成するビデオをトランスコードします</li>
+      <li><strong>Zencoder </strong> :ビデオをトランスコードし、複数のレンディションを作成します。</li>
       <li><strong>Amazon S3 </strong> :プロファイル設定に基づいて、マスターとレンディションをストレージに移動します。</li>
-      <li><strong>カタログ</strong> :ビデオに関連する必要な情報を格納します</li>
+      <li><strong>カタログ</strong> :ビデオに関連する必要な情報を格納します。</li>
     </ul>
 
     <p>最初のトランスコーディングの後、メディアに対して次のアクションを実行できます。</p>
 
     <ul><!-- the following item on hold indefinitely --><!-- <li><strong>Delete</strong>: Delete, when needed, the master or all items</li> -->
-      <li><strong>再トランスコード</strong>：マスターが存在するときに新しいレンディションを作成する (マスターが存在しない場合はエラー)。</li>
+      <li><strong>再トランスコード</strong>：マスターが存在する場合、新しいレンディションを作成する (マスターが存在しない場合はエラー)。</li>
       <li><strong>置換</strong> :新しいマスターを指すか、または既存マスターを置き換える。</li>
       <li>追加のメディアアセットを取り込む：
       <ul>
@@ -1338,12 +1338,13 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       </ul>
       </li>
     </ul>
+    <aside class="bcls-aside bcls-aside--information">注: インジェストで許可される最大文字数は <strong>25k</strong> です。そうでない場合、ボディサイズが許容される最大文字数を超えると、インジェストリクエストは拒否されます。</aside>
     </section>
 
     <section class="bcls-section">
     <h2 id="operations">オペレーション</h2>
 
-    <p>DI API を使用する場合は、取り込みプロファイルの読み取りやインジェスト情報のアカウントへの書き込みなど、さまざまな操作を実行します。DI タスクに必要な操作の完全なリストを次に示します。</p>
+    <p>DI API を使用する場合は、取り込みプロファイルの読み取りや、アカウントへのインジェスト情報の書き込みなど、さまざまな操作を実行します。DI タスクに必要な操作の完全なリストを次に示します。</p>
 
     <ul>
       <li>
@@ -1361,7 +1362,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       </li>
     </ul>
 
-    <p>クライアントの資格情報を取得するには、<a href="/general/managing-api-authentication-credentials.html"> Studio管理ツールを使用するか</a>、次のいずれかのドキュメントを参照してください。</p>
+    <p>クライアントの資格情報を取得するには、<a href="/general/managing-api-authentication-credentials.html"> Studio管理ツール</a>を使用するか、次のいずれかのドキュメントを参照してください。</p>
 
     <ul>
       <li><a href="/oauth/guides/oauth-create-client-credentials-using-curl.html">OAuth:CURL を使用してクライアント認証情報を取得する</a></li>
@@ -1370,17 +1371,17 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
 
     <section class="bcls-section">
-    <h2 id="best_practices">ベストプラクティス</h2>
+    <h2 id="best_practices">ベスト プラクティス</h2>
 
-    <p><a href="/dynamic-ingest/general/dynamic-ingest-api-best-practices.html">Dynamic Ingest API：ベストプラクティス</a>を参照して下さい。</p>
+    <p>詳細は <a href="/dynamic-ingest/general/dynamic-ingest-api-best-practices.html">Dynamic Ingest API：ベスト プラクティス</a>を参照して下さい。</p>
     </section>
 
     <section class="bcls-section">
-    <h2 id="sourceLocations">有効なソースロケーション</h2>
+    <h2 id="sourceLocations">有効なソース ロケーション</h2>
 
     <h3>プル型のインジェスト</h3>
 
-    <p>Dynamic Ingestでは、HTTP / HTTPS、S3、FTPからソース動画ファイルを取り込み、認証の有無に関係なく取り込むことができます。</p>
+    <p>Dynamic Ingestでは、HTTP / HTTPS、S3、FTPから、認証の有無に関わらず、ソース動画ファイルを取り込むことができます。</p>
 
     <p>例:</p>
 
@@ -1393,7 +1394,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
     <h4>S3 に関する注意事項</h4>
 
-    <p>動画が保護された S3 バケットにある場合、<a href="/dynamic-ingest/general/using-dynamic-ingest-s3.html">ファイルにアクセスするためのDynamic Ingestのアクセス権限を設定する方法の詳細については、「S3 でのDynamic Ingestの使用</a>」を参照してください。</p>
+    <p>動画が保護された S3 バケットにある場合、Dynamic Ingest がファイルにアクセスするためのアクセス権の設定方法の詳細については、「<a href="/dynamic-ingest/general/using-dynamic-ingest-s3.html">S3 でのDynamic Ingestの使用</a>」を参照してください。</p>
 
     <h4>FTPに関する注意事項</h4>
 
@@ -1404,146 +1405,146 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
     <aside class="bcls-aside bcls-aside--information">注
     <ul>
-      <li>ホスト名（ファイルの場所またはコールバック URL 用）には、IETF 仕様ごとにアンダースコア文字やその他の句読点や特殊文字を含めることはできません。詳細については<a href="https://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_hostnames">、このWikipediaの記事を参照してください</a>。ホスト名が IETF 標準に準拠していない場合、エラーが返されます。</li>
-      <li>Googleドライブはビデオファイルへの直接リンクを生成しないため、Dynamic Ingestでは、Googleドライブでホストされているファイルを取り込むことは<strong>できません</strong> 。</li>
+      <li>ホスト名（ファイルの場所またはコールバック URL 用）には、IETF 仕様に従い、アンダースコア文字やその他の句読点や特殊文字を含めることはできません。詳細については<a href="https://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_hostnames">、このWikipediaの記事</a>を参照してください。ホスト名が IETF 標準に準拠していない場合、エラーが返されます。</li>
+      <li>Google ドライブはビデオファイルへの直接リンクを生成しないため、Dynamic Ingestでは、Googleドライブでホストされているファイルを取り込むことは<strong>できません</strong>。詳細については、<a href="https://studio.support.brightcove.com/media/manage/uploading-videos-remote-urls.html#google">リモート URL を使用したビデオのアップロード</a>を参照して下さい。</li>
     </ul>
     </aside>
 
     <h3>ソースファイルのアップロード</h3>
 
-    <p>DynamicIngestがファイルをプルできる安全な一時的な場所にファイルをアップロードすることもできます。詳細については、<a href="/dynamic-ingest/getting-started/source-file-upload-api-dynamic-ingest.html">ソースファイルのアップロード</a>を参照してください。</p>
+    <p>また、ファイルを安全な一時的な場所にアップロードし、そこから Dynamic Ingest がファイルを取り込むこともできます。詳細については、<a href="/dynamic-ingest/getting-started/source-file-upload-api-dynamic-ingest.html">ソースファイルのアップロード</a>を参照してください。</p>
     </section>
 
     <section class="bcls-section">
     <h2 id="special_characters">特殊文字</h2>
 
-    <p><strong>Video CloudがビデオをフェッチするためのURLを提供していて、URLの一部として資格情報を送信している場合</strong>、特定の予約済み特殊文字を<a href="https://en.wikipedia.org/wiki/Percent-escape">パーセントエンコード</a>する必要があります：</p>
+    <p><strong>Video CloudがビデオをフェッチするためのURLを提供し、URLの一部として資格情報を送信している場合</strong>、特定の予約済み特殊文字を<a href="https://en.wikipedia.org/wiki/Percent-escape">パーセントエンコード</a>する必要があります：</p>
 
     <table class="bcls-table">
       <caption class="bcls-caption--table">特殊文字</caption>
       <thead class="bcls-table__head">
         <tr>
           <th>文字</th>
-          <th>パーセントエンコード</th>
+          <th>パーセント エンコード</th>
         </tr>
       </thead>
       <tbody class="bcls-table__body">
         <tr>
-          <td style="text-align:center;">]</td>
-          <td style="text-align:center;">%5B</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">[</td>
-          <td style="text-align:center;">%5D</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">?</td>
-          <td style="text-align:center;">%3F</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">/</td>
-          <td style="text-align:center;">%2F</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">&lt;</td>
-          <td style="text-align:center;">%3C</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">~</td>
-          <td style="text-align:center;">%7E</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">#</td>
-          <td style="text-align:center;">%23</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">`</td>
-          <td style="text-align:center;">%6D</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">!</td>
-          <td style="text-align:center;">%21</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">@</td>
-          <td style="text-align:center;">%40</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">$</td>
-          <td style="text-align:center;">%24</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">%</td>
-          <td style="text-align:center;">%25</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">^</td>
-          <td style="text-align:center;">%5E</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">&amp;</td>
-          <td style="text-align:center;">%26</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">*</td>
-          <td style="text-align:center;">%2A</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">(</td>
-          <td style="text-align:center;">%28</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">)</td>
-          <td style="text-align:center;">%29</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">+</td>
-          <td style="text-align:center;">%2B</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">=</td>
-          <td style="text-align:center;">%3D</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">}</td>
-          <td style="text-align:center;">%7D</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">|</td>
-          <td style="text-align:center;">%7C</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">:</td>
-          <td style="text-align:center;">%3A</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">「</td>
-          <td style="text-align:center;">%22</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">;</td>
-          <td style="text-align:center;">%3B</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">'</td>
-          <td style="text-align:center;">%27</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">,</td>
-          <td style="text-align:center;">%2C</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">&gt;</td>
-          <td style="text-align:center;">%3E</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">{</td>
-          <td style="text-align:center;">%7B</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;">スペース</td>
-          <td style="text-align:center;">%20</td>
-        </tr>
+            <td style="text-align:center;">]</td>
+            <td style="text-align:center;">%5B</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">[</td>
+            <td style="text-align:center;">%5D</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">?</td>
+            <td style="text-align:center;">%3F</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">/</td>
+            <td style="text-align:center;">%2F</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">&lt;</td>
+            <td style="text-align:center;">%3C</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">~</td>
+            <td style="text-align:center;">%7E</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">#</td>
+            <td style="text-align:center;">%23</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">`</td>
+            <td style="text-align:center;">%6D</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">!</td>
+            <td style="text-align:center;">%21</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">@</td>
+            <td style="text-align:center;">%40</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">$</td>
+            <td style="text-align:center;">%24</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">%</td>
+            <td style="text-align:center;">%25</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">^</td>
+            <td style="text-align:center;">%5E</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">&amp;</td>
+            <td style="text-align:center;">%26</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">*</td>
+            <td style="text-align:center;">%2A</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">(</td>
+            <td style="text-align:center;">%28</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">)</td>
+            <td style="text-align:center;">%29</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">+</td>
+            <td style="text-align:center;">%2B</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">=</td>
+            <td style="text-align:center;">%3D</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">}</td>
+            <td style="text-align:center;">%7D</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">|</td>
+            <td style="text-align:center;">%7C</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">:</td>
+            <td style="text-align:center;">%3A</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">"</td>
+            <td style="text-align:center;">%22</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">;</td>
+            <td style="text-align:center;">%3B</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">'</td>
+            <td style="text-align:center;">%27</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">,</td>
+            <td style="text-align:center;">%2C</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">&gt;</td>
+            <td style="text-align:center;">%3E</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">{</td>
+            <td style="text-align:center;">%7B</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">space</td>
+            <td style="text-align:center;">%20</td>
+          </tr>
       </tbody>
     </table>
 
@@ -1557,12 +1558,31 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         /* encoded */
         ftp://<span class="bcls-highlight">user%40example.com:pass%21word</span>@example.com/path/to/input.mp3
       </code></pre>
+
+      <p></p>
+      <aside class="bcls-aside bcls-aside--warning language-editable">ソースファイル名の一部に"%"を使用することは避けてください。</aside>
+      <p></p>
+
+      <h3>ダブル URL エンコーディング</h3>
+      <p>処理前にURLが一度デコードされる場合は、インジェスト ジョブを送信する前に、入力URLを2回URLエンコードする必要があります。</p>
+      <p>例:</p>
+      <p><strong>master.url</strong> は </p>
+      <pre>
+<code class="language-http" translate="No">https://some.file.storage.com/path/to/video.mp4?Signature=some%2Bcool%2B%25sig</code></pre>
+        <p>処理前に以下のように変換されます:</p>
+        <pre>
+<code class="language-http" translate="No">https://some.file.storage.com/path/to/video.mp4?Signature=some+cool+%sig</code></pre>
+      <p>その代わりに、次のように二重にエンコードする必要があります:</p>
+<pre>
+<code class="language-http" translate="No">https://some.file.storage.com/path/to/video.mp4?Signature=some%252Bcool%252B%2525sig</code></pre>
+<p>URLをエンコードするには、<a href="/general/utilities/string-encoder.html">String Encoder</a> ドキュメントを参照してください。 </p>
+
     </section>
 
     <section class="bcls-section">
     <h2 id="Source_file_names">ソースファイル名</h2>
 
-    <p>すべての入力 URL は、Brightcove に送信するときに、<a href="https://tools.ietf.org/html/rfc3986#section-2.1"> RFC 3986 </a>に従って適切に URL エンコードする必要があります。つまり、<a href="https://tools.ietf.org/html/rfc3986#section-2.2"> URLのパスで見つかった予約文字はパーセントエンコードされ</a>（スペースは<code translate="No">%20</code>にエンコードされる）、URLのクエリで見つかった予約文字はパーセントエンコードされます（スペースは<code translate="No">+</code>または<code translate="No">%20</code>に、<code translate="No">+</code>は<code translate="No">%2B</code>にエンコードされています）。</p>
+    <p>すべての入力 URL は、Brightcove に送信するときに、<a href="https://tools.ietf.org/html/rfc3986#section-2.1"> RFC 3986 </a>に従って適切に URL エンコードする必要があります。つまり、URLのパスで見つかった<a href="https://tools.ietf.org/html/rfc3986#section-2.2"> 予約文字</a>はパーセントエンコードされ（スペースは<code translate="No">%20</code>にエンコードされます）、URLのクエリで見つかった予約文字はパーセントエンコードされます（スペースは<code translate="No">+</code>または<code translate="No">%20</code>に、<code translate="No">+</code>は<code translate="No">%2B</code>にエンコードされています）。</p>
 
     <p><strong>署名付き</strong> S3（<strong> v2 </strong>には、<em>Signature</em>、<em>Expires</em>、<em> AWSAccessKeyId </em>が含まれ、<strong> v4 </strong>には<em> X-Amz-Algorithm</em>、<em> X-Amz-Credential </em>、<em> X-Amz-Date </em><em>、<em> X-Amz-Expires</em>、X-AMZ-SignedHeaders </em>、および<em> X-Amz-Signature</em>）または<strong> GCS </strong>（<em>署名</em>、<em>有効期限</em>、および<em> GoogleAccessID </em>を含む) URL <strong>は、すでに適切にエンコードされており、そのまま使用できるはずです</strong>。</p>
 
@@ -1572,21 +1592,19 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section">
     <h2 id="sampleAssets">サンプルアセット</h2>
 
-    <p>Brightcove ラーニングサービスには、Dynamic Ingestを始めるにあたり、実験的に使用できるサンプルアセットがいくつか用意されています。これらのアセットには、複数の言語での短い動画、画像、WebVTT キャプションが含まれます。</p>
+    <p>Brightcove ラーニングサービスは、Dynamic Ingestを始めるにあたり、実験的に使用できるサンプル アセットを提供しています。これらのアセットには、短い動画、画像、多言語の WebVTT キャプションが含まれます。</p>
 
     <ul>
-      <li><a href="//solutions.brightcove.com/bcls/assets/videos/">ビデオ</a></li>
-      <li><a href="//solutions.brightcove.com/bcls/assets/images/">画像</a></li>
-      <li><a href="//solutions.brightcove.com/bcls/assets/vtt">WebVTTキャプション</a></li>
-    </ul>
+        <li><a href="https://support.brightcove.com/test-assets/">テスト アセット</a></li>
+      </ul>
     </section>
 
     <section class="bcls-section">
     <h2 id="ingestProfile">トランスコードプロファイル</h2>
 
-    <p>動的配信ビデオを作成するには、特別な取り込みプロファイルが必要です。動的配信を有効にすると、アカウントにいくつかの<a href="/ingest-profiles/references/standard-ingest-profiles-dynamic-delivery-and-context-aware-encoding.html">標準の取り込みプロファイル</a>が表示されるので、これらを使用することをお勧めします。</p>
+    <p>Dynamic Delivery (動的配信)ビデオを作成するには、特別な取り込みプロファイルが必要です。動的配信が有効になっている場合、アカウントにいくつかの<a href="/ingest-profiles/references/standard-ingest-profiles-dynamic-delivery-and-context-aware-encoding.html">標準の取り込みプロファイル</a>が表示されます。</p>
 
-    <p>Studioの管理セクションで取り込みプロファイルにカスタム動的配信プロファイルを追加することもできます-詳細は<a href="https://studio.support.brightcove.com/admin/creating-ingest-profiles-context-aware-encoding.html">動的配信用の取り込みプロファイルの作成</a>を参照してください。</p>
+    <p>また、Studioの管理セクションで、取り込みプロファイルにカスタム動的配信プロファイルを追加することもできます-詳細は<a href="https://studio.support.brightcove.com/admin/creating-ingest-profiles-context-aware-encoding.html">動的配信用の取り込みプロファイルの作成</a>を参照してください。</p>
 
     <aside class="bcls-aside bcls-aside--information">Dynamic Deliveryは、デバイスへのビデオのリーチを最大化するために、いくつかのHLSレンディションをサポートおよび作成することに注意してください。</aside>
 
@@ -1637,10 +1655,10 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section" id="ingestingVideos">
     <h2>ビデオの取り込み</h2>
 
-    <p>動画の取り込みに必要なAPIリクエストは2つあります。</p>
+    <p>動画の取り込みに必要な API リクエストは2つあります。</p>
 
     <ol>
-      <li><span translate="No">CMS API</span>を呼び出して、Video Cloud システムにビデオオブジェクトを作成し、その ID を取得します。</li>
+      <li><span translate="No">CMS API</span>を呼び出して、Video Cloud システムにビデオ オブジェクトを作成し、その ID を取得します。</li>
       <li><span translate="No">Dynamic Ingest API</span>を呼び出して、ビデオソースファイルのURLを提供し、必要に応じて他のファイルと取り込みの設定を指定します。</li>
     </ol>
 
@@ -1668,7 +1686,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
     <p>応答データには、次のリクエストで使用されるビデオ<code translate="No">id </code>が含まれます。</p>
 
-    <h3>API リクエストを取り込み</h3>
+    <h3>インジェスト API リクエスト</h3>
 
     <dl>
       <dt>HTTPメソッド</dt>
@@ -1695,7 +1713,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
     <ul>
       <li><code translate="No">profile </code>フィールドを含めない場合、そのアカウントのデフォルトプロファイルが使用されます。動画の種類によって異なるプロファイルを使用する必要がある場合を除き、アカウントのデフォルトを使用することをお勧めします。アカウントのデフォルトを、（最も頻繁に）使用するプロファイルに設定してください。</li>
-      <li><code translate="No">callbacks </code>フィールドはオプションですが、取り込みジョブの進捗状況を把握するための適切な方法として使用することを強くお勧めします。通知の詳細については<a href="#notifications">以下</a>を参照して下さい。</li>
+      <li><code translate="No">callbacks </code>フィールドはオプションですが、インジェスト ジョブの進捗状況を把握するための適切な方法として使用することを強くお勧めします。通知の詳細については<a href="#notifications">以下</a>を参照して下さい。</li>
     </ul>
     </section>
 
@@ -1720,7 +1738,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section">
     <h2 id="retranscode">動画を再トランスコードする</h2>
 
-    <p><span translate="No">Dynamic Ingest API</span>またはStudioUpload Moduleを使用して動画を取り込んだときに、<a href="/ingest-profiles/guides/archiving-masters.html">マスターをアーカイブする</a>ことを選択した場合、マスターからビデオを再トランスコードすることもできます。この場合も、取り込みリクエストの URL は同じになりますが、リクエスト本文には次のものが含まれます。</p>
+    <p><span translate="No">Dynamic Ingest API</span>またはStudio Upload Moduleを使用して動画を取り込んだときに、<a href="/ingest-profiles/guides/archiving-masters.html">マスターをアーカイブする</a>ことを選択した場合、マスターからビデオを再トランスコードすることもできます。この場合も、取り込みリクエストの URL は同じになりますが、リクエスト本文には次のものが含まれます。</p>
 
     <pre class="line-numbers">
     <code class="language-javascript" translate="No">// request
@@ -1732,10 +1750,6 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     }
     </code>
     </pre>
-
-    <aside class="bcls-aside bcls-aside--information">
-    <p>注：動的配信またはコンテキスト対応インジェストプロファイルを使用して最初にトランスコードされた動画は、これらの取り込みプロファイルタイプのいずれかを使用してのみ再変換できます。従来の取り込みプロファイルを使用してトランスコードされた動画は、任意のタイプのプロファイルで再変換できます。</p>
-    </aside>
 
     <aside class="bcls-aside bcls-aside--information">
     <p>デフォルトでは、マスターはアーカイブされているため、上記のサンプルプロファイルはアーカイブされたマスターになります。</p>
@@ -1835,7 +1849,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     }</code>
     </pre>
 
-    <p>サイドカーのテキストトラックは、非動的配信ビデオの場合と同様に、CMSまたは再生応答に表示されます。</p>
+    <p>サイドカーのテキスト トラックは、非動的配信ビデオの場合と同様に、CMSまたは再生応答に表示されます。</p>
 
     <pre class="line-numbers">
     <code class="language-json" translate="No">"text_tracks": [
@@ -1858,7 +1872,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     }</code>
     </pre>
 
-    <p>テキストトラックは、HLSおよびDASHマニフェストにも表示されます。</p>
+    <p>テキストトラックは、HLS および DASHマニフェストにも表示されます。</p>
 
     <h4>HLS</h4>
 
@@ -1884,9 +1898,9 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </code>
     </pre>
 
-    <h3>テキストトラックアセットの通知</h3>
+    <h3>テキスト トラック アセットの通知</h3>
 
-    <p>以下は、テキストトラックの取り込みに固有の通知のサンプルです。</p>
+    <p>以下は、テキスト トラックの取り込みに固有の通知のサンプルです。</p>
 
     <pre class="line-numbers">
     <code class="language-json" translate="No">{
@@ -1912,7 +1926,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </code>
     </pre>
 
-    <h3>テキストトラック付きのサンプルプレーヤー（英語とスペイン語）</h3>
+    <h3>テキスト トラック付きのサンプルプレーヤー（英語とスペイン語）</h3>
 
     <figure class="bcls-figure">
     <div style="display: block; position: relative; max-width: 640px;">
@@ -1930,9 +1944,9 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
 
     <section id="retrieveRenditions" class="bcls-section">
-    <h2>ダイナミックレンディションを取得する</h2>
+    <h2>ダイナミック レンディションの取得</h2>
 
-    <p>ビデオのダイナミックレンディションに関する情報を取得するには、GET リクエストを以下に送信します。</p>
+    <p>ビデオのダイナミック レンディションに関する情報を取得するには、GET リクエストを以下に送信します。</p>
 
     <pre class="line-numbers">
     <code class="language-http" translate="No">https://cms.api.brightcove.com/v1/accounts/<span class="bcls-input">account_id</span>/videos/<span class="bcls-input">video_id</span>/assets/dynamic_renditions
@@ -2064,9 +2078,9 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
 
     <section class="bcls-section">
-    <h2 id="retrieveRenditions2">再生用のURLを取得する</h2>
+    <h2 id="retrieveRenditions2">再生用のURLの取得</h2>
 
-    <p>ビデオのダイナミックレンディションに関する情報を取得するには、GET リクエストを以下に送信します。</p>
+    <p>ビデオのダイナミック レンディションに関する情報を取得するには、GET リクエストを以下に送信します。</p>
 
     <pre class="line-numbers">
     <code class="language-http" translate="No">https://edge.api.brightcove.com/playback/v1/accounts/<span class="bcls-input">account_id</span>/videos/<span class="bcls-input">video_id</span>
@@ -2154,7 +2168,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section">
     <h2 id="drm">DRM</h2>
 
-    <p>DRMはサポートされていますが、通常のビデオ取り込みとは動作が異なります。取り込みプロファイルでパッケージを指定する必要は<strong>ない</strong>です。代わりに、アカウントのDRM設定に基づいて自動的にパッケージングが行われます。動画のDRMパッケージングのデフォルトを設定するには、<a href="https://supportportal.brightcove.com/s/login/?language=en_US">Brightcoveサポートにお問合せ</a>下さい。</p>
+    <p>DRMはサポートされていますが、通常のビデオ取り込みとは動作が異なります。取り込みプロファイルでパッケージを指定する必要は<strong>ありません</strong>。代わりに、アカウントのDRM設定に基づいて自動的にパッケージングが行われます。動画のDRMパッケージングのデフォルトを設定するには、<a href="https://supportportal.brightcove.com/s/login/?language=en_US">Brightcoveサポート</a>にお問合せ下さい。</p>
 
     <p>詳細については、<a href="/dynamic-ingest/ingest-guides/ingesting-content-drm.html#DRM_for_dynamic_delivery"> DRMによるコンテンツの取り込み</a>を参照してください。</p>
     </section>
@@ -2164,7 +2178,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
     <p><a href="/ingest-profiles/references/ingest-profiles-api-fields-reference-dynamic-delivery-and-context-aware-encoding.html#watermarkFields">電子透かし入りのレンディション</a>がサポートされています。一部またはすべての動画に電子透かしを追加する必要がある場合は、Brightcoveサポートにお問い合わせください。</p>
 
-    <p>静的な動的配信プロファイルでは、電子透かし入りのレンディションを追加できますが、コンテキストアウェアエンコーディング（CAE）プロファイルでは追加でき<strong>ない</strong>ことに注意して下さい。</p>
+    <p>静的な動的配信プロファイルでは、電子透かし入りのレンディションを追加できますが、コンテキスト アウェア エンコーディング（CAE）プロファイルでは追加でき<strong>ない</strong>ことに注意して下さい。</p>
     </section>
 
     <section class="bcls-section">
@@ -2178,9 +2192,9 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
     <p>通知の受信と解釈の詳細については、<a href="/dynamic-ingest/general/notifications-dynamic-delivery-video-cloud.html">通知</a>を参照して下さい。</p>
 
-    <h3>ステータスAPI</h3>
+    <h3>ステータス API</h3>
 
-    <p>Status APIを使用して、取り込みジョブの現在のステータスを取得することもできます。ステータスメッセージは、過去7日以内に送信された取り込みジョブでのみ使用できます。</p>
+    <p>ステータス APIを使用して、取り込みジョブの現在のステータスを取得することもできます。ステータス メッセージは、過去7日以内に送信された取り込みジョブでのみ使用できます。</p>
 
     <h4>エンドポイント</h4>
 
@@ -2251,11 +2265,11 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
 
     <section class="bcls-section">
-    <h2 id="context_aware_profiles">コンテキストアウェアエンコーディング</h2>
+    <h2 id="context_aware_profiles">コンテキスト アウェア エンコーディング</h2>
 
     <p>Context Aware Encoding（CAE）は、トランスコーディング中にソースビデオを分析し、ビデオの複雑さと提供される境界パラメーターのセット（最小レンディション数、最大ビットレート）に基づいて、最適なレンディションとビットレートのセットを生成するためにBrightcoveによって開発されたテクノロジーです。など）。</p>
 
-    <p>CAEプロファイルの使用方法については、<a href="/dynamic-ingest/ingest-guides/context-aware-encoding.html">コンテキストアウェアエンコーディング</a>を参照してください。</p>
+    <p>CAEプロファイルの使用方法については、<a href="/dynamic-ingest/ingest-guides/context-aware-encoding.html">コンテキスト アウェア エンコーディング</a>を参照してください。</p>
     </section>
 
     <section class="bcls-section">
@@ -2291,6 +2305,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
     <ul>
       <li>セグメント化されたビデオタイプ（HLSおよびDASH）の場合、一部のプレーヤーは、オーディオおよびビデオストリームの長さがセグメントの継続時間よりも大きく異なる場合を処理しません。この問題が発生した場合は、短いセグメント長を使用してみてください。</li>
+      <li>特殊文字"%"は、ソース・ファイル名の一部として使用する場合はサポートされていません。</li>
     </ul>
     </section>
     </article>
