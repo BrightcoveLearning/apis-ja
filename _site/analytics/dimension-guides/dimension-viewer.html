@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en-us">
+<html lang="ja">
 
 <head>
   <meta charset="utf-8">
   <meta name="robots" content="noindex,nofollow"> 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="このトピックでは、 Analytics API viewer寸法。NS viewerディメンションは、ビューアによる分析を提供します。">
+  <meta name="description" content="このトピックでは、 Analytics API viewer ディメンションについて説明します。viewer ディメンションは、視聴者による分析を提供します。">
   
-  <title>寸法：<code translate="No">viewer</code></title>
+  <title>ディメンション：<code translate="No">viewer</code></title>
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -23,8 +23,12 @@
   
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-2728311-17"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];関数gtag（）{dataLayer.push(arguments);} gtag（ 'js'、new Date（））; gtag（ 'config'、 'UA-2728311-17'）;
+<script translate="no">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-2728311-17');
 </script>
   <script src="/assets/js/sajari-head.js"></script>
 	<script src="https://unpkg.com/feather-icons"></script>
@@ -1298,14 +1302,22 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 </details>
 <!-- open in new tab/window -->
 <a id="open_new_tab" href="#" target="_blank" style="display: none;"><img src="/assets/images/feather/external-link.svg" alt="open in new tab" style="margin-top:4em;width: 1.5em;"></a> 
- <h1>寸法：<code translate="No">viewer</code></h1>
+ <h1>ディメンション：<code translate="No">viewer</code></h1>
 <article class="bcls-article">
-  <summary>このトピックでは、<span translate="No"> Analytics API </span><code translate="No">viewer</code>寸法。NS <code translate="No">viewer</code>ディメンションは、ビューアによる分析を提供します。</summary>
-  <aside class="bcls-aside bcls-aside--information">視聴者レベルの分析は、すべてのアカウントで利用できるわけではありません。アカウントでこの機能をオンにすることに興味がある場合は、アカウントマネージャーに連絡してください。</aside>
-    <section class="bcls-section">
+  <summary>このトピックでは、<span translate="No"> Analytics API </span> の <code translate="No">viewer</code> ディメンションについて説明します。<code translate="No">viewer</code> ディメンションは、視聴者による分析を提供します。</summary>
+  <aside class="bcls-aside bcls-aside--information">視聴者レベルの分析は、すべてのアカウントで利用できるわけではありません。お客様のアカウントでこの機能を有効にすることに興味がある場合は、弊社アカウント マネージャーにご連絡ください。</aside>
+    
+  
+  <section class="bcls-section">
+    <h2 id="introducion">はじめに</h2>
+    <p><code translate="No">viewer</code> ディメンションを使用すると、視聴者ごとにアナリティクスを見ることができます。視聴者IDがプレーヤーから分析データ コレクターに送信されない場合、視聴者のIPアドレスとユーザーエージェントから視聴者IDを構築しようとしますが、この方法ではエラーが発生しやすくなります。視聴者アナリティクスは、ログインしている視聴者がいて、その視聴者を確実に特定できる場合に最も役立ちます。</p>
+    <aside class="bcls-aside bcls-aside--information language-editable">また、Brightcove が生成する視聴者 ID は、プライバシー保護のためハッシュ化されており、分析データに表示される数字に意味を持たせないことにも注意してください。</aside>
+  </section>
+  
+  <section class="bcls-section">
     <h2 id="urlParams">URL パラメータ</h2>
 
-    <p>分析 API レポートでは、次の URL パラメータがサポートされています。</p>
+    <p>Analytics API レポートでは、次の URL パラメータがサポートされています。</p>
 
     <table class="bcls-table">
       <caption class="bcls-caption--table">URL パラメータ</caption>
@@ -1330,19 +1342,28 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
           <td><code translate="No">dimensions</code></td>
           <td>レポートするディメンション</td>
           <td>はい</td>
-          <td>1つ以上の次元をカンマで区切ったリスト (一部の組合せは無効です)</td>
+          <td>カンマ区切りリストとしての 1 つ以上のディメンション (一部の組み合わせは無効です - ここで <a href="/analytics/getting-started/analytics-api-overview-dimensions-fields-and-parameters.html#metrics">インタラクティブ ツール</a>を使用して、組み合わせが有効かどうかを判断します。)</td>
           <td>なし</td>
         </tr>
         <tr>
           <td><code translate="No">where</code></td>
-          <td>レポートのフィルタを指定するために使用します</td>
+          <td>レポートのフィルタを指定するために使用</td>
           <td>いいえ</td>
-          <td>{dimension} == {value} -セミコロンで区切られたリストとして1つ以上</td>
+          <td>
+            {dimension}=={value} - 1 つ以上のセミコロン区切りリスト。値は、そのディメンションの主なメトリックの 1 つ以上の値になります。例えば: <code translate="No">account==account_id</code>, <code translate="No">country=country-code</code>, または <code translate="No">viewer=viewer_id</code> (最後の場合、viewer_id の形式は何らかの viewer_id を自分で取得して送信するか、アナリティクス システムが生成する値によって異なります).
+            <aside class="bcls-aside bcls-aside--warning language-editable">
+              注:
+              <ul>
+                <li>特定のフィルターは、<strong>ディメンションが <code translate="No">dimensions</code> パラメーターに含まれている場合にのみ使用できます</strong>。</li>
+                <li>例えば、<code translate="No">video==video_id</code> は、<code translate="No">city</code> または <code translate="No">region</code> ディメンションでは機能<strong>しません</strong>。リクエストをテストして、フィルタがリクエストするディメンションと互換性があることを確認する必要があります。</li>
+              </ul>
+            </aside>
+          </td>
           <td>なし</td>
         </tr>
         <tr>
           <td><code translate="No">limit</code></td>
-          <td>返品するアイテムの数</td>
+          <td>返すアイテムの数</td>
           <td>いいえ</td>
           <td>正の整数</td>
           <td>10</td>
@@ -1358,43 +1379,61 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
           <td><code translate="No">sort</code></td>
           <td>アイテムを並べ替えるフィールド</td>
           <td>いいえ</td>
-          <td>リクエストの有効なフィールド</td>
-          <td>Viewer_view</td>
+          <td>リクエストによって返されるフィールド</td>
+          <td>video_view</td>
         </tr>
         <tr>
           <td><code translate="No">fields</code></td>
           <td>返すフィールド</td>
           <td>いいえ</td>
-          <td>レポートするディメンションによって異なります-を参照してください<a href="#fields">田畑</a>利用可能なフィールドについては、以下をご覧ください。</td>
-          <td>Viewer_view</td>
+          <td>レポートするディメンションによって異なります。</td>
+          <td>video, video_view</td>
         </tr>
         <tr>
           <td><code translate="No">format</code></td>
           <td>結果を返す形式</td>
           <td>いいえ</td>
-          <td>json | csv | xlxs</td>
+          <td>json (デフォルト) | csv | xlxs</td>
           <td>json</td>
         </tr>
-        <!-- <tr>
-          <td><code translate="No">reconciled</code></td>
-          <td>If included, will limit results to either historical or realtime data</td>
-          <td>no</td>
-          <td>true | false</td>
-          <td>true</td>
-        </tr> -->
+        <tr>
+            <td><code translate="No">reconciled</code></td>
+            <td>含まれている場合、結果は履歴データまたはリアルタイム データに制限されます。分析データは複数のソースから取得されます。プレーヤーから送信されるデータもありますが、CDN や Video Cloud システムから収集されるデータもあります。可能な限り迅速にアナリティクスを提供するため、「リアルタイム」データが利用可能になるとすぐに提供を開始し、すべてのソースからのデータが収集され処理された後でアナリティクスを調整します。完全に処理されたデータは調整済みと呼ばれます。</td>
+            <td>no</td>
+            <td>true | false</td>
+            <td>true</td>
+          </tr>
         <tr>
           <td><code translate="No">from</code></td>
           <td>リクエストの日付範囲の開始日</td>
           <td>いいえ</td>
-          <td>ISO 8601 日付（YYYY-MM-DD）、エポック時間（ミリ秒）、文字列 alltime、または相対日付（-1m）。エンゲージメントエンドポイントでは、過去 32 日以内の日付のみが許可されるか、または recalciled=false の場合も許可されます。</td>
-          <td>今までの30日前</td>
+          <td>
+            次のいずれか:
+            <ul>
+              <li>ISO 8601 date (YYYY-MM-DD)</li>
+              <li>ミリ秒単位のエポック時間 (例: 1659641316719 [= 2022年8月4日木曜日 7:28:36.719 PM GMT])。<a href="https://www.epochconverter.com/">エポック時間コンバーター</a>を参照して下さい。</li>
+              <li>文字列: <code translate="no">from=alltime</code></li>
+              <li>日(d)、週(w)、月(m)単位の - +/- 相対日付 - 例: <code translate="no">from=-6m&to=%2B2w</code> (6ヶ月前から2週間後までの期間 -- + 記号は <code translate="no">%2B</code> としてURIエンコードする必要があることに注意)</li>
+            </ul>
+            <p>エンゲージメント エンドポイント、または reconciled=false の場合、過去 32 日以内の日付のみが許可されます。</p>
+          </td>
+          <td>-30d</td>
         </tr>
         <tr>
           <td><code translate="No">to</code></td>
           <td>リクエストの日付範囲の終わり</td>
           <td>いいえ</td>
-          <td>ISO 8601 日付 (YYYY-MM-DD)、エポック時間 (ミリ秒)、現在の文字列、または相対データ (+7d)。エンゲージメントエンドポイントでは、過去 32 日以内の日付のみが許可されるか、または recalciled = false の場合に許可されます。</td>
-          <td>今</td>
+          <td>
+            次のいずれか:
+            <ul>
+              <li>ISO 8601 date (YYYY-MM-DD)</li>
+              <li>ミリ秒単位のエポック時間 (例: 1659641316719 [= 2022年8月4日木曜日 7:28:36.719 PM GMT])。<a href="https://www.epochconverter.com/">エポック時間コンバーター</a>を参照して下さい。</li>
+              <li>文字列: <code translate="no">to=now</code></li>
+              <li>日(d)、週(w)、月(m)単位の - +/- 相対日付 - 例: <code translate="no">from=-6m&to=%2B2w</code> (6ヶ月前から2週間後までの期間 -- + 記号は <code translate="no">%2B</code> としてURIエンコードする必要があることに注意)</li>
+            </ul>
+            <p>エンゲージメント エンドポイント、または reconciled=false の場合、過去 32 日以内の日付のみが許可されます。</p>
+          </td>
+          <td>now</td>
         </tr>
       </tbody>
     </table>
@@ -1403,33 +1442,151 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <section class="bcls-section">
     <h2 id="fieldValues">使用可能なフィールド</h2>
 
-    <p>ディメンションの次のフィールドを返すことができます。</p>
+    <p>ディメンションに対して以下のフィールドを返すことができます。</p>
 
     <ul id="fields">
-      <li><code translate="No">viewer</code> -イベントビューア（SSO IDまたはデバイスID、またはユーザーエージェントとIPに基づく一意の文字列）</li>
-      <!-- <li><code translate="No">application</code> - the value returned will be the  <code translate="No">account_id</code></li> -->
-      <li><code translate="No">video_view</code> -視聴者の再生が開始された回数</li>
-      <li><code translate="No">time</code> -ミリ秒単位のビデオビューのエポック時間</li>
-      <li><code translate="No">engagement_score</code> - <a href="https://studio.support.brightcove.com/analytics/calculating-video-engagement-score.html">エンゲージメントスコア</a></li>
+        <li><code translate="No">application</code> - バーチャル イベント エクスペリエンス ID。渡されない場合はNULLになります。</li>
+        <li><code translate="No">engagement_score</code> - <a href="https://studio.support.brightcove.com/analytics/calculating-video-engagement-score.html">エンゲージメント スコア</a></li>
+        <li><code translate="No">video_engagement_1</code> - 動画再生時間の 1% でのエンゲージメント</li>
+        <li><code translate="No">video_engagement_25</code> - 動画再生時間の 25% でのエンゲージメント</li>
+        <li><code translate="No">video_engagement_50</code> - 動画再生時間の 50% でのエンゲージメント</li>
+        <li><code translate="No">video_engagement_75</code> - 動画再生時間の 75% でのエンゲージメント</li>
+        <li><code translate="No">video_engagement_100</code> - 動画再生時間の 100% でのエンゲージメント</li>
+        <li><code translate="No">time</code> - 最後に受信したイベントのエポックタイム</li>
+        <li><code translate="No">video_view</code> - 視聴者の再生開始回数</li>
+        <li><code translate="No">viewer<sup><strong><a href="#note1">[1]</a></strong></sup></code> - イベント視聴者 (SSO ID およびデバイス ID またはユーザーエージェントとIPに基づく一意の文字列)</li>
     </ul>
+
+    <aside class="bcls-aside bcls-aside--information language-editable">
+        注:
+        <ol>
+          <li id="note1" style="list-style: none;"><sup><strong>[1]</strong></sup><a href="#Setting_the_viewer_id">アナリティクス システムに視聴者ID</a>を提供する必要があります。</li>
+        </ol>
+      </aside>
+  
+      <p>クエリに関連するディメンションが含まれている場合は、追加のフィールドも使用できます:</p>
+      <ul id="additional_fields">
+        <li><code translate="No">city</code> - 視聴者がいた都市 (<code translate="No">city</code> ディメンションが必要)</li>
+        <li><code translate="No">country</code> - 視聴者がいた国 (コード) (<code translate="No">country</code> ディメンションが必要)</li>
+        <li><code translate="No">country_name</code> - 視聴者がいた国名 (<code translate="No">country</code> ディメンションが必要)</li>
+        <li><code translate="No">region</code> - 視聴者がいた地域（コード）(<code translate="No">region</code> ディメンションが必要)</li>
+        <li><code translate="No">region_name</code> - 視聴者がいた地域名 (<code translate="No">region</code> ディメンションが必要)</li>
+        <li><code translate="No">rebuffering_seconds</code> - プレーヤーが再バッファリングに費やした合計時間 (<code translate="No">country</code> または <code translate="No">region</code> を含める必要があります)</li>
+        <li><code translate="No">device_type</code> - 視聴者が使用していたデバイスの種類 (<code translate="No">device_type</code> ディメンションが必要)</li>
+      </ul>
     </section>
 
     <section class="bcls-section">
-    <h2 id="filterValues">フィルタ値</h2>
+        <h2 id="Setting_the_viewer_id">視聴者IDの送信</h2>
+        <p>視聴者 ID をアナリティクス システムに送信するには、実行時に視聴者を識別する一意の ID を構築するロジックを作成し、それをプレーヤから分析データ コレクターに送信する必要があります。ID を作成するロジックは、視聴者がコンテンツを見るためにどのように認証するかによって異なります。Brightcove の Web プレーヤー、iOS および Android SDK プレーヤーは、アナリティクスにユーザー ID を送信できます。次のセクションで、Web プレーヤーと SDK プレーヤーに対してこれを行う方法を示します。</p>
+        <aside class="bcls-aside bcls-aside--information language-editable">プレーヤーによって視聴者 IDが共有されていない場合、アナリティクスはユーザーエージェントとIPアドレスに基づいてIDを生成しようとすることに注意してください。IPアドレスは保存されません。</aside>
+      </section>
+  
+      <section class="bcls-section">
+    <h2 id="Send_viewer_id_web_player">視聴者 ID の送信 - Brightcove プレーヤー</h2>
+    <aside class="bcls-aside bcls-aside--information language-editable">注: ネイティブSDKプレーヤでのビューアIDの設定については、<a href="https://sdks.support.brightcove.com/features/cross-device-resume-sdks.html">ネイティブSDKでのクロスデバイス再開</a>を参照してください。</aside>
+    <p>まず、ユーザーの視聴アクティビティを保存するために、ユーザー識別子を設定する必要があります。</p>
+    <h3>Brightcove プレーヤー</h3>
+    <p>
+        Brightcove プレーヤーを使用している場合は、以下の手順に従ってください:
+    </p>
+  
+    <ol class="bcls-tasklist-restart">
+      <li>
+        <p>
+            視聴者データは自動的に Brightcove アナリティクスに送信されますが、ユーザー識別子を設定する必要があります。これを行うには、<code translate="No">setUser()</code> メソッドを使用します。例えば:
+        </p>
+        <pre class="line-numbers"><code class="language-javascript" translate="No">myPlayer.bcAnalytics.client.setUser('<span class="bcls-input">viewer id</span>');</code></pre>
+        <p>Brightcove プレーヤー をホストする Web サイトでは、認証ゲートウェイまたは ID 管理ソリューションを使用して視聴者を追跡できます。この視聴者 ID を Brightcove アナリティクスに渡す視聴者 ID として使用します。</p>
+        <aside class="bcls-aside bcls-aside--warning"><span class="bcls-input">viewer id</span> の値は一意な文字列でなければなります。数値のような無効な値は無視されます。</aside>
+      </li>
+      <li>
+        <p>
+            プレーヤーにソースが設定される前に、視聴者 ID を設定することが重要です。これは、プレーヤーを初期化した直後に呼び出す必要があります。
+        </p>
+        <pre class="line-numbers"><code class="language-javascript" translate="No">&lt;video-js
+    id=&quot;myPlayerID&quot;
+    data-account=&quot;1752604059001&quot;
+    data-player=&quot;hyQW6GByl&quot;
+    data-embed=&quot;default&quot;
+    controls=&quot;&quot;
+    data-video-id=&quot;6156696074001&quot;
+    data-playlist-id=&quot;&quot;
+    data-application-id=&quot;&quot;
+    width=&quot;640&quot; height=&quot;360&quot;&gt;&lt;/video-js&gt;
+  &lt;script src=&quot;https://players.brightcove.net/1752604059001/hyQW6GByl_default/index.min.js&quot;&gt;&lt;/script&gt;
+  
+  &lt;script&gt;
+    videojs.getPlayer('myPlayerID').ready(function() {
+      var myPlayer = this;
+  
+      // Set the viewer id for Brightcove analytics
+      myPlayer.bcAnalytics.client.setUser('<span class="bcls-input">viewer id</span>');
+    });
+  &lt;/script&gt;</code></pre>
+      </li>
+      <li><code translate="No">setUser()</code> メソッドを使用する場合、値はハッシュされず、後続のすべてのビーコンでクリアされた状態で送信されます。
+        <p>
+          この場合、<code translate="No">player_init</code> イベントには <code translate="No">user</code> フィールドが含まれませんが、すべての <code translate="No">video_*</code> イベントには含まれることに注意してください。
+        </p>
+      </li>
+    </ol>
+    <h3>カスタム webプレーヤー</h3>
+    <p>
+      Brightcove プレーヤーを使用しないカスタム実装を構築する場合は、データ収集 API リクエストに <code translate="No">user</code> パラメーターを追加します。詳細については、<a href="https://apis.support.brightcove.com/data-collection/overview-data-collection-api-v2.html#all-event-parameters">概要: Data Collection API v2</a> ドキュメントを参照して下さい。
+    </p>
+    <p>プレーヤーをホストする Web サイトでは、認証ゲートウェイまたは ID 管理ソリューションを使用して視聴者を追跡できます。この視聴者 ID を Brightcove アナリティクスに渡す視聴者 ID として使用します。</p>
+    
+  </section>
+  
+      <section class="bcls-section">
+        <h2 id="send-viewer-id-sdk-players"></h2>
+        <p>Brightcove Native SDK プレーヤーの場合、Brightcove が生成する ID に依存しない限り、視聴者 ID も送信する必要があります。</p>
+  
+        <h3>Android</h3>
+        <p>Android プレーヤーには、次のコードを追加して下さい:</p>
+  <pre><code class="language-java" translate="No">HashMap&lt;String, String&gt; baseParams = new HashMap&lt;&gt;();
+    baseParams.put(Analytics.Fields.USER, &quot;<span class="bcls-input">viewer id</span>&quot;);
+    baseParams.put(Analytics.Fields.APPLICATION_ID, &quot;<span class="bcls-input">application id</span>&quot;);
+    
+    HashMap&lt;String, Object&gt; eventParams = new HashMap&lt;&gt;();
+    eventParams.put(Analytics.Fields.BASE_PARAMS, baseParams);
+    eventEmitter.emit(EventType.ADD_ANALYTICS_BASE_PARAMS, eventParams);
+    </code></pre>
+  
+          <h3>iOS</h3>
+          <p>iOS または tvOSの場合は、以下のコードを追加します:</p>
+  <pre><code class="language-objectivec" translate="No">@try
+    {
+      [BCOVGlobalConfiguration.sharedConfig setValue:@{
+        @&quot;privateUser&quot;: self.<span class="bcls-input">viewer id</span>,
+        @&quot;privateApplication&quot;: @&quot;<span class="bcls-input">application id</span>&quot;
+      }
+      forKey:@&quot;privateSessionAnalytics&quot;];
+    }
+    @catch (NSException *e)
+    {
+      NSLog(@&quot;%@&quot;, e.description);
+    }
+  </code></pre>
+              </section>
 
-    <p>フィルタとして使用すると、ディメンションを使用して結果を絞り込むことができます。</p>
+    <section class="bcls-section">
+    <h2 id="filterValues">フィルター値</h2>
 
-    <p id="filters">フィルタ値：カンマ区切りリストまたはviewer.q ==としてのビューアID {viewer field}：{value}</p>
+    <p>ディメンションをフィルタとして使用すると、結果を絞り込むことができます。</p>
+
+    <p id="filters">フィルタ値：viewer ids</p>
     </section>
 
     <section class="bcls-section">
-    <h2 id="combinations">寸法を組み合わせる</h2>
-      <p>NS <code translate="No">viewer</code>ディメンションは、取得可能な追加フィールドを追加する他のいくつかと組み合わせることができます。詳細は下表のとおりです。（（<strong>大胆な</strong>ディメンションが含まれている場合、アイテムはデフォルトで応答に含まれます。）</p>
+    <h2 id="combinations">ディメンションの組み合わせ</h2>
+      <p><code translate="No">viewer</code> ディメンションは、取得可能な追加フィールドを追加する他のいくつかと組み合わせることができます。詳細は下表のとおりです。（ディメンションを含めると、デフォルトで<strong>太文字</strong>の項目がレスポンスに含まれます。）</p>
       <table class="bcls-table">
         <caption class="bcls-caption--table">サポートされているディメンションの組み合わせ</caption>
         <thead class="bcls-table__head">
             <tr>
-                <th>次元</th>
+                <th>ディメンションでは機能</th>
                 <th>追加フィールド</th>
             </tr>
         </thead>
@@ -1445,6 +1602,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
                   <code translate="No">video_engagement_100</code><br>
                   <code translate="No">video_percent_viewed</code><br>
                   <code translate="No">video_seconds_viewed</code><br>
+                  <code translate="No">video_view</code><br>
                   <code translate="No">video.tags</code><br>
                   <code translate="No">video.reference_id</code><br>
                   <code translate="No">video.name</code><br>
@@ -1486,274 +1644,271 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
 
     <section class="bcls-section">
-    <h2 id="examples">リクエスト例</h2>
+      <h2 id="examples">リクエストの例</h2>
 
-    <h3>寸法要求サンプル</h3>
-
-    <pre class="line-numbers language-http code-toolbar">
-    https://analytics.api.brightcove.com/v1/data?accounts=3365624256001&amp;dimensions=viewer&amp;limit=10&amp;fields=viewer,time,video_view,engagement_score<code class="language-http" id="dimensionRequest"></code></pre>
-    <!-- <button class="bcls-button" id="sendDimensionRequest">Test This Request</button> -->
-    <details>
-      <summary>サンプル応答</summary>
-<pre class="line-numbers"><code class="language-json" translate="No">{
-  "item_count": 8,
-  "items": [
-    {
-      "engagement_score": null,
-      "viewer": "6798840584846290049",
-      "time": 1623870475157,
-      "video_view": 0
-    },
-    {
-      "engagement_score": 100,
-      "viewer": "-1094565064376617663",
-      "time": 1623870472882,
-      "video_view": 1
-    },
-    {
-      "engagement_score": 100,
-      "viewer": "8997125557862445199",
-      "time": 1623870433989,
-      "video_view": 1
-    },
-    {
-      "engagement_score": 39.13,
-      "viewer": "-8839675754655082792",
-      "time": 1623872904633,
-      "video_view": 1
-    },
-    {
-      "engagement_score": 143.48,
-      "viewer": "-6771654281667224776",
-      "time": 1623869869930,
-      "video_view": 2
+      <h3>ディメンション リクエストのサンプル</h3>
+  
+      <pre class="line-numbers language-http code-toolbar">
+      <code class="language-http" id="dimensionRequest">https://analytics.api.brightcove.com/v1/data?accounts=3365624256001&dimensions=viewer&limit=10&fields=viewer,time,video_view,engagement_score</code></pre>
+      <!--  -->
+      <details>
+        <summary>レスポンスのサンプル</summary>
+  <pre class="line-numbers"><code class="language-json" translate="No">{
+    "item_count": 8,
+    "items": [
+      {
+        "engagement_score": null,
+        "viewer": "6798840584846290049",
+        "time": 1623870475157,
+        "video_view": 0
+      },
+      {
+        "engagement_score": 100,
+        "viewer": "-1094565064376617663",
+        "time": 1623870472882,
+        "video_view": 1
+      },
+      {
+        "engagement_score": 100,
+        "viewer": "8997125557862445199",
+        "time": 1623870433989,
+        "video_view": 1
+      },
+      {
+        "engagement_score": 39.13,
+        "viewer": "-8839675754655082792",
+        "time": 1623872904633,
+        "video_view": 1
+      },
+      {
+        "engagement_score": 143.48,
+        "viewer": "-6771654281667224776",
+        "time": 1623869869930,
+        "video_view": 2
+      }
+    ],
+    "summary": {
+      "engagement_score": 110.51,
+      "time": 1623875119506,
+      "video_view": 12
     }
-  ],
-  "summary": {
-    "engagement_score": 110.51,
-    "time": 1623875119506,
-    "video_view": 12
-  }
-}</code></pre>
-    </details>
-    <h3>多次元リクエストのサンプル</h3>
-
-    <pre class="line-numbers language-http">
-    <code class="language-http" id="filterRequest">https://analytics.api.brightcove.com/v1/data?accounts=3365624256001&amp;dimensions=viewer,country,region,city,video,device_type&amp;limit=10&amp;fields=viewer,time,video_view,engagement_score,video_percent_viewed,video_seconds_viewed,video_engagement_1,video_engage video_engagement_50、video_engagement_75、video_engagement_100、video.tags、video.reference_id、video.name、video.description、video.duration、video.long_description、dma、country_name、region_name</code></pre>
-    <!-- <button class="bcls-button" id="sendFilterRequest">Test This Request</button> -->
-
-    <details>
-      <summary>サンプル応答</summary>
-<pre class="line-numbers"><code class="language-json" translate="No">{
-  "item_count": 8,
-  "items": [
-    {
-      "country": "MX",
-      "viewer": "6798840584846290049",
-      "video.name": "Bison",
-      "video_seconds_viewed": 23,
-      "video_engagement_75": 1,
-      "city": "Zapopan",
-      "device_type": "desktop",
-      "video": "5754204614001",
-      "video_engagement_50": 1,
-      "video.description": "Bison in Yellowstone National Park",
-      "video.reference_id": null,
-      "video_percent_viewed": 100,
-      "country_name": "Mexico",
+  }</code></pre>
+      </details>
+      <h3>マルチ ディメンション リクエストのサンプル</h3>
+  
+      <pre class="line-numbers language-http">
+      <code class="language-http" id="filterRequest">https://analytics.api.brightcove.com/v1/data?accounts=3365624256001&dimensions=viewer,country,region,city,video,device_type&limit=10&fields=viewer,time,video_view,engagement_score,video_percent_viewed,video_seconds_viewed,video_engagement_1,video_engagement_25,video_engagement_50,video_engagement_75,video_engagement_100,video.tags,video.reference_id,video.name,video.description,video.duration,video.long_description,dma,country_name,region_name</code></pre>
+      <!--  -->
+  
+      <details>
+        <summary>レスポンスのサンプル</summary>
+  <pre class="line-numbers"><code class="language-json" translate="No">{
+    "item_count": 8,
+    "items": [
+      {
+        "country": "MX",
+        "viewer": "6798840584846290049",
+        "video.name": "Bison",
+        "video_seconds_viewed": 23,
+        "video_engagement_75": 1,
+        "city": "Zapopan",
+        "device_type": "desktop",
+        "video": "5754204614001",
+        "video_engagement_50": 1,
+        "video.description": "Bison in Yellowstone National Park",
+        "video.reference_id": null,
+        "video_percent_viewed": 100,
+        "country_name": "Mexico",
+        "region_name": null,
+        "video_engagement_25": 1,
+        "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
+        "video.duration": 23295,
+        "video_engagement_100": 1,
+        "engagement_score": null,
+        "video_engagement_1": 1,
+        "video.tags": [
+          "animals",
+          "simulive",
+          "yellowstone"
+        ],
+        "dma": "0",
+        "time": 1623870475157,
+        "video_view": 0,
+        "region": "MX-JAL"
+      },
+      {
+        "country": "US",
+        "viewer": "-8839675754655082792",
+        "video.name": "Bison",
+        "video_seconds_viewed": 9,
+        "video_engagement_75": 0,
+        "city": "Safety Harbor",
+        "device_type": "desktop",
+        "video": "5754204614001",
+        "video_engagement_50": 0,
+        "video.description": "Bison in Yellowstone National Park",
+        "video.reference_id": null,
+        "video_percent_viewed": 39.13,
+        "country_name": "United States",
+        "region_name": "Florida",
+        "video_engagement_25": 1,
+        "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
+        "video.duration": 23295,
+        "video_engagement_100": 0,
+        "engagement_score": 39.13,
+        "video_engagement_1": 1,
+        "video.tags": [
+          "animals",
+          "simulive",
+          "yellowstone"
+        ],
+        "dma": "539",
+        "time": 1623872904633,
+        "video_view": 1,
+        "region": "US-FL"
+      },
+      {
+        "country": "US",
+        "viewer": "-1094565064376617663",
+        "video.name": "Bison",
+        "video_seconds_viewed": 23,
+        "video_engagement_75": 1,
+        "city": "Boulder",
+        "device_type": "desktop",
+        "video": "5754204614001",
+        "video_engagement_50": 1,
+        "video.description": "Bison in Yellowstone National Park",
+        "video.reference_id": null,
+        "video_percent_viewed": 100,
+        "country_name": "United States",
+        "region_name": "Colorado",
+        "video_engagement_25": 1,
+        "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
+        "video.duration": 23295,
+        "video_engagement_100": 1,
+        "engagement_score": 100,
+        "video_engagement_1": 1,
+        "video.tags": [
+          "animals",
+          "simulive",
+          "yellowstone"
+        ],
+        "dma": "751",
+        "time": 1623870472882,
+        "video_view": 1,
+        "region": "US-CO"
+      },
+      {
+        "country": "US",
+        "viewer": "8997125557862445199",
+        "video.name": "Bison",
+        "video_seconds_viewed": 23,
+        "video_engagement_75": 1,
+        "city": "Boulder",
+        "device_type": "desktop",
+        "video": "5754204614001",
+        "video_engagement_50": 1,
+        "video.description": "Bison in Yellowstone National Park",
+        "video.reference_id": null,
+        "video_percent_viewed": 100,
+        "country_name": "United States",
+        "region_name": "Colorado",
+        "video_engagement_25": 1,
+        "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
+        "video.duration": 23295,
+        "video_engagement_100": 1,
+        "engagement_score": 100,
+        "video_engagement_1": 1,
+        "video.tags": [
+          "animals",
+          "simulive",
+          "yellowstone"
+        ],
+        "dma": "751",
+        "time": 1623870433989,
+        "video_view": 1,
+        "region": "US-CO"
+      },
+      {
+        "country": "US",
+        "viewer": "-4530870087560842176",
+        "video.name": "Bison",
+        "video_seconds_viewed": 46,
+        "video_engagement_75": 2,
+        "city": "Newton Center",
+        "device_type": "desktop",
+        "video": "5754204614001",
+        "video_engagement_50": 2,
+        "video.description": "Bison in Yellowstone National Park",
+        "video.reference_id": null,
+        "video_percent_viewed": 200,
+        "country_name": "United States",
+        "region_name": "Massachusetts",
+        "video_engagement_25": 2,
+        "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
+        "video.duration": 23295,
+        "video_engagement_100": 2,
+        "engagement_score": 100,
+        "video_engagement_1": 2,
+        "video.tags": [
+          "animals",
+          "simulive",
+          "yellowstone"
+        ],
+        "dma": "506",
+        "time": 1623875061754,
+        "video_view": 2,
+        "region": "US-MA"
+      },
+      {
+        "country": "MX",
+        "viewer": "-6771654281667224776",
+        "video.name": "Bison",
+        "video_seconds_viewed": 66,
+        "video_engagement_75": 1,
+        "city": "Zapopan",
+        "device_type": "desktop",
+        "video": "5754204614001",
+        "video_engagement_50": 1,
+        "video.description": "Bison in Yellowstone National Park",
+        "video.reference_id": null,
+        "video_percent_viewed": 286.96,
+        "country_name": "Mexico",
+        "region_name": null,
+        "video_engagement_25": 1,
+        "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
+        "video.duration": 23295,
+        "video_engagement_100": 1,
+        "engagement_score": 143.48,
+        "video_engagement_1": 1,
+        "video.tags": [
+          "animals",
+          "simulive",
+          "yellowstone"
+        ],
+        "dma": "0",
+        "time": 1623869869930,
+        "video_view": 2,
+        "region": "MX-JAL"
+      }
+    ],
+    "summary": {
+      "video_seconds_viewed": 305,
+      "video_engagement_75": 10,
+      "video_engagement_25": 11,
+      "video_engagement_50": 10,
+      "video_engagement_100": 10,
+      "engagement_score": 110.51,
+      "video_engagement_1": 11,
+      "video_percent_viewed": 1326.09,
+      "country_name": null,
       "region_name": null,
-      "video_engagement_25": 1,
-      "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
-      "video.duration": 23295,
-      "video_engagement_100": 1,
-      "engagement_score": null,
-      "video_engagement_1": 1,
-      "video.tags": [
-        "animals",
-        "simulive",
-        "yellowstone"
-      ],
-      "dma": "0",
-      "time": 1623870475157,
-      "video_view": 0,
-      "region": "MX-JAL"
-    },
-    {
-      "country": "US",
-      "viewer": "-8839675754655082792",
-      "video.name": "Bison",
-      "video_seconds_viewed": 9,
-      "video_engagement_75": 0,
-      "city": "Safety Harbor",
-      "device_type": "desktop",
-      "video": "5754204614001",
-      "video_engagement_50": 0,
-      "video.description": "Bison in Yellowstone National Park",
-      "video.reference_id": null,
-      "video_percent_viewed": 39.13,
-      "country_name": "United States",
-      "region_name": "Florida",
-      "video_engagement_25": 1,
-      "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
-      "video.duration": 23295,
-      "video_engagement_100": 0,
-      "engagement_score": 39.13,
-      "video_engagement_1": 1,
-      "video.tags": [
-        "animals",
-        "simulive",
-        "yellowstone"
-      ],
-      "dma": "539",
-      "time": 1623872904633,
-      "video_view": 1,
-      "region": "US-FL"
-    },
-    {
-      "country": "US",
-      "viewer": "-1094565064376617663",
-      "video.name": "Bison",
-      "video_seconds_viewed": 23,
-      "video_engagement_75": 1,
-      "city": "Boulder",
-      "device_type": "desktop",
-      "video": "5754204614001",
-      "video_engagement_50": 1,
-      "video.description": "Bison in Yellowstone National Park",
-      "video.reference_id": null,
-      "video_percent_viewed": 100,
-      "country_name": "United States",
-      "region_name": "Colorado",
-      "video_engagement_25": 1,
-      "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
-      "video.duration": 23295,
-      "video_engagement_100": 1,
-      "engagement_score": 100,
-      "video_engagement_1": 1,
-      "video.tags": [
-        "animals",
-        "simulive",
-        "yellowstone"
-      ],
-      "dma": "751",
-      "time": 1623870472882,
-      "video_view": 1,
-      "region": "US-CO"
-    },
-    {
-      "country": "US",
-      "viewer": "8997125557862445199",
-      "video.name": "Bison",
-      "video_seconds_viewed": 23,
-      "video_engagement_75": 1,
-      "city": "Boulder",
-      "device_type": "desktop",
-      "video": "5754204614001",
-      "video_engagement_50": 1,
-      "video.description": "Bison in Yellowstone National Park",
-      "video.reference_id": null,
-      "video_percent_viewed": 100,
-      "country_name": "United States",
-      "region_name": "Colorado",
-      "video_engagement_25": 1,
-      "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
-      "video.duration": 23295,
-      "video_engagement_100": 1,
-      "engagement_score": 100,
-      "video_engagement_1": 1,
-      "video.tags": [
-        "animals",
-        "simulive",
-        "yellowstone"
-      ],
-      "dma": "751",
-      "time": 1623870433989,
-      "video_view": 1,
-      "region": "US-CO"
-    },
-    {
-      "country": "US",
-      "viewer": "-4530870087560842176",
-      "video.name": "Bison",
-      "video_seconds_viewed": 46,
-      "video_engagement_75": 2,
-      "city": "Newton Center",
-      "device_type": "desktop",
-      "video": "5754204614001",
-      "video_engagement_50": 2,
-      "video.description": "Bison in Yellowstone National Park",
-      "video.reference_id": null,
-      "video_percent_viewed": 200,
-      "country_name": "United States",
-      "region_name": "Massachusetts",
-      "video_engagement_25": 2,
-      "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
-      "video.duration": 23295,
-      "video_engagement_100": 2,
-      "engagement_score": 100,
-      "video_engagement_1": 2,
-      "video.tags": [
-        "animals",
-        "simulive",
-        "yellowstone"
-      ],
-      "dma": "506",
-      "time": 1623875061754,
-      "video_view": 2,
-      "region": "US-MA"
-    },
-    {
-      "country": "MX",
-      "viewer": "-6771654281667224776",
-      "video.name": "Bison",
-      "video_seconds_viewed": 66,
-      "video_engagement_75": 1,
-      "city": "Zapopan",
-      "device_type": "desktop",
-      "video": "5754204614001",
-      "video_engagement_50": 1,
-      "video.description": "Bison in Yellowstone National Park",
-      "video.reference_id": null,
-      "video_percent_viewed": 286.96,
-      "country_name": "Mexico",
-      "region_name": null,
-      "video_engagement_25": 1,
-      "video.long_description": "Bison in Yellowstone National Park. This is the long description.  This was filmed in Yellowstone National Park.",
-      "video.duration": 23295,
-      "video_engagement_100": 1,
-      "engagement_score": 143.48,
-      "video_engagement_1": 1,
-      "video.tags": [
-        "animals",
-        "simulive",
-        "yellowstone"
-      ],
-      "dma": "0",
-      "time": 1623869869930,
-      "video_view": 2,
-      "region": "MX-JAL"
+      "time": 1623875119506,
+      "video_view": 12,
+      "account": "3365624256001"
     }
-  ],
-  "summary": {
-    "video_seconds_viewed": 305,
-    "video_engagement_75": 10,
-    "video_engagement_25": 11,
-    "video_engagement_50": 10,
-    "video_engagement_100": 10,
-    "engagement_score": 110.51,
-    "video_engagement_1": 11,
-    "video_percent_viewed": 1326.09,
-    "country_name": null,
-    "region_name": null,
-    "time": 1623875119506,
-    "video_view": 12,
-    "account": "3365624256001"
-  }
-}</code></pre>
-    </details>
-
-    <pre class="line-numbers language-json">
-    <code class="language-json" id="response">リクエストをテストすると、応答がここに表示されます</code></pre>
+  }</code></pre>
+      </details>
     </section>
     </article>
     <script src="//learning-services-media.brightcove.com/doc-assets/viewer-cloud-apis/analytics-api/aapi-model-v2.min.js"></script><script src="//learning-services-media.brightcove.com/doc-assets/viewer-cloud-apis/analytics-api/guides/dimension-drupal-v2.js"></script>
