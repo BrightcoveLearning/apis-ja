@@ -23,8 +23,12 @@
   
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-2728311-17"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];関数gtag（）{dataLayer.push(arguments);} gtag（ 'js'、new Date（））; gtag（ 'config'、 'UA-2728311-17'）;
+<script translate="no">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-2728311-17');
 </script>
   <script src="/assets/js/sajari-head.js"></script>
 	<script src="https://unpkg.com/feather-icons"></script>
@@ -1298,180 +1302,206 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 </details>
 <!-- open in new tab/window -->
 <a id="open_new_tab" href="#" target="_blank" style="display: none;"><img src="/assets/images/feather/external-link.svg" alt="open in new tab" style="margin-top:4em;width: 1.5em;"></a> 
- <h1>MRSSを介した取り込みのためのXMLマニフェスト</h1>
+ <h1>MRSS 経由の取り込み用 XML マニフェスト</h1>
 <article class="bcls-article">
-  <summary>このトピックでは、ビデオをVideoCloudにアップロードするためにMRSS取り込みで使用されるXMLの構造について説明します。注:これはベータ取り込みサービスです。</summary>
+  <summary>このトピックでは、MRSS 取り込みでビデオを Video Cloud にアップロードするために使用する XML の構造について説明します。</summary>
+  
   <section class="bcls-section">
-    <h2 id="Introduction">入門</h2>
-    <p>ビデオを取り込むときは、XML マニフェストファイルを使用して、追加のメタデータ（動画のタイトル、説明、フライト時間、ラベル、カスタムメタデータを含む）、およびサムネイルファイルとクローズドキャプションファイルを指定できます。</p>
-    <aside class="bcls-aside bcls-aside--information">ノート：
+    <h2 id="Manifest_tags">マニフェスト タグ</h2>
+    <p>取り込みマニフェストは、動画に動画メタデータを追加するために使用されます。</p>
+    <h3>注:</h3>
+    <ul>
+    <li>すべての特殊文字はエスケープする必要があります。</li>
+    <li>ラベルとタグはコンマで区切る必要があります。</li>
+    <aside class="bcls-aside bcls-aside--information language-editable">Aspera マニフェストを使用する場合、アセットは外部サーバー上の場所を指す URL で指定する必要があります。</aside>
+    </ul>
+    <p>メタデータ フィールドの詳細については、<a href="/cms/references/cms-api-video-fields-reference.html">CMS API 動画フィールド リファレンス</a> を参照してください。マニフェスト全体は RSS フィードとして構築する必要があり、Video Cloud メタデータは <code translate="No">チャンネル</code> として含まれることに注意してください。 <code translate="No">item</code> です。つまり、マニフェスト全体は次のように構成する必要があります:</p>
+    <pre class="line-numbers"><code class="language-xml">&lt;rss xmlns:media="https://search.yahoo.com/mrss/"
+    xmlns:dcterms="https://purl.org/dc/terms/"
+    xmlns:fh="https://purl.org/syndication/history/1.0"
+    xmlns:brightcove="https://www.brightcove.com/mrss/" version="2.0"&gt;
+    &lt;channel&gt;
+    &lt;item&gt;
+    &lt;brightcove&gt;
+    
+    &lt;!-- ここに含まれる項目は、以下に詳述するタグを使用して構築されます --&gt;
+    
+    &lt;brightcove&gt;
+    &lt;/item&gt;
+    &lt;/channel&gt;
+    &lt;/rss&gt;</code></pre>
+    
+    <h3>タグ リファレンス</h3>
+    
+    <dl>
+    <dt>
+    <pre><code translate="No" style="font-weight:bold;">&lt;item&gt;</code></pre>
+    </dt>
+    <dd><code translate="No">item</code> タグは各メディア アイテムのラッパーであり、<code translate="No">brightcove</code> タグを含みます。このタグにはすべての Brightcove メタデータ タグが含まれます。</dd>
+    
+    <dt>
+    <pre><code translate="No" style="font-weight:bold;">&lt;brightcove&gt;</code></pre>
+    </dt>
+    <dd><code translate="No">brightcove</code> タグは、以下のすべての Brightcove メタデータ タグのラッパーです。</dd>
+    
+    <dt>
+    <pre><code translate="No" style="font-weight:bold;">&lt;profile&gt; id/name &lt;/profile&gt;</code></pre>
+    </dt>
+    <dd>使用する取り込みプロファイルの名前または ID。動画にのみ適用されます。省略した場合は、アカウントのデフォルト プロファイルが使用されます。</dd>
+    
+    <dt>
+    <pre><code translate="No" style="font-weight:bold;">&lt;name&gt;&lt;/name&gt;</code></pre>
+    </dt>
+    <dd>動画のタイトル。</dd>
+    <dt>
+      <pre><code translate="No" style="font-weight:bold;">&lt;master url="string" useMaster="boolean"/&gt;</code></pre>
+      </dt>
+      <dd>
+      再トランスコーディング要求の場合。保存されたマスターを使用するように指定するか (<code translate="No">useMaster="true"</code>)、<strong>または</strong>保存されていないマスターの URL を指定できます。<code translate="No">url</code> と <code translate="No">useMaster</code> の両方を含めると、要求は失敗します。
+      <p>注意:</p>
       <ul>
-        <li>これは<strong><em>ベータ</em></strong>取り込みサービス-ベータ版への参加に興味がある場合は、アカウントマネージャーにお問い合わせください。</li>
-        <li>XMLタグはキーワードを使用しますが<code translate="No">ooyala</code>、この取り込み方法を使用すると、VideoCloudアカウントに動画をアップロードできます。</li>
+      <li> <strong>MRSS</strong> 経由で取り込む場合、 <code translate="No">url</code> は公開されている必要があります。</li>
+      <li> <strong>Aspera</strong> 経由で取り込む場合、 <code translate="No">url</code> は、アップロードした Aspera サーバー上のファイルへのパスである必要があります。</li>
       </ul>
-    </aside>
-  </section>
-  <section class="bcls-section">
-    <h2 id="Handling_of_metadata">メタデータの処理</h2>
-    <p><code translate="No">metadata</code>ビデオを取り込むときに含めると、次の 2 つの方法のいずれかで Video Cloud 動画フィールドにマップされます。</p>
-    <ol>
-      <li>デフォルトでは、各<code translate="No">metadata</code>キー/値のペアは、<strong>タグ</strong>として<code translate="No">meta::key::value</code>の形式で追加されます。たとえば、<code translate="No">&lt;ooyala:metadata name="category"&gt;cooking&lt;/ooyala:metadata&gt;</code>はタグを生成します<code translate="No">meta::category::cooking</code></li>
-    </ol>
-  </section>
-  <section class="bcls-section">
-    <h2 id="XML_Manifest_Elements">XML マニフェスト要素</h2>
-    <p>XML マニフェストファイルでは、次の要素を使用できます。</p>
-    <table class="bcls-table">
-      <caption class="bcls-caption--table">XML要素</caption>
-      <thead class="bcls-table__head">
-          <tr>
-              <th>XML タグ</th>
-              <th>説明</th>
-              <th>必須/オプション</th>
-          </tr>
-      </thead>
-      <tbody class="bcls-table__body">
-          <tr>
-              <td><code translate="No">&lt;channel&gt;</code></td>
-              <td>1 <code translate="No">&lt;item&gt;</code>つまたは複数の要素が含まれています。</td>
-              <td>必須</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;item&gt;</code></td>
-              <td>取り込む単一のビデオを表します。XML マニフェストファイルでは、複数の動画（<code translate="No">&lt;item&gt;</code>タグ）を指定できます。このテーブルの残りのタグが含まれます。</td>
-              <td>必須</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;media:content&gt;</code></td>
-              <td>
-                取り込むビデオをとして指定します<strong>ファイル名</strong>サーバーにアップロードしたビデオの<aside class="bcls-aside bcls-aside--information">注意: 
-                  <ul style="margin-left: 1rem;padding: 0;">
-                    <li>リモートURLファイル拡張子は<strong>m3u8</strong>または<strong>mpd</strong> ;それ以外の場合は、デフォルトでプログレッシブになります<strong>.mp4</strong>。</li>
-                    <li>リモートアセットの場合は、<code translate="No">&lt;ooyala:remoteasset&gt;</code>代わりにを使用します。</li>
-                  </ul>
-                  </aside>
-              </td>
-              <td>必須（リモートアセットを除く）</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;media:title&gt;</code></td>
-              <td>ビデオの名前またはタイトル。</td>
-              <td>オプショナル</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;media:thumbnail&gt;</code></td>
-              <td>
-                サムネイル (プレビューイメージ) を指定します。次のいずれかの操作を行います。
-                <ul style="padding: 0;margin-left: 1rem;">
-                  <li>サーバーにアップロードしたサムネイルのファイル名。</li>
-                  <li>サムネイルが配置されている URL。URL には、<code translate="No">http://</code>またはを含めることができます<code translate="No">https://</code>。</li>
-                </ul>
-              </td>
-              <td>オプショナル</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;media:subTitle&gt;</code></td>
-              <td>
-                クローズドキャプションファイルを指定します（DFXP、WebVTT、および SRT ファイルでサポートされます）。<a href="https://studio.support.brightcove.com/media/overview-adding-captions-video.html">クローズドキャプションファイルの取り込みを参照してください</a>。属性:
-                <ul style="padding: 0;margin-left: 1rem;">
-                  <li><code translate="No">href</code>（（<strong>必須</strong>）-次のいずれか：
-                    <ul style="padding: 0;margin-left: 1rem;">
-                      <li>アップロードしたクローズドキャプションファイルのファイル名。例： <samp translate="No">キャプション-1.dfxp</samp></li>
-                      <li>クローズドキャプションファイルが格納されている URL。URL には、<code translate="No">http://</code>またはを含めることができます<code translate="No">https://</code>。</li>
-                    </ul>
-                  </li>
-                  <li><code translate="No">lang</code>（（<strong>必須</strong>）-クローズドキャプションファイルの言語。2文字のコード。<a href="https://studio.support.brightcove.com/media/adding-captions-videos-using-media-module.html#texttrack">サポートされているクローズドキャプションを参照してください</a>。</li>
-                  <li><code translate="No">frameRate</code>（（<strong>オプション</strong>）-クローズドキャプションファイルのフレームレート。単位はフレーム/秒 (FPS) です。デフォルトは 30 です。古いクローズドキャプションファイルは 24 である可能性があります。</li>
-                </ul>
-              </td>
-              <td>オプショナル</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;media:description&gt;</code></td>
-              <td>ビデオの説明。</td>
-              <td>オプショナル</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;<link>&gt;</code></td>
-              <td>ビデオを埋め込む永続的な URL。作成されたアセットにマップします<code translate="No">hosted_at</code>プロパティ</td>
-              <td>オプショナル</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;dcterms:valid&gt;</code></td>
-              <td>
-                アセットを再生できる開始時間と終了時間を表すフライト時間。例：
-<pre class="line-numbers"><code class="language-xml">&lt;dcterms：valid&gt; start = 2011-06-28T15：15：00-07：00; end = 2022-12-01T16：00：00-07：00; schema = W3C-DTF &lt;/ dcterms：valid&gt;</code></pre>
-              </td>
-              <td>オプショナル</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;ooyala:labels&gt;</code></td>
-              <td>コンマで区切られた1つ以上の値。例: <code translate="No">/sports,/sports/jogging</code>。これらの値は、入力に使用されます<a href="https://studio.support.brightcove.com/media/editing-video-properties-using-media-module.html">ビデオクラウドタグ</a>。</td>
-              <td>オプショナル</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;ooyala:embedcode&gt;</code></td>
-              <td>Video Cloud動画 ID。</td>
-              <td>オプション（新しい動画を追加するのではなく、動画を更新する場合は必須）</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;ooyala:metadata&gt;</code></td>
-              <td>
-                ビデオのカスタムメタデータ。Studioのカスタムフィールドにマップします。<aside class="bcls-aside bcls-aside--information">注:<strong>メタデータが定義されていて、カスタムフィールドが存在しない場合、取り込みは失敗します</strong>。</aside>
-                <p>例: <code translate="No">&lt;ooyala:metadata name="category"&gt;cooking&lt;/ooyala:metadata&gt;</code>。</p>
-              </td>
-              <td>オプショナル</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;ooyala:remoteasset&gt;</code></td>
-              <td>
-                取り込むリモートアセットを指定します。リモートアセットは、VideoCloud以外の場所でホストされているビデオです。次の属性を指定します。
-                <ul style="padding: 0;margin-left: 1rem;">
-                  <li><code translate="No">durationInMs</code> : メディア継続時間 (ミリ秒)</li>
-                  <li><code translate="No">url</code>:リモートアセットが配置されているURL。URL には、<code translate="No">http://</code>またはを含めることができます<code translate="No">https://</code>。</li>
-                </ul>
-                <p>この設定は、リモートアセットのhosted_atプロパティの値にマップされます。例: <code translate="No">&lt;ooyala:remoteasset durationInMs='5000' url="http://your_website/your_remote_assets.mp4" /&gt;</code></p>
-                <aside class="bcls-aside bcls-aside--information">注:リモートアセットが作成された後、さまざまな CDN への伝播が 60 秒以上遅れることがあります。作成後すぐにリモートアセットをリクエストすると、結果がCDNによってキャッシュされ、クリアされるまでに数分かかる場合があります。</aside>
-              </td>
-              <td>必須（リモートアセットのみ）</td>
-          </tr>
-          <tr>
-              <td><code translate="No">&lt;ooyala:profileguid&gt;</code></td>
-              <td>ビデオ処理に使用する Video Cloud インジェストプロファイルを指定します。アカウントのデフォルトプロファイルを使用しない場合は、代わりに使用するプロファイルを指定する必要があります。「<a href="https://studio.support.brightcove.com/admin/managing-ingest-profiles.html">取り込みプロファイルの管理</a>」を参照してください。</td>
-              <td>オプショナル</td>
-          </tr>
-      </tbody>
-  </table>
-  </section>
-  <section class="bcls-section">
-    <h2 id="Sample_manifest">マニフェストのサンプル</h2>
-    <p>以下は完全なサンプルマニフェストです。</p>
-<pre class="line-numbers"><code class="language-xml">&lt;？xml version = "1.0" encoding = "utf-8"？&gt; &lt;rss version = "2.0" xmlns：media = "http://search.yahoo.com/mrss/" xmlns：dcterms = "http：/ /purl.org/dc/terms/ "xmlns：fh =" http://purl.org/syndication/history/1.0 "xmlns：ooyala =" http://www.ooyala.com/mrss/ "&gt; &lt;channel &gt; &lt;item&gt; &lt;media：content url = "test.mp4"&gt; &lt;/ media：content&gt; &lt;media：subTitle href = "my_caption.dfxp"&gt; &lt;/ media：subTitle&gt; &lt;media：thumbnail url = "my_thumbnail.jpg "filesize =" 35712 "&gt; &lt;/ media：thumbnail&gt; &lt;media：title&gt;テストXML &lt;/ media：title&gt; &lt;media：description&gt;これは例です&lt;/ media：description&gt; &lt;ooyala：labels&gt; / test、/例、/ xml &lt;/ ooyala：labels&gt; &lt;dcterms：valid&gt; start = 2016-01-01T15：15：00-07：00; end = 2022-01-01T16：00：00-07：00 &lt;/ dcterms：valid&gt; &lt;ooyala：profileguid&gt; 57d5a5a10f654fe79ef954dc8d29a108 &lt;/ ooyala：profileguid&gt; &lt;/ item&gt; &lt;/ channel&gt; &lt;/ rss&gt;</code></pre>
-  </section>
-  <section class="bcls-section">
-    <h2 id="Step_by_step">ステップバイステップ</h2>
-    <h3>XML マニフェストファイルの作成</h3>
-    <ol class="bcls-tasklist">
-      <li>ビデオやその他のコンテンツ（サムネイル、クローズドキャプションファイルなど）をホスティングサーバーにアップロードします。URLは公開されている必要があります。</li>
-      <li>XML を検証するテキストエディタ (できれば) を開きます。（Brightcove LearningServicesチームは<a href="https://code.visualstudio.com">VisualStudioコード</a>しかし、他にもいくつかの良いオプションがあります）。</li>
-      <li>
-        必要な XML ヘッダーを追加します。例は次のとおりです。
-<pre class="line-numbers"><code class="language-xml">&lt;？xml version = "1.0" encoding = "utf-8"？&gt; &lt;rss version = "2.0" xmlns：media = "http://search.yahoo.com/mrss/" xmlns：dcterms = "http：/ /purl.org/dc/terms/ "xmlns：fh =" http://purl.org/syndication/history/1.0 "xmlns：ooyala =" http://www.brightcove.com/mrss/ "&gt;</code></pre>
-      </li>
-      <li>
-        <code translate="No">&lt;channel&gt;</code>コンテナを作成します。
-      </li>
-      <li>
-        <code translate="No">&lt;item&gt;</code>上記の表の目的の要素を含む各ビデオのエントリを作成します。
-        <p>次の例では、XML は 2 つのビデオのメタデータを指定します。最初の動画では、ファイルとサムネイルはアップロードサーバー上に配置され、そのサーバーから取り出されます。2 番目のビデオでは、ファイルとサムネイルは既に Ooyala サーバーにアップロードされています。2番目のビデオには飛行時間もあります。</p>
-<pre class="line-numbers"><code class="language-xml">&lt;？xml version = "1.0" encoding = "utf-8"？&gt; &lt;rss version = "2.0" xmlns：media = "http://search.yahoo.com/mrss/" xmlns：dcterms = "http：/ /purl.org/dc/terms/ "xmlns：fh =" http://purl.org/syndication/history/1.0 "xmlns：ooyala =" http://brightcove.com/mrss "&gt; &lt;channel&gt; &lt;item &gt; &lt;media：content url = "http://mysite.com/upload/lacrosse_70.mov" /&gt; &lt;media：thumbnail url = "http://mysite.com/upload/lacrosse_70_previewimage.jpg" /&gt; &lt;media：タイトル&gt;実際に存在するスポーツ：Lacrosse &lt;/ media：title&gt; &lt;media：description&gt;私の動画の説明&lt;/ media：description&gt; &lt;ooyala：labels&gt; / sports / lacrosse、/ hobbies / lacrosse &lt;/ ooyala：labels&gt; &lt;link&gt; http：// mysite.com/videos/sports/real_sports.html &lt;/ link&gt; &lt;ooyala：metadata name = "video_ID"&gt; 70 &lt;/ ooyala：metadata&gt; &lt;ooyala：metadata name = "season_number"&gt; 1 &lt;/ ooyala：metadata&gt; &lt; / item&gt; &lt;item&gt; &lt;media：content url = "curling_71.mov" /&gt; &lt;media：thumbnail url = "curling_71_previewimage.jpg" /&gt; &lt;media：title&gt;実際に存在するスポーツ：カーリング&lt;/ media：title&gt; &lt;media：description&gt;動画の説明&lt;/ media：description&gt; &lt;ooyala：labels&gt; / sports / curling、/ hobbies / curling &lt;/ ooyala：labels&gt; &lt;link&gt; http：// mysite.com/videos/sports/real_sports.html &lt;/ link&gt; &lt;ooyala：metadata name = "video_ID"&gt; 71 &lt;/ ooyala：metadata&gt; &lt;ooyala：metadata name = "season_number"&gt; 1 &lt;/ ooyala：metadata&gt; &lt; ！-フライト時間を設定します-&gt; &lt;dcterms：valid&gt; start = 2011-06-28T15：15：00-07：00; end = 2022-12-01T16：00：00-07：00; schema = W3C-DTF &lt;/ dcterms：valid&gt; &lt;/ item&gt; &lt;/ channel&gt; &lt;/ rss&gt;</code></pre>
-      </li>
-      <li>ファイルを XML として保存します。必ず一意の名前を指定してください。同じ名前の2つのファイルを指定し、もう一方が処理中に一方をアップロードすると、もう一方は無視される可能性があります</li>
-      <li>
-        選択したアップロード方法を使用して、ビデオをアップロードしたホスティングサーバーにXMLマニフェストファイルをアップロードします。<aside class="bcls-aside bcls-aside--information">XMLマニフェストのURLは、アカウントマネージャーに提供したものと正確に一致する必要があることに注意してください。</aside>
-      </li>
-    </ol>
-  </section>
+      </dd>
+      
+      <dt>
+      <pre><code translate="No" style="font-weight:bold;">&lt;description long="string" short="string"/&gt;</code></pre>
+      </dt>
+      <dd>動画の短い説明。</dd>
+      
+      <dt>
+      <pre><code translate="No" style="font-weight:bold;">&lt;images&gt; &lt;image&gt; の配列</code></pre>
+      </dt>
+      <dd>ビデオに関連付けられた画像のコレクションが含まれます。次のタグを参照してください。</dd>
+      
+      <dt>
+      <pre><code translate="No" style="font-weight:bold;">&lt;image url="string/required"
+      language="string"
+      variant="string/required"
+      label="string"
+      height="number"
+      width="number"/&gt;</code></pre>
+      </dt>
+      <dd>
+      画像の詳細 (詳細については、<a href="https://apis.support.brightcove.com/dynamic-ingest/references/dynamic-ingest-ingest-fields.html">Dynamic Ingest Fields Reference</a> を参照してください)。簡単に説明すると、
+      <ul>
+      <li><code translate="No">language</code> は、<a href="https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry">Language Subtag Registry</a> の 2 文字の言語コードです。</li>
+      <li><code translate="No">variant</code> は、<code translate="No">poster | thumbnail | Portrait | square | wide | ultra-wide</code> です。</li>
+      <li><code translate="No">height</code> と <code translate="No">width</code> はピクセル値です。</li>
+      </ul>
+      </dd>
+      
+      <dt><code translate="No" style="font-weight:bold;">&lt;texttracks&gt; &lt;texttrack&gt; の配列</code></dt>
+      <dd>ビデオに関連付けられたテキスト トラックのコレクションが含まれます。次のタグを参照してください。</dd>
+      
+      <dt>
+      <pre><code translate="No" style="font-weight:bold;">&lt;texttrack
+      url="string/required"
+      srclang="string/required"
+      kind="string"
+      label="string"
+      default="boolean"/&gt;</code></pre>
+      </dt>
+      <dd>
+      詳細については、<a href="https://apis.support.brightcove.com/dynamic-ingest/references/dynamic-ingest-ingest-fields.html">Dynamic Ingest Fields Reference</a> を参照してください。簡単に言うと:
+      <ul>
+      <li><code translate="No">srclang</code> - テキスト トラックの ISO 639 2 文字 (アルファ 2) 言語コード</li>
+      <li><code translate="No">kind</code> - <code translate="No">キャプション | 字幕 | チャプター | メタデータ</code></li>
+      <li><code translate="No">label</code> - ユーザーが判読できるラベル</li>
+      <li><code translate="No">default</code> - これらのテキスト トラックがビデオのデフォルトかどうか</li>
+      </ul>
+      </dd>
+      
+      <dt><code translate="No" style="font-weight:bold;">&lt;audiotracks&gt; &lt;audiotrack&gt; の配列</code></dt>
+      <dd>ビデオに関連付けられたオーディオ トラックのコレクションが含まれます - 次のタグを参照してください。</dd>
+      
+      <dt>
+        <pre><code translate="No" style="font-weight:bold;">&lt;audiotrack
+          url="string"
+          language="string"
+          variant="string"/&gt;</code></pre>
+          </dt>
+          <dd>
+          詳細については、<a href="https://apis.support.brightcove.com/dynamic-ingest/references/dynamic-ingest-ingest-fields.html">Dynamic Ingest Fields Reference</a> を参照してください。簡単に説明すると、
+          <ul>
+          <li><code translate="No">language</code> - <a href="https://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-2 3 文字言語コード</a></li>
+          <li><code translate="No">variant</code> - <code translate="No">main | alternate | commentary | dub |説明的</code></li>
+          </ul>
+          </dd>
+          
+          <dt>
+          <pre><code translate="No" style="font-weight:bold;">&lt;customField name="string/required"&gt;value&lt;/customField&gt;</code></pre>
+          </dt>
+          <dd>
+          <code translate="No">value</code> は、このビデオの指定された名前のカスタム フィールドに割り当てられます。
+          <aside class="bcls-aside bcls-aside--information language-editable">カスタム フィールドはアカウント内に存在している必要があります。存在しない場合は取り込みが失敗します。</aside>
+          </dd>
+          
+          <dt>
+          <pre><code translate="No" style="font-weight:bold;">&lt;labels&gt;カンマで区切られた &lt;/labels&gt;</code></pre>
+          </dt>
+          <dd><a href="/cms/managing-videos/working-with-labels.html">ラベルの操作</a>を参照してください。</dd>
+          
+          <dt>
+          <pre><code translate="No" style="font-weight:bold;">&lt;tags&gt; カンマで区切られた &lt;/tags&gt;</code></pre>
+          </dt>
+          <dd>タグのリスト。タグは、<a href="/cms/managing-videos/managing-playlists-using-cms-api.html">スマート プレイリスト</a>などの動画を選択するために使用できます。</dd>
+          
+          <dt>
+          <pre><code translate="No" style="font-weight:bold;">&lt;referenceId&gt;&lt;/referenceId&gt;</code></pre>
+          </dt>
+          <dd>動画の一意の参照 ID。参照 ID は、動画をシステム内のエンティティに関連付けるために使用できます。また、動画 ID ではなく参照 ID を使用して動画を公開することもできます。</dd>
+          
+          <dt>
+          <pre><code translate="No" style="font-weight:bold;">&lt;videoId&gt;&lt;/videoId&gt;</code></pre>
+          </dt>
+          <dd>動画 ID。新しい動画を取り込む場合は、これを含めないでください。<strong></strong>既存のビデオのメディア アセットを置き換えたり、再トランスコードしたり、追加したりする場合にのみ使用します。</dd>
+          
+          <dt>
+          <pre><code translate="No" style="font-weight:bold;">&lt;schedule endsAt="" startsAt=""/&gt;</code></pre>
+          </dt>
+          <dd>ビデオが再生可能になるタイミング、および (オプションで) 再び再生不可になるタイミングをスケジュールします。<code translate="No">2022-09-20T20:41:07.689Z</code> または <code translate="No">2022-09-20</code> などの ISO-8601 日付形式の時刻。</dd>
+          
+          <dt>
+          <pre><code translate="No" style="font-weight:bold;">&lt;link&gt; value &lt;/link&gt;</code></pre>
+          </dt>
+          <dd>関連リンクのURL。</dd>
+          </dl>
+          </section>
+
+          <section class="bcls-section">
+            <h2 id="Sample_manifest_brightcove">サンプル マニフェスト</h2>
+            <div style="overflow-x: scroll;">
+            <pre class="line-numbers"><code class="language-xml">&lt;rss xmlns:media=&quot;https://search.yahoo.com/mrss/&quot;
+            xmlns:dcterms=&quot;https://purl.org/dc/terms/&quot;
+            xmlns:fh=&quot;https://purl.org/syndication/history/1.0&quot;
+            xmlns:brightcove=&quot;https://www.brightcove.com/mrss/&quot;
+            version=&quot;2.0&quot;&gt;
+            &lt;channel&gt;
+            &lt;item&gt;
+            &lt;brightcove&gt;
+            &lt;master url=&quot;countdown_10.mp4&quot;/&gt;
+            &lt;profile&gt;multi-platform-standard-dynamic-with-mp4&lt;/profile&gt;
+            &lt;name&gt;カウントダウン 10&lt;/name&gt;
+            &lt;status&gt;アクティブ&lt;/status&gt;
+            &lt;description short=&quot;countdown&quot; long=&quot;カウントダウン ビデオ #10&quot; /&gt;
+            &lt;labels&gt;&lt;/labels&gt;
+            &lt;tags&gt;サンプル、カウントダウン&lt;/tags&gt;
+            &lt;referenceId&gt;count_1&lt;/referenceId&gt;
+            &lt;images&gt;
+            &lt;image url=&quot;Countdown10.png&quot; バリアント=&quot;thumbnail&quot; language=&quot;es&quot; label=&quot;thumbnail&quot; height=&quot;480&quot; width=&quot;640&quot;/&gt;
+            &lt;/images&gt;
+            &lt;texttracks&gt;
+            &lt;texttrack url=&quot;WEBVTT-10.vtt&quot; srclang=&quot;en-US&quot; kind=&quot;captions&quot; label=&quot;English&quot;/&gt;
+            &lt;/texttracks&gt;
+            &lt;/brightcove&gt;
+            &lt;/item&gt;
+            &lt;/channel&gt;
+            &lt;/rss&gt;</code></pre>
+            </div>
+            </section>
+
 </article>
 <!-- complete bootstrap layout -->
     </div>
