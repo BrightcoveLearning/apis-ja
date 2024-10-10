@@ -1483,61 +1483,68 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
       </section>
   
       <section class="bcls-section">
-    <h2 id="Send_viewer_id_web_player">視聴者 ID の送信 - Brightcove プレーヤー</h2>
-    <aside class="bcls-aside bcls-aside--information language-editable">注: ネイティブSDKプレーヤでのビューアIDの設定については、<a href="https://sdks.support.brightcove.com/features/cross-device-resume-sdks.html">ネイティブSDKでのクロスデバイス再開</a>を参照してください。</aside>
-    <p>まず、ユーザーの視聴アクティビティを保存するために、ユーザー識別子を設定する必要があります。</p>
-    <h3>Brightcove プレーヤー</h3>
-    <p>
-        Brightcove プレーヤーを使用している場合は、以下の手順に従ってください:
-    </p>
-  
-    <ol class="bcls-tasklist-restart">
-      <li>
+        <h2 id="Send_viewer_id_web_player">視聴者 ID の送信 - Brightcove プレーヤー</h2>
+        <aside class="bcls-aside bcls-aside--information language-editable">注: ネイティブ SDK プレーヤーで視聴者 ID を設定する方法については、<a href="https://sdks.support.brightcove.com/features/cross-device-resume-sdks.html">ネイティブ SDK を使用したクロスデバイス レジューム</a> を参照してください。</aside>
+        <h2 id="Requirements">要件</h2>
+        <p>視聴者 ID トラッキングには、次の要件が必要です:</p>
+        <ul>
+        <li>Brightcove プレーヤー v7.18.0 以降</li>
+        </ul>
+        <p>まず、ユーザーの視聴アクティビティを保存するためにユーザー ID を設定する必要があります。</p>
+        <h3>Brightcoveプレーヤー</h3>
         <p>
-            視聴者データは自動的に Brightcove アナリティクスに送信されますが、ユーザー識別子を設定する必要があります。これを行うには、<code translate="No">setUser()</code> メソッドを使用します。例えば:
+        Brightcove Player を使用している場合は、次の手順に従います。
         </p>
-        <pre class="line-numbers"><code class="language-javascript" translate="No">myPlayer.bcAnalytics.client.setUser('<span class="bcls-input">viewer id</span>');</code></pre>
-        <p>Brightcove プレーヤー をホストする Web サイトでは、認証ゲートウェイまたは ID 管理ソリューションを使用して視聴者を追跡できます。この視聴者 ID を Brightcove アナリティクスに渡す視聴者 ID として使用します。</p>
-        <aside class="bcls-aside bcls-aside--warning"><span class="bcls-input">viewer id</span> の値は一意な文字列でなければなります。数値のような無効な値は無視されます。</aside>
-      </li>
-      <li>
+        
+        <ol class="bcls-tasklist-restart">
+        <li>
         <p>
-            プレーヤーにソースが設定される前に、視聴者 ID を設定することが重要です。これは、プレーヤーを初期化した直後に呼び出す必要があります。
+        視聴者データは Brightcove Analytics に自動的に送信されますが、ユーザー ID を設定する必要があります。これを行うには、<code translate="No">user()</code> メソッドを使用します。例:
+        </p>
+        <pre class="line-numbers"><code class="language-javascript" translate="No">myPlayer.bcAnalytics.client.user('<span class="bcls-input">viewer id</span>');</code></pre>
+        <p>Brightcove Player をホストする Web サイトでは、認証ゲートウェイまたは何らかの ID 管理ソリューションを使用して視聴者を追跡できます。このビューア ID を、Brightcove アナリティクスに渡すビューア ID として使用します。</p>
+        <aside class="bcls-aside bcls-aside--warning"><span class="bcls-input">ビューア ID</span> の値は一意の文字列である必要があります。数値などの無効な値は無視されます。</aside>
+        <p></p>
+        <aside class="bcls-aside bcls-aside--tip language-editable">ここで追加された値は、Insights レポートでは <code translate="No">customerId</code> と呼ばれます。</aside>
+        <p></p>
+        </li>
+        <li>
+        <p>
+        プレーヤーにソースが設定される前にビューア ID を設定することが重要です。プレーヤーを初期化した直後に呼び出す必要があります。
         </p>
         <pre class="line-numbers"><code class="language-javascript" translate="No">&lt;video-js
-    id=&quot;myPlayerID&quot;
-    data-account=&quot;1752604059001&quot;
-    data-player=&quot;hyQW6GByl&quot;
-    data-embed=&quot;default&quot;
-    controls=&quot;&quot;
-    data-video-id=&quot;6156696074001&quot;
-    data-playlist-id=&quot;&quot;
-    data-application-id=&quot;&quot;
-    width=&quot;640&quot; height=&quot;360&quot;&gt;&lt;/video-js&gt;
-  &lt;script src=&quot;https://players.brightcove.net/1752604059001/hyQW6GByl_default/index.min.js&quot;&gt;&lt;/script&gt;
-  
-  &lt;script&gt;
-    videojs.getPlayer('myPlayerID').ready(function() {
-      var myPlayer = this;
-  
-      // Set the viewer id for Brightcove analytics
-      myPlayer.bcAnalytics.client.setUser('<span class="bcls-input">viewer id</span>');
-    });
-  &lt;/script&gt;</code></pre>
-      </li>
-      <li><code translate="No">setUser()</code> メソッドを使用する場合、値はハッシュされず、後続のすべてのビーコンでクリアされた状態で送信されます。
+        id=&quot;myPlayerID&quot;
+        data-account=&quot;1752604059001&quot;
+        data-player=&quot;hyQW6GByl&quot;
+        data-embed=&quot;default&quot;
+        controls=&quot;&quot;
+        data-video-id=&quot;6156696074001&quot;
+        data-playlist-id=&quot;&quot;
+        data-application-id=&quot;&quot;
+        width=&quot;640&quot; height=&quot;360&quot;&gt;&lt;/video-js&gt;
+        &lt;script src=&quot;https://players.brightcove.net/1752604059001/hyQW6GByl_default/index.min.js&quot;&gt;&lt;/script&gt;
+        
+        &lt;script&gt; videojs.getPlayer('myPlayerID').ready(function() {
+        var myPlayer = this;
+        
+        // Brightcove アナリティクスのビューア ID を設定します
+        myPlayer.bcAnalytics.client.user('<span class="bcls-input">viewer id</span>');
+        });
+        &lt;/script&gt;</code></pre>
+        </li>
+        <li><code translate="No">user()</code> メソッドを使用すると、値はハッシュ化されず、後続のすべてのビーコンとともに平文で送信されます。
         <p>
-          この場合、<code translate="No">player_init</code> イベントには <code translate="No">user</code> フィールドが含まれませんが、すべての <code translate="No">video_*</code> イベントには含まれることに注意してください。
+        この場合、<code translate="No">player_init</code> イベントには <code translate="No">user</code> フィールドは含まれませんが、すべての <code translate="No">video_*</code> イベントには含まれることに注意してください。
         </p>
-      </li>
-    </ol>
-    <h3>カスタム webプレーヤー</h3>
-    <p>
-      Brightcove プレーヤーを使用しないカスタム実装を構築する場合は、データ収集 API リクエストに <code translate="No">user</code> パラメーターを追加します。詳細については、<a href="https://apis.support.brightcove.com/data-collection/overview-data-collection-api-v2.html#all-event-parameters">概要: Data Collection API v2</a> ドキュメントを参照して下さい。
-    </p>
-    <p>プレーヤーをホストする Web サイトでは、認証ゲートウェイまたは ID 管理ソリューションを使用して視聴者を追跡できます。この視聴者 ID を Brightcove アナリティクスに渡す視聴者 ID として使用します。</p>
-    
-  </section>
+        </li>
+        </ol>
+        <h3>カスタム プレーヤー</h3>
+        <p>
+        Brightcove Player を使用しないカスタム実装を構築する場合は、Data Collection API リクエストに <code translate="No">user</code> パラメータを追加します。詳細については、<a href="https://apis.support.brightcove.com/data-collection/overview-data-collection-api-v2.html#all-event-parameters">概要: Data Collection API v2</a> ドキュメントを参照してください。
+        </p>
+        <p>認証ゲートウェイまたは ID 管理ソリューションを使用して、プレーヤーをホストするサイトで視聴者を追跡できます。この視聴者 ID を視聴者 ID として使用し、Brightcove アナリティクスに渡します。</p>
+        
+        </section>
   
       <section class="bcls-section">
         <h2 id="send-viewer-id-sdk-players"></h2>
