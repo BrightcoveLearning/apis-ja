@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="これは、動的配信（DD）およびコンテキスト認識エンコーディング（CAE）の取り込みプロファイルのフィールドへの参照です。">
+  <meta name="description" content="Dynamic Delivery（DD）および Context Aware Encoding（CAE）のトランスコード プロファイルのフィールドへの参照になります。">
   
-  <title>取り込みプロファイルフィールドリファレンス</title>
+  <title>トランスコード プロファイル フィールド リファレンス</title>
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -133,7 +133,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
                  
                     <li><a href="/general/all-api-references.html">すべてのAPIリファレンス</a></li>
                     
-                    <li><a href="/general/overview-context-aware-encoding.html">コンテキスト認識エンコーディングの概要</a></li>
+                    <li><a href="/general/overview-context-aware-encoding.html">Context Aware Encodingの概要</a></li>
                     
                     <li><a href="/general/managing-api-authentication-credentials.html">API 認証資格情報の管理</a></li>
                     
@@ -1302,23 +1302,23 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 </details>
 <!-- open in new tab/window -->
 <a id="open_new_tab" href="#" target="_blank" style="display: none;"><img src="/assets/images/feather/external-link.svg" alt="open in new tab" style="margin-top:4em;width: 1.5em;"></a> 
- <h1>取り込みプロファイルフィールドリファレンス</h1>
+ <h1>トランスコード プロファイル フィールド リファレンス</h1>
 <article class="bcls-article">
-  <summary><p>これは、動的配信（DD）およびコンテキスト認識エンコーディング（CAE）の取り込みプロファイルのフィールドへの参照です。</p></summary>
+  <summary><p>Dynamic Delivery（DD）および Context Aware Encoding（CAE）のトランスコード プロファイルのフィールドへの参照になります。</p></summary>
     <section class="bcls-section">
-    <h2 id="primaryFields">プロファイルフィールド</h2>
+    <h2 id="primaryFields">プロファイル フィールド</h2>
     
-    <aside class="bcls-aside bcls-aside--warning">ユーザーが新しいカスタムプロファイルの基礎として使用する目的でプロファイルをプログラムでプルする場合、ユーザーはプロファイルを削除する必要があります。<strong> id</strong>、<strong>バージョン</strong>、<strong> date_created</strong>、<strong> date_last_modified</strong>、 と<strong>brightcove_standard</strong>フィールド、および<strong>名前</strong>アカウント内で新しく、一意である必要があります。</aside>
+    <aside class="bcls-aside bcls-aside--warning">新しいカスタム プロファイルのベースとして使用する目的で、ユーザがプログラムでプロファイルをプルする場合、ユーザは <strong> id</strong>、<strong>version</strong>、<strong> date_created</strong>、<strong> date_last_modified</strong> および <strong>brightcove_standard</strong> フィールドを削除する必要があり、<strong>name</strong> はアカウント内で新しく、一意である必要があります。</aside>
     
     <table class="bcls-table">
-      <caption class="bcls-caption--table">トップレベルのプロファイル・オプション</caption>
+      <caption class="bcls-caption--table">トップレベルのプロファイル オプション</caption>
       <thead class="bcls-table__head">
         <tr>
           <th>プロパティ</th>
           <th>タイプ</th>
           <th>説明</th>
           <th>DD</th>
-          <th>カエ</th>
+          <th>CAE</th>
           <th>デフォルト</th>
         </tr>
       </thead>
@@ -1342,7 +1342,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr id="account_id">
           <td><code translate="No">account_id</code></td>
           <td>整数</td>
-          <td>ビデオクラウドアカウント ID</td>
+          <td>Video Cloud アカウント ID</td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>なし</td>
@@ -1381,14 +1381,14 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr id="brightcove_standard">
           <td><code translate="No">brightcove_standard</code></td>
-          <td>ブール値</td>
-          <td>読み取り専用- <code translate="No">false</code>すべてのカスタムプロファイル用</td>
+          <td>真偽値</td>
+          <td>読み取り専用 - すべてのカスタム プロファイルに対して <code translate="No">false</code></td>
           <td>false</td>
         </tr>
         <tr id="digital_master">
           <td><code translate="No"><a href="#digital_master_fields">digital_master</a></code></td>
           <td>オブジェクト</td>
-          <td>デジタルマスターをアーカイブするかどうか、およびその方法を定義します。</td>
+          <td>デジタル マスターをアーカイブするかどうか、およびその方法を定義します。</td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>{}</td>
@@ -1404,7 +1404,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr id="renditions">
           <td><code translate="No">renditions</code></td>
           <td>配列</td>
-          <td>レンディションオブジェクトの配列。<strong> DDまたはCAEには使用されません</strong>、これらのプロファイルの空の配列になります</td>
+          <td>レンディションオブジェクトの配列。<strong> DD または CAE には使用されません</strong>、これらのプロファイルの空の配列になります</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td>[]</td>
@@ -1414,19 +1414,19 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
     
     <section class="bcls-section">
-    <h2 id="digital_master_fields">デジタルマスターフィールド</h2>
+    <h2 id="digital_master_fields">デジタル マスター フィールド</h2>
     
-    <p>ザ・<code translate="No">digital_master</code>オブジェクトは、後で再トランスコーディングに使用できるデジタルマスターを保存するかどうかとその方法を定義します。見る<a href="/ingest-profiles/guides/archiving-masters.html">アーカイブマスター</a>詳細については。</p>
+    <p>ザ・<code translate="No">digital_master</code>オブジェクトは、後で再トランスコーディングに使用できるデジタル マスターを保存するかどうかとその方法を定義します。詳細については、<a href="/ingest-profiles/guides/archiving-masters.html">アーカイブ マスター</a> を参照してください。</p>
     
     <table class="bcls-table">
-      <caption class="bcls-caption--table">デジタルマスターフィールド</caption>
+      <caption class="bcls-caption--table">デジタル マスター フィールド</caption>
       <thead class="bcls-table__head">
         <tr>
           <th>プロパティ</th>
           <th>タイプ</th>
           <th>説明</th>
           <th>DD</th>
-          <th>カエ</th>
+          <th>CAE</th>
           <th>デフォルト</th>
         </tr>
       </thead>
@@ -1434,15 +1434,15 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr>
           <td><code translate="No">rendition</code></td>
           <td>文字列</td>
-          <td>アーカイブするレンディション-どちらか<code translate="No">passthrough</code>または<code translate="No">none</code> DDおよびCAEプロファイルの唯一のオプションです</td>
+          <td>アーカイブするレンディション - DD および CAEプロファイルでは、<code translate="No">passthrough</code> または <code translate="No">none</code> が唯一のオプションになります。</td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
-          <td>パススルー</td>
+          <td>passthrough</td>
         </tr>
         <tr>
           <td><code translate="No">distribute</code></td>
-          <td>ブール値</td>
-          <td>digital_masterをCDNにプッシュして、再生できるようにするかどうか。このオプションは現在、DDまたはCAEプロファイルでは機能せず、に戻ります。<code translate="No">false</code>に設定した場合<code translate="No">true</code></td>
+          <td>真偽値</td>
+          <td>digital_master を CDN にプッシュして、再生できるようにするかどうか。このオプションは現在、DD または CAEプロファイルでは機能せず、<code translate="No">true</code> に設定すると <code translate="No">false</code> に戻ります。</td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td>false</td>
@@ -1452,17 +1452,17 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
     
     <section class="bcls-section">
-    <h2 id="dynamic_origin_fields">動的原点フィールド</h2>
+    <h2 id="dynamic_origin_fields">Dynamic Origin フィールド</h2>
     
     <table class="bcls-table">
-      <caption class="bcls-caption--table">動的原点フィールド</caption>
+      <caption class="bcls-caption--table">Dynamic Origin フィールド</caption>
       <thead class="bcls-table__head">
         <tr>
           <th>プロパティ</th>
           <th>タイプ</th>
           <th>説明</th>
           <th>DD</th>
-          <th>カエ</th>
+          <th>CAE</th>
           <th>デフォルト</th>
         </tr>
       </thead>
@@ -1470,13 +1470,13 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr id="dynamic_origin_renditions">
           <td><code translate="No">renditions</code></td>
           <td>配列</td>
-          <td>生成されるレンディションの配列。CAE の場合は、必要なオーディオのみのレンディションのみを含めます。を参照してください<a href="/ingest-profiles/references/standard-ingest-profiles-dynamic-delivery-and-context-aware-encoding.html#renditions">選択可能なレンディション</a></td>
+          <td>生成されるレンディションの配列。CAE の場合は、必要なオーディオのみのレンディションのみを含めます。<a href="/ingest-profiles/references/standard-ingest-profiles-dynamic-delivery-and-context-aware-encoding.html#renditions">選択可能なレンディション</a> ご覧ください。</td>
           <td>[]</td>
         </tr>
         <tr id="dynamic_origin_images">
           <td><code translate="No">images</code></td>
           <td>配列</td>
-          <td>の配列<a href="#image_fields">画像</a>ポスターとサムネイルのオブジェクト</td>
+          <td>ポスターとサムネイル用の <a href="#image_fields">画像</a> オブジェクトの配列</td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>[]</td>
@@ -1484,7 +1484,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr id="dynamic_profile_options">
           <td><code translate="No"><a href="#dynamic_profile_options_fields">dynamic_profile_options</a></code></td>
           <td>オブジェクト</td>
-          <td>CAEプロファイルのレンディションオプションを定義します</td>
+          <td>CAE プロファイルのレンディション オプションを定義します。</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>{}</td>
@@ -1497,14 +1497,14 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <h2 id="image_fields">画像フィールド</h2>
     
     <table class="bcls-table">
-      <caption class="bcls-caption--table">イメージフィールド</caption>
+      <caption class="bcls-caption--table">画像フィールド</caption>
       <thead class="bcls-table__head">
         <tr>
           <th>プロパティ</th>
           <th>タイプ</th>
           <th>説明</th>
           <th>DD</th>
-          <th>カエ</th>
+          <th>CAE</th>
           <th>デフォルト</th>
         </tr>
       </thead>
@@ -1512,14 +1512,14 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr>
           <td><code translate="No">label</code></td>
           <td>文字列</td>
-          <td>画像タイプ：いずれか<code translate="No">poster</code>または<code translate="No">thumbnail</code></td>
+          <td>画像タイプ：<code translate="No">poster</code> または <code translate="No">thumbnail</code></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>なし</td>
         </tr>
         <tr>
           <td><code translate="No">height</code></td>
-          <td>番号</td>
+          <td>数値</td>
           <td>画像の高さ（ピクセル単位）</td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
@@ -1527,7 +1527,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td><code translate="No">width</code></td>
-          <td>番号</td>
+          <td>数値</td>
           <td>画像の幅（ピクセル単位）</td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
@@ -1538,27 +1538,43 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     </section>
     
     <section class="bcls-section">
-    <h2 id="dynamic_profile_options_fields">動的プロファイル・オプションのフィールド</h2>
+    <h2 id="dynamic_profile_options_fields">ダイナミック プロファイル オプションのフィールド</h2>
     
-    <p>ダイナミックプロファイルオプションフィールドは、コンテキスト認識エンコーディングを使用する場合のレンディション作成のガイドラインを示します。</p>
+    <p>ダイナミック プロファイル オプション フィールドは、Context Aware Encoding を使用する場合のレンディション作成のガイドラインを示します。</p>
     
     <table class="bcls-table">
-      <caption class="bcls-caption--table">動的プロファイル・オプション</caption>
+      <caption class="bcls-caption--table">ダイナミック プロファイル オプション</caption>
       <thead class="bcls-table__head">
         <tr>
           <th>プロパティ</th>
           <th>タイプ</th>
           <th>説明</th>
           <th>DD</th>
-          <th>カエ</th>
+          <th>CAE</th>
           <th>デフォルト</th>
         </tr>
       </thead>
       <tbody class="bcls-table__body">
         <tr>
+            <td><code translate="No">deinterlace</code></td>
+            <td>文字列</td>
+            <td>インターレース解除フィルタを適用するかどうかを決定する。 デフォルトは <code translate="No">detect</code> – 入力ファイルがインターレースとして検出された場合、インターレース解除されます。 インターレース解除を強制する場合は <code translate="No">on</code> に設定し（入力がインターレースでない場合は品質が低下する）、インターレース解除を避ける場合は <code translate="No">off</code> に設定します。</td>
+            <td><i data-feather="x"></i></td>
+            <td><i data-feather="check"></i></td>
+            <td><code translate="No">detect</code></td>
+          </tr>
+          <tr>
+            <td><code translate="No">deinterlace_mode</code></td>
+            <td>文字列</td>
+            <td>含まれていない場合、または <code translate="No">frame-to-frame</code> に設定されている場合、Video Cloud の出力は入力ファイルのフレーム レートに一致します。 <code translate="No">field-to-frame</code> 設定すると、Video Cloud は入力ファイルのフレーム レートを 2 倍にして出力します。 手動で framerate を入力ファイルのフレーム レートの 2 倍に設定すると、Video Cloud は自動的に <code translate="No">deinterlace_mode</code> を <code translate="No">field-to-frame</code> に設定し、出力のフレーム レートを 2 倍にします。</td>
+            <td><i data-feather="x"></i></td>
+            <td><i data-feather="check"></i></td>
+            <td><code translate="No">frame-to-frame</code></td>
+          </tr>
+        <tr>
           <td><code translate="No">video_codecs</code></td>
           <td>配列</td>
-          <td>混合コーデック出力の場合、レンディションを作成するコーデックの配列。現在、許可されているアイテムの値は次のとおりです。<code translate="No">h264</code>そして<code translate="No">hevc</code></td>
+          <td>混合コーデック出力の場合は、レンディションを作成するコーデックの配列。現在、許可されているアイテムの値は次のとおりです。<code translate="No">h264</code> または <code translate="No">hevc</code></td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /><sup><strong><a href="#note2-1"> [2-1]</a></strong></sup></td>
           <td>なし</td>
@@ -1567,9 +1583,9 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
           <td><code translate="No">video_codec_options</code></td>
           <td>配列</td>
           <td>
-            混合コーデック出力の場合、各コーデックのオプションを指定するオブジェクト。各プロパティは、名前の付いたオブジェクトです<code translate="No">h264</code>または<code translate="No">hevc</code>、そのプロパティは、そのコーデックのレンディションの制約を設定します。これらのオブジェクトに使用できるプロパティは次のとおりです。
+            混合コーデック出力の場合、各コーデックのオプションを指定するオブジェクト。各プロパティは、名前の付いたオブジェクトで、<code translate="No">h264</code> または <code translate="No">hevc</code> という名前を持つオブジェクトで、、そのプロパティは、そのコーデックのレンディションの制約を設定します。これらのオブジェクトに使用できるプロパティは次のとおりです。
             <ul>
-              <li><code translate="No">min_renditions</code>必須</li>
+              <li><code translate="No">min_renditions</code> 必須</li>
               <li><code translate="No">min_bitrate</code></li>
               <li><code translate="No">max_bitrate</code></li>
               <li><code translate="No">max_first_rendition_bitrate</code></li>
@@ -1577,7 +1593,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
               <li><code translate="No">max_resolution</code></li>
               <li><code translate="No">max_first_rendition_resolution</code></li>
             </ul>
-            <aside class="bcls-aside bcls-aside--information">注：これらの設定は、グローバルレベルでも使用されます。グローバルレベルとコーデック単位の両方の設定を使用する場合は、値に互換性がある必要があります。たとえば、グローバルレベルで設定されたmax_renditionsは、コーデックごとのレベルで設定されたmin_rendition値の合計以上である必要があります。</aside>
+            <aside class="bcls-aside bcls-aside--information">注：これらの設定は、グローバル レベルでも使用されます。グローバル レベルとコーデック レベルの両方の設定を使用する場合は、値に互換性がある必要があります。例えば、グローバル レベルで設定された max_renditions は、コーデックごとのレベルで設定された min_rendition 値の合計以上である必要があります。</aside>
           </td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /><sup><strong><a href="#note2-2"> [2-2]</a></strong></sup></td>
@@ -1609,7 +1625,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td><code translate="No">min_resolution.width</code></td>
-          <td>番号</td>
+          <td>数値</td>
           <td>レンディションの最小幅 (ピクセル単位)</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
@@ -1617,7 +1633,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td><code translate="No">min_resolution.height</code></td>
-          <td>番号</td>
+          <td>数値</td>
           <td>レンディションの最小の高さ (ピクセル単位)</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
@@ -1629,19 +1645,19 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
           <td>レンディションの最大解像度</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
-          <td>デフォルトはソース解像度です</td>
+          <td>デフォルトはソースの解像度です</td>
         </tr>
         <tr>
           <td><code translate="No">max_resolution.width</code></td>
-          <td>番号</td>
+          <td>数値</td>
           <td>レンディションの最大幅 (ピクセル単位)</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
-          <td>ソース幅</td>
+          <td>ソースの幅</td>
         </tr>
         <tr>
           <td><code translate="No">max_resolution.height</code></td>
-          <td>番号</td>
+          <td>数値</td>
           <td>レンディションの最大高さ (ピクセル単位)</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
@@ -1649,23 +1665,23 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td><code translate="No">max_bitrate</code></td>
-          <td>番号</td>
+          <td>数値</td>
           <td>レンディションの最大ビットレート (kbps)</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
-          <td>ソースビットレート</td>
+          <td>ソースのビットレート</td>
         </tr>
         <tr>
           <td><code translate="No">max_first_rendition_bitrate</code></td>
-          <td>番号</td>
-          <td>最小ビットレートレンディションの最大ビットレート (kbps)</td>
+          <td>数値</td>
+          <td>最小ビットレート レンディションの最大ビットレート (kbps)</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
-          <td>ソースビットレート</td>
+          <td>ソースのビットレート</td>
         </tr>
         <tr>
           <td><code translate="No">max_frame_rate</code></td>
-          <td>番号</td>
+          <td>数値</td>
           <td>レンディションの最大フレームレート (fps)</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
@@ -1673,8 +1689,8 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         </tr>
         <tr>
           <td><code translate="No">keyframe_rate</code></td>
-          <td>番号</td>
-          <td>レンディションの 1 秒あたりのキーフレーム数 (したがって、値 0.5 は 2 秒ごとに 1 つのキーフレームになり、値が 3 の場合、1 秒あたり 3 つのキーフレームになります)</td>
+          <td>数値</td>
+          <td>レンディションにおける 1 秒あたりのキーフレーム数 (0.5 を指定すると 2 秒ごとに 1 つのキーフレームになり、3 を指定すると、1 秒あたり 3 キーフレームになります)</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>0.5</td>
@@ -1682,15 +1698,15 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr>
           <td><code translate="No">select_baseline_profile_configuration</code></td>
           <td>ブール値</td>
-          <td>プロファイルで使用される少なくとも1つのレンディションがベースラインプロファイルになります</td>
+          <td>プロファイルで使用される少なくとも1つのレンディションは、ベースライン プロファイルになります。</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>false</td>
         </tr>
         <tr>
           <td><code translate="No">select_distinct_configurations</code></td>
-          <td>ブール値</td>
-          <td>trueの場合、CAEは、解像度、フレームレート、コーデックプロファイルの同じ組み合わせを2つのレンディションが使用しないようにします。</td>
+          <td>真偽値</td>
+          <td>true の場合、CAEは、解像度、フレームレート、コーデック プロファイルの同じ組み合わせが 2つとも同じにならないようにします。</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>false</td>
@@ -1698,27 +1714,35 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr>
           <td><code translate="No"><a href="#watermarkFields">watermarks</a></code></td>
           <td>配列</td>
-          <td>の配列<a href="#watermarkFields">透かし</a>レンディションに追加する1つ以上の透かしを指定するオブジェクト</td>
+          <td>レンディションに追加する1つ以上のウォーターマーク(透かし)を指定する<a href="#watermarkFields">ウォーターマーク</a> オブジェクトの配列</td>
           <td><img alt="no" src="//learning-services-media.brightcove.com/doc-assets/general/images/x16.png" /></td>
           <td><img alt="yes" src="//learning-services-media.brightcove.com/doc-assets/general/images/check16.png" /></td>
           <td>false</td>
         </tr>
+        <tr>
+          <td><code translate="No">video_color_range</code></td>
+          <td>文字列</td>
+          <td>画素値のダイナミックレンジを示します。 例えば、8ビット ピクセルの場合、 <code translate="No">limited</code> は Y (輝度) ピクセル値が 16 から 235 の範囲にとどまることを意味し、<code translate="No">full</code> は Y (輝度) ピクセル値が 0 から 255 の範囲にあることを意味します。 現在、大半のコンテンツは <code translate="No">limited</code> ピクセルを使って制作され、エンコードされています。しかし、full レンジ ピクセルが使われることもあります。 例えば、Dolby Vision 5フォーマットでは10ビット幅の full レンジ ピクセルが使用されています。</td>
+          <td><i data-feather="x"></i></td>
+          <td><i data-feather="check"></i></td>
+          <td>none</td>
+        </tr>
       </tbody>
     </table>
     <h3>注</h3>
-    <li id="note2-1"><sup><strong> [2-1]</strong></sup> 次の場合に必要<code translate="No">video_codec_options</code>が存在します。見る<a href="/ingest-profiles/guides/hevc-video.html">HEVCビデオ</a>詳細については。</li>
-    <li id="note2-2"><sup><strong> [2-2]</strong></sup> 次の場合に必要<code translate="No">video_codecs</code>が存在します。見る<a href="/ingest-profiles/guides/hevc-video.html">HEVCビデオ</a>詳細については。</li>
+    <li id="note2-1"><sup><strong> [2-1]</strong></sup> <code translate="No">video_codec_options</code> が存在する場合は必須。詳細は <a href="/ingest-profiles/guides/hevc-video.html">HEVCビデオ</a> を参照して下さい。</li>
+    <li id="note2-2"><sup><strong> [2-2]</strong></sup> <code translate="No">video_codecs</code> が存在する場合は必須。詳細は <a href="/ingest-profiles/guides/hevc-video.html">HEVCビデオ</a> を参照して下さい。</li>
     </section>
     
     <section class="bcls-section">
-    <h2 id="watermarkFields">透かしフィールド</h2>
+    <h2 id="watermarkFields">ウォーターマーク フィールド</h2>
     
-    <p>透かし画像は、右下隅の各ビデオフレームに焼き付けられます。</p>
+    <p>ウォーターマーク(透かし)画像は、右下隅の各ビデオ フレームに焼き付けられます。</p>
     
-    <aside class="bcls-aside bcls-aside--information">透かしは、以下に示すフィールドを介してCAEプロファイルで指定できることに注意してください。静的なDynamicDelivery取り込みプロファイルに透かしを追加する場合は、Brightcoveサポートに連絡してください。</aside>
+    <aside class="bcls-aside bcls-aside--information">ウォーターマークは、以下に示すフィールドを介して CAE プロファイルで指定できることに注意してください。静的な Dynamic Delivery トランスコード プロファイルにウォーターマークを追加する場合は、Brightcove サポートに連絡してください。</aside>
     
     <figure>
-    <figcaption>ウォーターマークサンプル</figcaption>
+    <figcaption>ウォーターマーク サンプル</figcaption>
     
     <div><iframe src="https://players.brightcove.net/57838016001/default_default/index.html?videoId=6060420791001" allowfullscreen="" allow="encrypted-media" width="480" height="270"></iframe></div>
     </figure>
@@ -1742,25 +1766,25 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
         <tr id="watermarkWidth">
           <td><code translate="No">width</code></td>
           <td style="white-space:nowrap;">文字列<sup>[3-2]<strong><a href="#note3-2"></a></strong></sup></td>
-          <td>透かしの幅（ピクセル単位）またはフレーム幅のパーセンテージ-例：<code translate="No">20%</code><sup class="once-red">[3-1]<strong><a href="#note3-1"></a></strong></sup></td>
+          <td>ウォーターマークの幅（ピクセル単位）またはフレーム幅のパーセンテージ-例：<code translate="No">20%</code><sup class="once-red">[3-1]<strong><a href="#note3-1"></a></strong></sup></td>
           <td>なし</td>
         </tr>
         <tr id="watermarkHeight">
           <td><code translate="No">height</code></td>
           <td style="white-space:nowrap;">文字列<sup>[3-2]<strong><a href="#note3-2"></a></strong></sup></td>
-          <td>透かしの高さ（ピクセル単位）またはフレームの高さのパーセンテージ-例：<code translate="No">10%</code><sup>[3-1]<strong><a href="#note3-1"></a></strong></sup></td>
+          <td>ウォーターマークの高さ（ピクセル単位）またはフレームの高さのパーセンテージ-例：<code translate="No">10%</code><sup>[3-1]<strong><a href="#note3-1"></a></strong></sup></td>
           <td>なし</td>
         </tr>
         <tr id="watermarkX">
           <td><code translate="No">x</code></td>
           <td style="white-space:nowrap;">文字列<sup>[3-2]<strong><a href="#note3-2"></a></strong></sup></td>
-          <td>ビデオフレームの左端から透かしの中心までの距離 (ピクセルまたはフレーム幅のパーセンテージ)</td>
+          <td>ビデオフレームの左端からウォーターマークの中心までの距離 (ピクセルまたはフレーム幅のパーセンテージ)</td>
           <td>なし</td>
         </tr>
         <tr id="watermarkY">
           <td><code translate="No">y</code></td>
           <td style="white-space:nowrap;">文字列<sup>[3-2]<strong><a href="#note3-2"></a></strong></sup></td>
-          <td>ビデオフレームの上端から透かしの中心までの距離 (ピクセルまたはフレーム幅のパーセンテージ)</td>
+          <td>ビデオフレームの上端からウォーターマークの中心までの距離 (ピクセルまたはフレーム幅のパーセンテージ)</td>
           <td>なし</td>
         </tr>
       </tbody>
@@ -1769,8 +1793,8 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
     <h3>注</h3>
     
     <ul class="list-none">
-      <li class="bcls-footnote" id="note3-1"><sup>[3-1]<strong></strong></sup> 幅のみを指定すると、画像のアスペクト比が自動的に維持されます</li>
-      <li class="bcls-footnote" id="note3-2"><sup>[3-2]<strong></strong></sup> が<code translate="No">width</code>、<code translate="No">height</code>、<code translate="No">x</code>、 と<code translate="No">y</code>フィールドは文字列値です。それらには数値（ピクセルまたはパーセンテージ）が含まれます</li>
+      <li class="bcls-footnote" id="note3-1"><sup>[3-1]<strong></strong></sup> 幅のみを指定した場合、画像のアスペクト比が自動的に維持されます。</li>
+      <li class="bcls-footnote" id="note3-2"><sup>[3-2]<strong></strong></sup> <code translate="No">width</code>、<code translate="No">height</code>、<code translate="No">x</code>、<code translate="No">y</code>フィールドは文字列値であり、ダブルクォートで囲む必要があり、これらの数値（ピクセルまたはパーセンテージ）を含みます。</li>
     </ul>
     </section>
     </article>
@@ -1790,7 +1814,7 @@ function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;i
 
 <hr>
 <div class="last-updated">
-  ページの最終更新日22 Sep 2021
+  ページの最終更新日22 Sep 2024
 </div>
 
 <footer class="bcls-footer" role="contentinfo">
