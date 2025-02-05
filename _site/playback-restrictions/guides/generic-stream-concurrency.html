@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja"> 
     <head>
-        <title>視聴者ごとの同時ストリーム数の制限</title>
+        <title>ジェネリック ストリーム同時視聴制限</title>
         
         <!-- Meta -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="このトピックでは、Brightcove 再生制限を使用して同時ストリーム数を制限する方法について学びます。">
+        <meta name="description" content="このドキュメントでは、DRMを使用せずにハートビート機構を用いてエンドユーザーのストリーム同時視聴を制限する方法について説明します。">
         
         <!-- Google Font -->
         <link href="/assets/s-site-assets-stylesheets/fonts/poppins.css" rel="stylesheet">
@@ -3117,13 +3117,13 @@
                   
                   
                   
-                  <li class="nav-item"><a class="nav-link" href="/playback-restrictions/guides/generic-stream-concurrency.html">Generic Stream Concurrency</a></li>
+                  <li class="nav-item section-doc"><a class="nav-link" href="/playback-restrictions/guides/generic-stream-concurrency.html" aria-current="page">Generic Stream Concurrency</a></li>
                   
                   
                   
                   
                   
-                  <li class="nav-item section-doc"><a class="nav-link" href="/playback-restrictions/guides/stream-concurrency.html" aria-current="page">Limiting Concurrent Streams per Viewer</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/playback-restrictions/guides/stream-concurrency.html">Limiting Concurrent Streams per Viewer</a></li>
                   
                   
                   
@@ -3615,7 +3615,7 @@
             
             
             
-            <li class="breadcrumb-item active" aria-current="page">Limiting Concurrent Streams per Viewer</li>
+            <li class="breadcrumb-item active" aria-current="page">Generic Stream Concurrency</li>
             
             
           </ol>
@@ -3636,253 +3636,288 @@
       <br>
       
       
-      <h1>視聴者ごとの同時ストリーム数の制限</h1>
+      <h1>ジェネリック ストリーム同時視聴制限</h1>
       <article class="bcls-article">
-        <summary>このトピックでは、Brightcove 再生制限を使用して同時ストリーム数を制限する方法について学びます。</summary>
-        
-        <br/>
-        <aside class="bcls-aside bcls-aside--tip">この機能は、DRM パッケージ化された動画のストリーム同時実行にのみ対応しています。DRM なしの動画に対するストリーム同時実行を設定する場合は、<a href="/playback-restrictions/guides/generic-stream-concurrency.html">ジェネリック ストリーム同時実行</a>を参照してください。</aside>
-      
+        <summary>このドキュメントでは、DRMを使用せずにハートビート機構を用いてエンドユーザーのストリーム同時視聴を制限する方法について説明します。</summary>
         <section class="bcls-section">
           <h2 id="Introduction">はじめに</h2>
-      
-          <p>同時ストリーム数の制限を設定すると、特定のユーザーが任意の時点で視聴できる動画ストリームの数を決定することができます。ユーザーごとの同時ストリーム数を制限することで、アカウントを持たない友人と認証情報を共有することを防止することができます。</p>
-          <p>
-            最大同時ストリーム数に達した後に視聴者またはそのアカウント認証情報を持つ他の誰かが追加のストリームを開こうとすると、最も古いセッションが停止されるか、新しいリクエストがブロックされます。この挙動は制御可能です。
-          </p>
-          <p>
-            この機能は DRM ワークフローに組み込まれているため、安全に使用でき、最小限の統合で利用することができます。
-          </p>
-      
-          <p>この機能を初めて使用する場合は、<a href="/playback-restrictions/getting-started/overview-playback-restrictions.html">Brightcove 再生制限の概要</a>ドキュメントをご参照ください。</p>
-      
+          <p>ジェネリック ストリーム同時視聴制限（Generic Stream Concurrency および GSC）を使用すると、特定のユーザーが同時に視聴できる動画ストリームの数を定義することができます。
+            ストリームの同時視聴を制限することで、認証情報の盗難や不適切な共有によるコンテンツの不正視聴を防ぐことができます。</p>
+          <p>この機能は「再生制限（Playback Restrictions）」の一部であり、<a
+              href="/playback-restrictions/guides/stream-concurrency.html">DRMを使用したストリーム同時視聴制限</a> の代替手段として利用することができます。</p>
         </section>
-      
         <section class="bcls-section">
-          <h2 id="Account_setup">アカウントの設定</h2>
-      
-          <p>ストリーム同時実行機能を有効にするには、弊社担当営業にお問い合わせください。</p>
+          <h2 id="when_to_use_gsc">GSCを使用するタイミング</h2>
+          <p>Brightcove は同時視聴管理のために2つのソリューションを提供しています：</p>
+          <ul>
+            <li>ジェネリック ストリーム同時視聴制限（本トピックで解説）</li>
+            <li><a href="/playback-restrictions/guides/stream-concurrency.html">DRMを使用したストリーム同時視聴制限</a></li>
+          </ul>
+          <p>以下の表は、この2つのソリューションを比較したもので、どちらが適しているか判断するのに役立ちます。</p>
+          <div style="overflow-x: scroll;">
+            <table class="bcls-table">
+              <caption class="bcls-caption--table">ストリーム同時視聴制限ソリューション</caption>
+              <thead class="bcls-table__head">
+                <tr>
+                  <th>ジェネリック ストリーム同時視聴制限</th>
+                  <th>DRMを使用したストリーム同時視聴制限</th>
+                </tr>
+              </thead>
+              <tbody class="bcls-table__body">
+                <tr>
+                  <td>
+                    <strong>メリット：</strong>
+                    <ul>
+                      <li>DRMが不要。</li>
+                      <li>APIを使用してアクティブなストリームセッションを一覧表示する事ができる。</li>
+                    </ul>
+                  </td>
+                  <td>
+                    <strong>メリット：</strong>
+                    <ul>
+                      <li>クライアント側で無効化する方法がない。</li>
+                      <li>カスタム実装で更新メカニズムが透過的に動作。</li>
+                      <li>より高いセキュリティを提供。</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>デメリット：</strong>
+                    <ul>
+                      <li>ハートビートはクライアント側で実行される。</li>
+                      <li>カスタム実装では、ハートビート機構の統合が必要。</li>
+                    </ul>
+                  </td>
+                  <td>
+                    <strong>デメリット：</strong>
+                    <ul>
+                      <li>多数のDRMライセンスが必要。</li>
+                      <li>特定のユーザーのアクティブなセッションを一覧表示する方法がない。</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
-      
         <section class="bcls-section">
-          <h2 id="Implementation">実装</h2>
-          <p>
-            この機能を使用するには、コンテンツが DRM により暗号化されている必要があります。実装の手順は以下のとおりです：
-          </p>
-          <ol class="bcls-tasklist">
-            <li>
-              <p>クレームの値を決めます：</p>
-              <ul>
-                <li><code translate="No">climit</code> クレームは、同時に再生可能な視聴者またはストリームの数を示します。</li>
-                <li>
-                  <code translate="No">cbeh</code> クレームは、同時ストリーム数の制限に達した際のブロック方法を定義します。新規視聴者（異なる IP アドレスおよびデバイス）をブロックするか、新しいストリームリクエスト（セッション）をブロックするかを選択することができます。
-                  <ul>
-                    <li><code translate="No">cbeh</code> 値 <code translate="No">BLOCK_NEW_USER</code> - 新規視聴者をブロック</li>
-                    <li><code translate="No">cbeh</code> 値 <code translate="No">BLOCK_NEW</code> - 新しいストリームをブロック</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li>JSON Web Tokent（JWT）を作成し、希望する同時ストリーム制限を含めます。詳細については、<a href="https://general.support.brightcove.com/developer/create-jwt.html">JSON Web Token (JWT) の作成</a>を参照して下さい。</li>
-            <li>
-                再生制限を使用するようにプレーヤーを設定し、動画コンテンツを取得する際に <span translate="No">JSON Web Token</span> (JWT) を渡します。詳細は、再生権限管理サービスの<a href="/playback-rights/getting-started/implementing-epa.html#Configure_your_player">プレーヤーの設定</a> セクションを参照してください。
-            </li>
-          </ol>
-      
+            <h2 id="how_it_works">動作の仕組み</h2>
+            <h3>ハートビート</h3>
+            <p>ハートビートは、特定のユーザーのアクティブなセッションを一定間隔でリクエストし、再生全体を通じて有効なセッションであることを強制するメカニズムです。ハートビートは、Brightcove の Web プレーヤーおよびネイティブ SDK プレーヤーで有効にすることができます。</p>
+            <p>デフォルトの更新頻度は1分（最小値）に設定されています。より長い間隔に変更することも可能ですが、1分未満には設定することができません。</p>
+        
+            <h3>ストリームのブロック</h3>
+            <p>許可された同時ストリーム数の上限に達した状態で、視聴者またはそのアカウント情報を使用した第三者が追加のストリームを開こうとすると、別のストリーミング場所として識別されたそのユーザーからの新しいストリームはブロックされます。</p>
         </section>
-      
+        
         <section class="bcls-section">
-          <h2 id="Renewal_interval">更新間隔</h2>
-          <p>
-            同時ストリーム数の制限を確実に適用するために、定義された更新間隔に基づいて、再生中に DRM ライセンスの更新リクエストが送信されます。設定時にこの更新間隔を定義する必要があります。
-          </p>
-          <p>
-            再生中の認証リクエストでは、JWT トークン内で同時実行制限を指定し、公開鍵 ID を含める必要があります。
-          </p>
-      
-          <p>現在、各更新リクエストは購入済みライセンスのカウントに加算されるため、更新間隔を決定する際に考慮する必要があります。</p>
-          <table class="bcls-table">
-            <thead class="bcls-table__head">
-              <tr>
-                <th>更新間隔</th>
-                <th>2 時間のコンテンツに対するライセンス発行数</th>
-              </tr>
-            </thead>
-            <tbody class="bcls-table__body">
-              <tr>
-                <td>なし</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>15 分</td>
-                <td>8</td>
-              </tr>
-              <tr>
-                <td>5 分</td>
-                <td>24</td>
-              </tr>
-              <tr>
-                <td>2 分</td>
-                <td>60</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </article>
-      
-
-      <section class="bcls-section">
-        <h2 id="Understanding_behavior">動作の理解</h2>
-        <p>
-          この機能では、ストリームのブロック方法を選択することができます。
-        </p>
-    
-        <h3>最も古いストリームをブロック</h3>
-        <p>
-          Brightcove は DRM 保護されたコンテンツの再生ストリーム制限をサポートしています。新しい更新リクエストが処理されると、最も古いセッションが停止されます。これにより、新しいユーザーリクエストにアクセスが許可され、もはや有効でない可能性のある最も古いリクエストがブロックされ、ネットワークやデバイスの障害に関するメッセージが表示されます。
-        </p>
-        <p>
-          <strong>この動作がデフォルトの設定です。</strong>
-        </p>
-        <figure class="bcls-figure">
-          <img class="bcls-image--no-border" src="/assets/images/playback-restrictions/concurrency-general.png" alt="最も古いストリームをブロック">
-          <figcaption class="bcls-caption--image">最も古いストリームをブロック</figcaption>
-        </figure>
-    
-        <p>
-          <strong>ユーザーの動作（時系列）：</strong>
-        </p>
-        <ol>
-          <li>
-            Ben、Jason、Sarah が映画の視聴を開始。
-          </li>
-          <li>
-            Jamie が視聴を開始しようとしたため、Ben の更新リクエストが拒否される。
-          </li>
-          <li>
-            Ben が映画を再開し、今度は Jason の更新リクエストが失敗する。
-          </li>
-          <li>
-            しばらくして Jason が別の映画を視聴開始し、Sarah の映画が停止する。
-          </li>
-        </ol>
-    
-        <h3>新規ユーザーをブロック</h3>
-        <p>
-          最大同時ストリーム数に達した際に、新規視聴者/ユーザー（異なる IP アドレスおよびデバイス）をブロックすることもできます。これにより、同時にアクセスできるユニークなユーザー数を制限できますが、各ユーザーは複数のリクエストを送信することができます。
-        </p>
-        <p>
-          この動作を有効にするには、<a href="https://general.support.brightcove.com/developer/create-jwt.html">JSON Web Token (JWT)</a> の <code translate="No">cbeh</code> クレームを次のように設定します：
-        </p>
-        <pre><code class="language-json" translate="No">&quot;cbeh&quot;: &quot;BLOCK_NEW_USER&quot;</code></pre>
-        <br />
-        <p>
-          以下はその例です：
-        </p>
-        <figure class="bcls-figure">
-          <img class="bcls-image--no-border" src="/assets/images/playback-restrictions/block-new-user.png" alt="新規ユーザーをブロック">
-          <figcaption class="bcls-caption--image">新規ユーザーをブロック</figcaption>
-        </figure>
-    
-        <p>
-          <strong>ユーザーの動作（時系列）：</strong>
-        </p>
-        <ol>
-          <li>
-            Ben、Jason、Sarah が映画の視聴を開始。
-          </li>
-          <li>
-            Jamie が視聴を開始しようとするが、最大制限に達しているためリクエストがブロックされる。
-          </li>
-          <li>
-            Jason が視聴を停止し、新たな視聴者が視聴を開始できるようになる。Jamie が映画を視聴開始。
-          </li>
-        </ol>
-    
-        <h3>新規ストリームをブロック</h3>
-        <p>
-          また、最大同時ストリーム数に達した際に、新規ストリーム リクエスト（セッション）をブロックすることもできます。これにより、現在視聴しているユーザーはそのまま視聴を続けることができますが、新しいリクエストにはエラーメッセージが表示されます。
-        </p>
-        <p>
-          この動作を有効にするには、<a href="https://general.support.brightcove.com/developer/create-jwt.html">JSON Web Token (JWT)</a> の <code translate="No">cbeh</code> クレームを次のように設定します：
-        </p>
-        <pre><code class="language-json" translate="No">&quot;cbeh&quot;: &quot;BLOCK_NEW&quot;</code></pre>
-        <br />
-        <p>
-          以下はその例です：
-        </p>
-        <figure class="bcls-figure">
-          <img class="bcls-image--no-border" src="/assets/images/playback-restrictions/block-new-request.webp" alt="新規リクエストをブロック">
-          <figcaption class="bcls-caption--image">新規リクエストをブロック</figcaption>
-        </figure>
-    
-        <p>
-          <strong>ユーザーの動作（時系列）：</strong>
-        </p>
-        <ol>
-          <li>
-            Jason、Jamie、Sarah が映画の視聴を開始。
-          </li>
-          <li>
-            Jason が同じデバイスで 2 つ目のストリームを開始しようとするが、最大制限に達しているためリクエストがブロックされる。
-          </li>
-          <li>
-            Jamie が視聴を停止し、新たなセッションリクエストが許可される。Jason が 2 つ目のストリームを視聴開始。
-          </li>
-        </ol>
-    </section>
-    
-
-    <section class="bcls-section">
-        <h2 id="PlayReady">PlayReady</h2>
-        <p>PlayReady は、再生中のライセンスチェックをサポートしていません。</p>
-    
-        <h3>現在の Brightcove Player</h3>
-        <p>Brightcove Player v6.48.x 以降を使用している場合、Edge ブラウザでは PlayReady ではなく Widevine を優先的に使用するように設定されます。そのため、PlayReady に関する問題は発生しません。</p>
-        <p>Chromium Edge ブラウザにおける EPA DRM ソース選択の修正については、<a href="https://player.support.brightcove.com/release-notes/brightcove-player-release-notes.html">Brightcove Player リリースノート</a>を参照してください。</p>
-    
-        <h3>古いバージョン</h3>
-        <p>古いバージョンの Brightcove Player では、Chromium Edge ブラウザのデフォルト設定として PlayReady が優先されます。この場合、再生中のライセンスチェックを手動で実行する必要があります。</p>
-        <p>
-          プレーヤーで手動のライセンス更新を実装する方法については、<a href="https://docs.microsoft.com/en-us/playready/features/concurrency-limiting">Microsoft の Concurrency Limiting</a> ドキュメントを参照してください。
-        </p>
-    </section>
-    
-    <section class="bcls-section">
-        <h2 id="Safari">Safari</h2>
-        <p>
-          Safari ブラウザでは同時ストリーム数の制限がサポートされていますが、更新リクエストは送信されません。これは、他のブラウザと比較して新しいセッションやストリームのブロックが長時間継続することを意味します。
-        </p>
-        <p>DRM を使用した同時ストリーム制限を設定する場合、Safari ウェブブラウザから AirPlay へのキャストはできません。AirPlay へのキャストは、<a href="https://sdks.support.brightcove.com/ios/index.html">Brightcove Native SDK for iOS</a> を使用したネイティブアプリからのみ可能です。</p>
-    </section>
-    
-    <section class="bcls-section">
-        <h2 id="Notes">注意事項</h2>
-        <p>
-          本機能に関して、以下の注意事項が適用されます：
-        </p>
-        <ul>
-          <li>
-            以下の場合は手動のライセンス更新リクエストを実装する必要があります：
+            <h2 id="correlator_identifier">Correlator identifier (コリレータ識別子)</h2>
+            <p>コリレータ(相関器)識別子は、視聴者のストリーミング場所を定義するために使用されます。その特徴は以下のとおりです：</p>
             <ul>
-              <li>
-                Brightcove 以外のプレーヤーで同時ストリーム制限を使用する場合（Widevine で保護されている場合を除く）
-              </li>
-              <li>
-                PlayReady を使用するすべてのデバイスで同時ストリーム制限を適用する場合（Brightcove Player v6.48.x 以降を使用している場合を除く）
-              </li>
+                <li>同じ視聴者からのすべてのリクエストを適切に関連付けるため、十分に特定性の高い値である必要があります。識別子が一般的すぎると、複数の視聴者が同じ視聴者IDでグループ化されてしまう可能性があります。</li>
+                <li>同じ視聴者が視聴するすべての動画で一貫性を保つ必要があります。</li>
             </ul>
-          </li>
-          <li>
-            手動のライセンス更新リクエストは、設定された更新間隔よりも短い間隔で実行する必要があります。
-          </li>
-        </ul>
-    </section>
-    
+            <p>「コリレータ」が異なる場合、視聴者IDに対する「スロット」を埋めようとします。そのため、視聴中にこの値が変更されると、異なる視聴者として認識され、再生が妨げられる可能性があります。</p>
+            <p>コリレータは JWT 内の<code translate="No">sid</code> クレームを使用して設定されます。</p>
+        </section>
+        
+        <section class="bcls-section">
+            <h2 id="Implementation">実装方法</h2>
+            <h3>Brightcove Web プレーヤーまたは SDK プレーヤーを使用する場合</h3>
+            <ol class="bcls-tasklist-restart">
+                <li>デフォルトのハートビート頻度（1分）を変更したい場合は、弊社<a href="https://supportportal.brightcove.com/">サポート</a>にお問い合わせください。</li>
+                <li>
+                    <p><a href="https://general.support.brightcove.com/developer/create-json-web-token.html">JWTを作成</a>し、再生制限を適用します。</p>
+                    <p>以下のクレームが必須です：</p>
+                    <ul>
+                        <li>
+                            <code translate="No">climit</code> - 同時視聴制限。何人の視聴者またはストリームが同時に再生可能かを示します。
+                        </li>
+                        <li>
+                            <code translate="No">uid</code> - 視聴者識別子。複数のセッションを関連付けてストリーム同時視聴制限を適用するために使用されます。
+                        </li>
+                        <li>
+                            <p><code translate="No">sid</code> - <a href="#correlator_identifier">コリレータ識別子</a>。視聴者のストリーミング場所を定義します。</p>
+                            <aside class="bcls-aside bcls-aside--information">
+                                <code translate="No">sid</code>の値は、<strong>ユーザーエージェント + 一意のランダムな値または文字列</strong>の組み合わせにすることができます。この組み合わせにより、各デバイスごとに新しいセッションが作成されます（例: 同じ視聴者IDが2台のiPhoneを使用する場合）。
+                            </aside>
+                            <p>例：</p>
+                            <ul>
+                                <li>Chrome MAC (Cadmium) HTML 5 - 1112223334</li>
+                                <li>Apple iPad 7th Gen 10.2 (Wi-Fi) - 2223334444</li>
+                                <li>Apple Apple TV TBD Apple TV - 3334445555</li>
+                                <li>Android DefaultWidevineL3Phone Android Phone - 1112224567</li>
+                                <li>Firefox MAC (Cadmium) HTML 5 - 1112226754</li>
+                                <li>Google Chromecast streaming stick - 1112346677</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Brightcove に JWT の公開鍵を登録してください。詳細は、<a href="https://general.support.brightcove.com/developer/create-json-web-token.html">認証APIの使用</a> をご覧ください。</li>
+                <li>クライアント プレーヤーでジェネリック ストリーム同時視聴制限を有効にする方法については、以下の <a href="#implementation_in_players">プレーヤーでの実装</a> セクションをご参照ください。</li>
+            </ol>
+    <details>
+      <summary>
+        サンプル JSON Web Token (JWT) クレーム
+      </summary>
+      <pre class="line-numbers"><code class="language-json" translate="No">{
+  // アカウント id: JWTはこのアカウントでのみ有効
+  "accid":"4590388311111",
+  // 同時接続ユーザー数の制限
+  "climit": 3,
+  // ユーザー id
+  "uid": "108.26.184.3_1634052241",
+  // コリレータ識別子
+  "sid": "Firefox MAC (Cadmium) HTML 5 - 1112346677"
+  }
+</code></pre>
+    </details>
+  </section>
+  <section class="bcls-section">
+    <h2 id="Notes">注意事項</h2>
+    <ul>
+        <li>視聴者のセッション数が上限を超えた場合、セッションが停止されます。ただし、停止が完了するまでにハートビートの間隔分の時間がかかることがあります。</li>
+        <li>
+            クライアント プレーヤーがサーバーに接続できない場合、3回再試行されます。それでも接続できない場合、再生は停止されます。
+            <aside class="bcls-aside bcls-aside--information language-editable">
+                Brightcove Web プレーヤーでは、以下のプロパティを <code translate="No">video_cloud</code> オブジェクトに追加することで、再試行回数や間隔を変更できます（詳細は<a href="https://player.support.brightcove.com/general/player-configuration-guide.html">プレーヤー設定ガイド</a>をご覧ください）。
+                <ul>
+                    <li><code translate="no">max_retry</code> - サーバー接続の最大再試行回数</li>
+                    <li><code translate="no">interval_retry</code> - 再試行間隔（ミリ秒単位）</li>
+                </ul>
+            </aside>
+        </li>
+    </ul>
+</section>
 
+<section class="bcls-section">
+    <h2 id="implementation_in_players">プレーヤーでの実装</h2>
+    <h3>必要条件</h3>
+    <ul>
+        <li>ジェネリック ストリーム同時視聴制限（GSC）は、Brightcove Web プレーヤー 6.63.2 以降で利用可能です。</li>
+        <li>Brightcove iOS SDKプレーヤー 6.10.1 以降が必要です。</li>
+        <li>Brightcove Android SDKプレーヤー 6.17.2 以降が必要です。</li>
+    </ul>
+
+    <h3>Brightcove Web プレーヤー</h3>
+    <p>Brightcove プレーヤーでジェネリック ストリーム同時視聴制限を有効にするには、プレーヤー設定で <code translate="No">video_cloud.stream_concurrency</code> を使用します。</p>
+    <p>現在、この機能に特化した UI は Studio にはないため、JSONエディターを使用して設定を追加する必要があります。設定例は以下のとおりです：</p>
+    <pre class="line-numbers"><code class="language-json" translate="No">"stream_concurrency" : true</code></pre>
+    <pre class="line-numbers"><code class="language-json" translate="No">
+    ...
+    "video_cloud": {
+        <span class="bcls-highlight">"stream_concurrency": true,</span>
+        "policy_key": "BCpk..."
+    },
+    "player": {
+        "template": {
+            "name": "single-video-template",
+            "version": "6.63.1"
+        }
+    },
+    ...
+    </code></pre>
+    <p>このキー/値ペアがJSONに存在しない、または値が false の場合、プレーヤーで GSC 機能は有効になりません。</p>
+
+    <h4>JWTの設定（実行時）</h4>
+    <p>ジェネリック ストリーム同時視聴制限は、EPAのストリーム同時視聴制限機能と同様に、JSON Web Token（JWT）に依存します。</p>
+    <p>プレーヤーの設定が完了したら、次のステップは実行時に JWT をプレーヤーに提供することです。これは EPA の設定と同じ手順です。</p>
+    <pre class="line-numbers"><code class="language-javascript" translate="No">player.catalog.setBcovAuthToken('<span class="bcls-input">your token</span>');</code></pre>
+
+    <h5>例</h5>
+    <p>JWT トークンを追加した後、Playback API からデータを取得し、プレーヤーにロードします。この例では単一の動画を取得しています。</p>
+    <pre class="line-numbers"><code class="language-javascript" translate="No">// 認証トークンを設定
+    player.catalog.setBcovAuthToken('<span class="bcls-input">your token</span>');
+
+    // カタログリクエストを開始（API選択は呼び出すたびに行われる）
+    player.catalog.get({id: '1', type: 'video'}).
+    then(function(data) {
+        // リクエスト完了後、取得したメタデータとソースをプレーヤーにロード
+        player.catalog.load(data);
+    }).
+    catch(function(error) {
+        throw new Error(error);
+    });</code></pre>
+
+    <h3>iOS</h3>
+    <p>iOS SDK でジェネリック ストリーム同時視聴制限を有効にするには、<code translate="No">playbackController</code> の <code translate="No">streamConcurrencyEnabled</code> を有効にします。</p>
+    <p>また、<code translate="No">sid</code> の値をオプションで指定できます。<code translate="No">sid</code> を指定しない場合、この値はヘッダーに送信されません。</p>
+
+    <h4>Objective-C</h4>
+    <pre><code class="language-objectivec" translate="No">self.playbackController.streamConcurrencyEnabled = YES;
+    // オプション：カスタム sid を設定
+    self.playbackController.options = @{ kBCOVAuthHeartbeatPropertyKeySessionld: "sessionId" };</code></pre>
+
+    <h4>Swift</h4>
+    <pre><code class="language-swift" translate="No">self.playbackController.streamConcurrencyEnabled = true
+    // オプション：カスタム sid を設定
+    self.playbackController.options = [ kBCOVAuthHeartbeatPropertyKeySessionld: "sessionId" ]</code></pre>
+    <p>詳細については、<a href="https://sdks.support.brightcove.com/ios/reference/sdk/index.html#GSC">Brightcove iOS SDKリファレンス</a> をご覧ください。</p>
+
+    <h3>Android</h3>
+    <p>プレーヤーのアクティビティの <code translate="No">onCreate</code> メソッドに次の行を追加してください：</p>
+    <pre class="line-numbers"><code translate="no" class="language-java">brightcoveVideoView.setStreamConcurrencyEnabled(true);</code></pre>
+    <p><code translate="No">onCreate</code> メソッド内で <code translate="No">DID_SET_VIDEO</code> イベント用のリスナーを追加し、ハートビートヘッダーを設定してください。</p>
+    <p>この JWT は動画取得時に使用したものと同じであり、<code translate="No">uid</code>（オプションで <code translate="No">sid</code> も）を含める必要があります。</p>
+    <pre class="line-numbers"><code translate="no" class="language-java">Map&lt;String, String&gt; requestHeaders = new HashMap&lt;&gt;();
+    requestHeaders.put(ConcurrencyClient.HEARTBEAT_VIDEO_HEADER_KEY, video.getId());
+    requestHeaders.put(ConcurrencyClient.HEARTBEAT_ACCOUNTID_HEADER_KEY, accountId);
+    requestHeaders.put(BrightcoveTokenAuthorizer.BRIGHTCOVE_AUTHORIZATION_HEADER_KEY, jwtToken);
+    brightcoveVideoView.setStreamConcurrencyRequestHeaders(requestHeaders);</code></pre>
+</section>
+
+
+<section class="bcls-section">
+    <h2 id="implementation_via_API">APIによる実装</h2>
+    <p>この機能は、Brightcove Web プレーヤーや SDK プレーヤーを使用せずに、Concurrency Service API を通じて実装することができます。詳細は、<a href="/playback-restrictions/references/concurrency-service-api/reference.html">APIリファレンス</a>をご参照ください。</p>
+
+    <p>Concurrency Service API の基本URLは以下のとおりです:</p>
+    <pre><code class="language-http" translate="No">https://edge-gsc.api.brightcove.com</code></pre>
+
+    <p>認証は、<code translate="No">Authorization</code> ヘッダーに JWT を送信することで行われます:</p>
+    <pre><code class="language-http" translate="No">Authorization: Bearer <span class="bcls-input">{token}</span></code></pre>
+
+    <p>プレーヤーやアプリが実行する基本的なロジックは、以下の図のとおりです：</p>
+    <figure class="bcls-figure">
+        <img class="bcls-image"
+            src="/assets/images/playback-restrictions/guides/generic-stream-concurrency/concurrency-api-logic.svg"
+            alt="同時視聴管理のロジック">
+        <figcaption class="bcls-caption--image">同時視聴管理のロジック</figcaption>
+    </figure>
+
+    <h4>API エンドポイント</h4>
+    <dl>
+        <dt>セッション作成</dt>
+        <dd>
+            このエンドポイントは、新しいストリーミングセッションを作成し、同時視聴管理のためのハートビートを設定するために使用されます：
+            <pre><code class="language-http" translate="No">/api/v1/accounts/&#123;&#123;account_id&#125;&#125;/sessions</code></pre>
+            <p><strong>メソッド: <code translate="No">POST</code></strong></p>
+            <p><strong>リクエストボディ:</strong></p>
+            <pre class="line-numbers"><code class="language-json" translate="No">{
+  "video": "<span class="bcls-input">the_video_id</span>"
+}</code></pre>
+        </dd>
+
+        <dt>アクティブセッションの取得</dt>
+        <dd>
+            このエンドポイントを使用すると、現在のストリーミングセッションの一覧を取得できます。同時視聴の上限に達した際に、どのセッションを停止するかを決定するロジックを実装する際に役立ちます：
+            <pre><code class="language-http" translate="No">/api/v1/accounts/&#123;&#123;account_id&#125;&#125;/sessions</code></pre>
+            <p><strong>メソッド: <code translate="No">GET</code></strong></p>
+        </dd>
+
+        <dt>セッションの停止</dt>
+        <dd>
+            このエンドポイントを使用すると、ストリーミングセッションを停止できます。新しい再生リクエストが同時視聴制限を超えた場合、どのセッションを停止するかを決定するロジックを実装する際に利用します。主にバックエンド側で、不要なセッションを削除するために使用されます：
+            <pre><code class="language-http" translate="No">/api/v1/accounts/&#123;&#123;account_id&#125;&#125;/sessions</code></pre>
+            <p><strong>メソッド: <code translate="No">DELETE</code></strong></p>
+        </dd>
+    </dl>
+</section>
 
 
 </article>
+
 <!-- <div class="col-sm-2 right-side-bar" style="display: inline-block;max-width: 20%;"> -->
   
   <nav class="right-side-nav" id="right_side_nav">
