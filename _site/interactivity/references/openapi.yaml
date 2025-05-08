@@ -1,0 +1,2270 @@
+openapi: 3.0.0
+x-bc-implicit-head: true
+x-bc-implicit-options: true
+x-bc-throttle-key: $bf_capture_account_id
+x-bc-upstream: 'http://backend_server'
+info:
+  title: Brightcove Interactivity API リファレンス
+  description: |- 
+    videocloud でインタラクティビティ データにアクセスするための API です。API リクエストをテストするには <a href="/getting-started/concepts-testing-tools-brightcove-apis.html" target="_blank">API テストツール</a>を使用することが出来ます.
+
+    API の機能に関する詳細なガイドについては、 **[一般ドキュメント](/interactivity/index.html)**を参照して下さい。
+
+    **Base URL**: https://interactivity.api.brightcove.com
+  version: 1.0.115-e554f8e
+  x-bc-studio: interactivity
+servers:
+  - url: 'https://interactivity.api.brightcove.com' 
+paths:
+  '/v1/accounts/{アカウント_id}/projects':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 特定アカウントの全プロジェクトの取得。
+      description: 特定アカウントの全プロジェクトを取得します。デフォルトでは最初の10件のプロジェクトを返します。
+      tags:
+        - Projects
+      operationId: GetProjects
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+        - $ref: '#/components/parameters/Title'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/SortBy'
+        - $ref: '#/components/parameters/OrderBy'
+        - $ref: '#/components/parameters/SoftDeleteRetrieval'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Project'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    post:
+      summary: 特定アカウント用のプロジェクトを作成。
+      description: 特定アカウント用のプロジェクトを作成。
+      tags:
+        - Projects
+      operationId: CreateProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: '成功: プロジェクトが作成されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Project'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/projects/counts':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 特定アカウントのプロジェクト数を取得。
+      description: 特定アカウントのプロジェクト数を取得。
+      tags:
+        - Projects
+      operationId: GetProjectCount
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+        - $ref: '#/components/parameters/Title'
+        - $ref: '#/components/parameters/SoftDeleteRetrieval'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: integer
+                        format: int64
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+  '/v1/accounts/{account_id}/projects/{id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: 特定アカウントから特定のプロジェクトを取得。
+      description: 特定アカウントから特定のプロジェクトを取得。
+      tags:
+        - Projects
+      operationId: GetProject
+      parameters:
+        - $ref: '#/components/parameters/IncludeTemplateAnnotations'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/Project'
+                          - type: object
+                            properties:
+                              template_annotations:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/Annotation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    patch:
+      summary: 特定アカウントの特定のプロジェクトを更新。
+      description: 特定アカウントの特定のプロジェクトを更新。
+      tags:
+        - Projects
+      operationId: UpdateProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: '成功: プロジェクトが更新されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Project'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/projects/{id}/{soft_delete}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/SoftDelete'
+    delete:
+      summary: 特定アカウントの特定のプロジェクトを削除。
+      description: 特定アカウントの特定のプロジェクトを削除します。デフォルトではソフト削除を実行します。ハード削除を行うにはリクエストボディを使用してください。
+      tags:
+        - Projects
+      operationId: DeleteProject
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/projects/{id}/annotations':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: 特定プロジェクトの全アノテーションを取得。
+      description: 特定プロジェクトの全アノテーションを取得。
+      tags:
+        - Project Annotations
+      operationId: GetProjectAnnotations
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Annotation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    post:
+      summary: プロジェクト用のアノテーションを作成。
+      description: プロジェクト用のアノテーションを作成。
+      tags:
+        - Project Annotations
+      operationId: CreateAnnotation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Annotation'
+      responses:
+        '200':
+          description: '成功: アノテーションが作成されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Annotation'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/projects/{id}/annotations/{annotation_id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/AnnotationId'
+    get:
+      summary: 特定プロジェクトの特定のアノテーションを取得。
+      description: 特定プロジェクトの特定のアノテーションを取得。
+      tags:
+        - Project Annotations
+      operationId: GetAnnotation
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Annotation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    patch:
+      summary: アノテーションの更新。
+      description: アノテーションの更新。
+      tags:
+        - Project Annotations
+      operationId: UpdateAnnotation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Annotation'
+      responses:
+        '200':
+          description: '成功: アノテーションが更新されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Annotation'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+    delete:
+      summary: アノテーションの削除。
+      description: アノテーションの削除。
+      tags:
+        - Project Annotations
+      operationId: DeleteAnnotation
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/templates':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 特定アカウントの全テンプレートを取得。
+      description: 特定アカウントの全テンプレートを取得します。デフォルトでは最初の10件のテンプレートを返します。
+      tags:
+        - Templates
+      operationId: GetTemplates
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+        - $ref: '#/components/parameters/Title'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/SortBy'
+        - $ref: '#/components/parameters/OrderBy'
+        - $ref: '#/components/parameters/SoftDeleteRetrieval'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Template'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    post:
+      summary: アカウント用のテンプレートを作成。
+      description: アカウント用のテンプレートを作成。
+      tags:
+        - Templates
+      operationId: CreateTemplate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+      responses:
+        '200':
+          description: '成功: テンプレートが作成されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Template'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/templates/counts':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 特定アカウントのテンプレート数を取得。
+      description: 特定アカウントのテンプレート数を取得。
+      tags:
+        - Templates
+      operationId: GetTemplateCount
+      parameters:
+        - $ref: '#/components/parameters/VideoId'
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+        - $ref: '#/components/parameters/Title'
+        - $ref: '#/components/parameters/SoftDeleteRetrieval'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: integer
+                        format: int32
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+  '/v1/accounts/{account_id}/templates/{id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: アカウントの特定のテンプレートを取得。
+      description: アカウントの特定のテンプレートを取得。
+      tags:
+        - Templates
+      operationId: GetTemplate
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Template'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    patch:
+      summary: テンプレートを更新。
+      description: テンプレートを更新。
+      tags:
+        - Templates
+      operationId: UpdateTemplate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+      responses:
+        '200':
+          description: '成功: テンプレートが更新されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Template'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all 
+  '/v1/accounts/{account_id}/templates/{id}/{soft_delete}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/SoftDelete'
+    delete:
+      summary: テンプレートの削除。
+      description: テンプレートを削除します。デフォルトではソフト削除を実行します。ハード削除を行うにはリクエストボディを使用してください。
+      tags:
+        - Templates
+      operationId: DeleteTemplate
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/templates/{id}/annotations':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: 特定テンプレートの全アノテーションを取得。
+      description: 特定テンプレートの全アノテーションを取得。
+      tags:
+        - Template Annotations
+      operationId: GetTemplateAnnotations
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Annotation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    post:
+      summary: テンプレート用のアノテーションを作成。
+      description: テンプレート用のアノテーションを作成。
+      tags:
+        - Template Annotations
+      operationId: CreateTemplateAnnotation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Annotation'
+      responses:
+        '200':
+          description: '成功: アノテーションが作成されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Annotation'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/templates/{id}/annotations/{annotation_id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/AnnotationId'
+    get:
+      summary: 特定テンプレートの特定のアノテーションを取得。
+      description: 特定テンプレートの特定のアノテーションを取得。
+      tags:
+        - Template Annotations
+      operationId: GetTemplateAnnotationById
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Annotation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    patch:
+      summary: アノテーションを更新。
+      description: アノテーションを更新。
+      tags:
+        - Template Annotations
+      operationId: UpdateTemplateAnnotationById
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Annotation'
+      responses:
+        '200':
+          description: '成功: アノテーションが更新されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Annotation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+    delete:
+      summary: アノテーションの削除。
+      description: アノテーションの削除。
+      tags:
+        - Template Annotations
+      operationId: DeleteTemplateAnnotationById
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/experiences':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 特定アカウントの全エクスペリエンスを取得。
+      description: 特定アカウントの全エクスペリエンスを取得。
+      tags:
+        - Experiences
+      operationId: GetExperiences
+      parameters:
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+        - $ref: '#/components/parameters/Title'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/SortBy'
+        - $ref: '#/components/parameters/OrderBy'
+        - $ref: '#/components/parameters/SoftDeleteRetrieval'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Experience'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    post:
+      summary: アカウント用のエクスペリエンスを作成。
+      description: アカウント用のエクスペリエンスを作成。
+      tags:
+        - Experiences
+      operationId: CreateExperience
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Experience'
+      responses:
+        '200':
+          description: 'SUCCESS: The experience was created'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Experience'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/experiences/counts':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 特定アカウントのエクスペリエンス数を取得。
+      description: 特定アカウントのエクスペリエンス数を取得。
+      tags:
+        - Experiences
+      operationId: GetExperienceCount
+      parameters:
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+        - $ref: '#/components/parameters/Title'
+        - $ref: '#/components/parameters/SoftDeleteRetrieval'
+      responses:
+        '200':
+          description: 'SUCCESS'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: integer
+                        format: int32
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+  '/v1/accounts/{account_id}/experiences/{id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: アカウントの特定のエクスペリエンスを取得。
+      description: アカウントの特定のエクスペリエンスを取得。
+      tags:
+        - Experiences
+      operationId: GetExperience
+      parameters:
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+        - $ref: '#/components/parameters/Title'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Experience'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    patch:
+      summary: エクスペリエンスを更新。
+      description: エクスペリエンスを更新。
+      tags:
+        - Experiences
+      operationId: UpdateExperience
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Experience'
+      responses:
+        '200':
+          description: '成功: エクスペリエンスが更新されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Experience'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all   
+  '/v1/accounts/{account_id}/experiences/{id}/{soft_delete}': 
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/SoftDelete'
+    delete:
+      summary: エクスペリエンスを削除。
+      description: エクスペリエンスを削除します。デフォルトではソフト削除を実行します。ハード削除を行うにはリクエストボディを使用してください。
+      tags:
+        - Experiences
+      operationId: DeleteExperience
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/experiences/{id}/scorm_download':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: SCORM ダウンロードを取得。
+      description: エクスペリエンス用の SCORM zip ファイルを取得。
+      tags:
+        - Experiences
+      operationId: GetExperienceScormDownload
+      parameters:
+        - name: scorm_version
+          in: query
+          description: ダウンロードするSCORMバージョンを選択します。デフォルトは2004です。
+          schema:
+            type: string
+            enum:
+              - v1_2
+              - v2004
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+  '/v1/accounts/{account_id}/folders':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 特定アカウントの全フォルダを取得。
+      description: 特定アカウントの全フォルダを取得。
+      tags:
+        - Folders
+      operationId: GetFolders
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Folder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/read
+    post:
+      summary: アカウント用のフォルダを作成。
+      description: アカウント用のフォルダを作成。
+      tags:
+        - Folders
+      operationId: CreateFolder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Folder'
+      responses:
+        '200':
+          description: '成功: フォルダーが作成されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Folder'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/folders/{id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: アカウントの特定のフォルダを取得。
+      description: アカウントの特定のフォルダを取得。
+      tags:
+        - Folders
+      operationId: GetFolder
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Folder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+    patch:
+      summary: フォルダの名前を変更。
+      description: フォルダの名前を変更。
+      tags:
+        - Folders
+      operationId: RenameFolder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: string
+                  description: ID
+                  readOnly: true
+                name:
+                  type: string
+                  description: 'フォルダーの名前'
+      responses:
+        '200':
+          description: '成功: フォルダー名が変更されました'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/Folder'
+                      message:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+    delete:
+      summary: フォルダを削除。
+      description: フォルダを削除。
+      tags:
+        - Folders
+      operationId: DeleteFolder
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/folders/{id}/contents':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: アカウントの特定のフォルダの内容を取得。
+      description: アカウントの特定のフォルダの内容を取得。
+      tags:
+        - Folders
+      operationId: GetFolderContents
+      parameters:
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/SortBy'
+        - $ref: '#/components/parameters/OrderBy'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      items:
+                        oneOf:
+                          - type: array
+                            items:
+                              $ref: '#/components/schemas/Project'
+                          - type: array
+                            items:
+                              $ref: '#/components/schemas/Template'
+                          - type: array
+                            items:
+                              $ref: '#/components/schemas/Experience'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/folders/{id}/contents/counts':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+    get:
+      summary: アカウントの特定のフォルダ内のコンテンツ項目数を取得。
+      description: アカウントの特定のフォルダ内のコンテンツ項目数を取得。
+      tags:
+        - Folders
+      operationId: GetFolderContentsCounts
+      parameters:
+        - $ref: '#/components/parameters/Tag'
+        - $ref: '#/components/parameters/TagMatchMode'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Count'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/folders/{id}/contents/{content_id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/ContentId'
+    put:
+      summary: コンテンツ項目をフォルダに移動。
+      description: アカウントの特定のフォルダにコンテンツ項目を移動。
+      tags:
+        - Folders
+      operationId: MoveContentToFolder
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+    delete:
+      summary: フォルダからコンテンツ項目を削除。
+      description: アカウントの特定のフォルダからコンテンツ項目を削除。
+      tags:
+        - Folders
+      operationId: RemoveContentFromFolder
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/reports/gradebook/summary':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 成績表サマリーレポートを取得。
+      description: ユーザーIDごとにグループ化された正解数を取得。
+      tags:
+        - Reports
+      operationId: GetGradeBookSummary
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/StartTime'
+        - $ref: '#/components/parameters/EndTime'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      num_questions:
+                        type: number
+                        description: クイズ内の質問の総数（日時/プロジェクトIDでフィルタリング後）
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            user_id:
+                              type: string
+                              description: ID
+                              readOnly: true
+                            total_correct_answers:
+                              type: number
+                            total_question_count:
+                              type: number
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/reports/gradebook/users/answers':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: 成績表ユーザー回答詳細レポートを取得。
+      description: ユーザーが提出した回答を取得。
+      tags:
+        - Reports
+      operationId: GetGradeBookDetails
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/StartTime'
+        - $ref: '#/components/parameters/EndTime'
+        - in: query
+          name: user_id
+          description: クイズで使用されるユーザーID
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: show_details
+          description: レスポンスに追加フィールドを表示（project_title、question、answer）
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_id:
+                          type: string
+                        projects:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              project_id:
+                                type: string
+                              project_title:
+                                type: string
+                                description: show_details が true に設定されている場合のみ表示されます。
+                              questions:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    question:
+                                      type: string
+                                    answer:
+                                      type: string
+                                    correct:
+                                      type: boolean
+                                    submitted_at:
+                                      type: string
+                                      description: ISO日付文字列。
+                                    answers:
+                                      type: array
+                                      description: show_details が true に設定されている場合のみ表示されます。質問の可能な回答を表示します。
+                                      items:
+                                        type: object
+                                        properties:
+                                          text:
+                                            type: string
+                                            description: 回答テキスト
+                                          type:
+                                            type: string
+                                            enum:
+                                              - choice
+                                              - text-choice
+                                            description:
+                                             回答タイプ
+                                          correct:
+                                            type: boolean
+                                            description: 正解の場合は true に設定されます。フィールドが欠落している場合は false となります。
+                                    total_submissions:
+                                      type: number
+                                      description: show_details が true に設定されている場合のみ表示されます。質問に対して提出された回答数を表示します（質問に回答したユーザー数に対応します）。
+
+
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/reports/quiz/actions':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: クイズアクションレポートを取得。
+      description: プロジェクトごとにグループ化された回答済み質問の数を取得。
+      tags:
+        - Reports
+      operationId: GetQuizActions
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/StartTime'
+        - $ref: '#/components/parameters/EndTime'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        actions:
+                          type: number
+                          description: 日時/プロジェクトIDでフィルタリングした提出済み回答の総数
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: ID
+                              readOnly: true
+                            title:
+                              type: string
+                              description: プロジェクト タイトル
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+  '/v1/accounts/{account_id}/reports/quiz/project/summary':
+    parameters:
+      - $ref: '#/components/parameters/AccountId'
+    get:
+      summary: クイズプロジェクトサマリーレポートを取得。
+      description: 質問および回答ごとにグループ化されたユニークな提出回答数を取得。
+      tags:
+        - Reports
+      operationId: GetQuizActionsSummary
+      parameters:
+        - name: project_id
+          in: query
+          description: プロジェクトIDでフィルタリング
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/StartTime'
+        - $ref: '#/components/parameters/EndTime'
+      responses:
+        '200':
+          description: '成功'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        answers:
+                          type: array
+                          description: 質問に対して提出されたユニークな回答。
+                          items:
+                            type: object
+                            properties:
+                              answer:
+                                type: string
+                                description: 提出された回答のテキスト。
+                              correct:
+                                type: boolean
+                                description: これが正解かどうかを示します。
+                              num_responses:
+                                type: number
+                                description: この回答を含む提出の総数。
+                              percent:
+                                type: number
+                                description: この回答を含む質問の総提出数に対する割合。
+                        num_correct:
+                          type: number
+                          description: 日時/プロジェクトIDでフィルタリングした質問の正解数の総数
+                        num_responses:
+                          type: number
+                          description: 日時/プロジェクトIDでフィルタリングした質問の提出済み回答の総数。
+                        question:
+                          type: string
+                          description: 質問のテキスト。
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BC_OAuth2:
+            - video-cloud/interactivity/all
+components:
+  parameters:
+    AccountId:
+      name: account_id
+      in: path
+      description: アカウントID。
+      required: true
+      schema:
+        type: string
+    Id:
+      name: id
+      in: path
+      description: 項目のID。
+      required: true
+      schema:
+        type: string
+    AnnotationId:
+      name: annotation_id
+      in: path
+      description: アノテーション ID。
+      required: true
+      schema:
+        type: string
+    IncludeTemplateAnnotations:
+      name: include_template_annotations
+      in: query
+      description: レスポンスにテンプレート注釈を含める場合は true に設定します。デフォルトは false です。
+      required: false
+      schema:
+        type: boolean
+    ContentId:
+      name: content_id
+      in: path
+      description: プロジェクト、テンプレート、またはエクスペリエンスのID。
+      required: true
+      schema:
+        type: string
+    VideoId:
+      name: video_id
+      in: query
+      description: ビデオIDでフィルタリング。
+      schema:
+        type: string
+    ProjectId:
+      name: project_id
+      in: query
+      description: プロジェクトIDでフィルタリング。
+      schema:
+        type: string
+    Tag:
+      name: tag
+      in: query
+      description: タグでフィルタリングします。複数のタグを指定するには、tag=tag1&tag=tag2 のように指定します。AND / OR の条件は 'tag_match_mode' パラメータで制御されます。
+      schema:
+        type: string
+    TagMatchMode:
+      name: tag_match_mode
+      in: query
+      description: 'tag' フィルターを 'all' または 'any' に設定します。設定しない場合はデフォルトで 'any' になります。
+      schema:
+        type: string
+        enum: [ all, any ]
+    Title:
+      name: title
+      in: query
+      description: タイトルでフィルタリング。
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: 表示/一覧するページを指定します
+      required: false
+      schema: 
+        type: integer
+        default: 1
+    PageSize:
+      name: pageSize
+      in: query
+      description: 1ページあたりに返す項目数を設定します。
+      required: false
+      schema: 
+        type: integer
+        default: 10
+    SortBy:
+      name: sort_by
+      in: query
+      description: ソートするフィールドを指定します。
+      required: false
+      schema: 
+        type: string
+        default: 'updated_at'
+    OrderBy:
+      name: order_by
+      in: query
+      description: ソート順を設定します（asc または desc）。
+      required: false
+      schema: 
+        type: string
+        default: desc
+    SoftDeleteRetrieval:
+      name: soft_delete
+      in: query
+      description: false の場合、削除されていない項目のみを取得します。true の場合、削除された項目のみを取得します。
+      required: false
+      schema:
+        type: boolean
+        default: false
+    SoftDelete:
+      name: soft_delete
+      in: path
+      description: true の場合、項目をソフト削除します。false の場合、項目をハード削除します。
+      required: true
+      schema:
+        type: boolean
+        default: true
+    StartTime:
+      name: start_time
+      in: query
+      description: 日付範囲の開始時刻。
+      required: false
+      schema:
+        type: string
+        format: date-time
+    EndTime:
+      name: end_time
+      in: query
+      description: 日付範囲の終了時刻。
+      required: false
+      schema:
+        type: string
+        format: date-time
+  schemas:
+    Project:
+      title: Project
+      description: プロジェクトオブジェクト。
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+          readOnly: true
+        title:
+          type: string
+          description: タイトル
+        video_id:
+          type: string
+          description: ビデオ ID
+        tags:
+          type: array
+          items:
+            type: string
+            example: ['Tag1', 'Tag2']
+          description: タグ
+        template_ids:
+          type: array
+          items: 
+            type: string
+            example: ['5f6e34f5759403001663bf6a']
+          description: テンプレート ID
+        annotations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Annotation'
+        show_questions_once:
+          type: boolean
+        css_url:
+          type: string
+          format: uri
+        workflow_state:
+          type: boolean
+        created_at:
+          type: string
+          description: 項目の作成日
+          readOnly: true
+        updated_at:
+          type: string
+          description: 項目の更新日
+          readOnly: true
+        created_by:
+          description: 項目の作成者
+          readOnly: true
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID
+              readOnly: true
+            email:
+              type: string
+              description: eメール
+            type:
+              type: string
+              enum: [user, unknown]
+              description: タイプ
+        updated_by:
+          description: 項目の更新者
+          readOnly: true
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID
+              readOnly: true
+            email:
+              type: string
+              description: eメール
+            type:
+              type: string
+              enum: [user, unknown]
+              description: タイプ 
+      required:
+        - title
+        - video_id
+    Template:
+      title: Template
+      description: テンプレート オブジェクト
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+          readOnly: true
+        title:
+          type: string
+          description: タイトル
+        video_id:
+          type: string
+          description: ビデオ ID
+        tags:
+          type: array
+          items:
+            type: string
+            example: ['Tag1', 'Tag2']
+          description: タグ
+        apply_to_project_tags:
+          type: array
+          items:
+            type: string
+            example: ['Tag1', 'Tag2']
+          description: テンプレートは、これらのタグのいずれかを持つプロジェクトに適用されます。
+        apply_to_all_projects:
+          type: boolean
+          description: true の場合、テンプレートはすべてのプロジェクトに適用されます。
+          default: false
+        annotations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Annotation'
+        created_at:
+          type: string
+          description: 項目の作成日
+          readOnly: true
+        updated_at:
+          type: string
+          description: 項目の更新日
+          readOnly: true
+        created_by:
+          description: 項目の作成者
+          readOnly: true
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID
+              readOnly: true
+            email:
+              type: string
+              description: eメール
+            type:
+              type: string
+              enum: [user, unknown]
+              description: タイプ
+        updated_by:
+          description: 項目の更新者
+          readOnly: true
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID
+              readOnly: true
+            email:
+              type: string
+              description: eメール
+            type:
+              type: string
+              enum: [user, unknown]
+              description: タイプ 
+      required:
+        - title
+    Annotation:
+      title: Annotation
+      description: アノテーション オブジェクト
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+          readOnly: true
+        type:
+          type: string
+          enum: [contents, iframe, pop, quiz, bookmark, ontime, drawing, image, hotlink]
+          description: アノテーションの種類
+        properties:
+          type: object
+          description: アノテーションのプロパティ
+          properties:
+            popcorn:
+              $ref: '#/components/schemas/PopcornProperties'
+            custom_configuration:
+              $ref: '#/components/schemas/customeConfigurations'
+        start_time:
+          type: object
+          description: アノテーションの開始時刻
+          properties:
+            value:
+              type: number
+              description: タイムコードの値
+              readOnly: false
+            units:
+              type: string
+              enum: [percent, seconds]
+              description: タイムコードの単位
+              default: seconds
+          required:
+            - value
+            - units
+        duration:
+          type: object
+          description: アノテーションの長さ
+          properties:
+            value:
+              type: number
+              description: タイムコードの値
+            units:
+              type: string
+              enum: [percent, seconds, infinite]
+              description: タイムコードの単位
+              default: seconds
+          required:
+            - value
+            - units
+        created_at:
+          type: string
+          description: 項目の作成日
+          readOnly: true
+        updated_at:
+          type: string
+          description: 項目の更新日
+          readOnly: true
+      required:
+        - type
+        - properties
+        - start_time
+        - duration
+    Experience:
+      title: Experience
+      description: エクスペリエンス オブジェクト
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+          readOnly: true
+        title:
+          type: string
+          description: エクスペリエンスのタイトル
+        type:
+          type: string
+          enum: [slidesync, lesson, branching, off_video_chapters]
+          description: The type of experience
+        tags:
+          type: array
+          items:
+            type: string
+            example: ['Tag1', 'Tag2']
+          description: エクスペリエンスを整理するためのユーザー設定タグ。
+        playlist:
+          type: array
+          items:
+            type: string
+            example: ['5f6e34f5759403001663bf6a']
+          description: 再生用のプロジェクトの順序付きリスト。
+        playback:
+          type: object
+          properties:
+            auto_play:
+              type: boolean
+              default: false
+            auto_progress:
+              type: boolean
+              default: false
+        configuration:
+          type: object
+          properties:
+            layout:
+              type: string
+              enum: [playlist_under_video, playlist_full_width, off_video_chapters, video_only]
+              description: スライド同期エクスペリエンス専用。
+            default_zoom:
+              type: number
+              minimum: 20
+              maximum: 80
+              description: スライド同期エクスペリエンス専用。
+            grading_algorithm:
+              type: string
+              enum: [percent_watched, gate_until_watched, quiz_results]
+              description: レッスン エクスペリエンス用。
+            pass_fail_grading:
+              type: boolean
+              description: レッスン エクスペリエンス用。
+            completion_threshold:
+              type: number
+              minimum: 0
+              maximum: 100
+              description: レッスン エクスペリエンス用。
+        branding:
+          type: object
+          properties:
+            header_html:
+              type: string
+            footer_html:
+              type: string
+            background_image_url:
+              type: string
+              format: uri
+        css_url:
+          type: string
+          format: uri
+        landing_page_code:
+          type: string
+        created_at:
+          type: string
+          description: 項目の作成日。
+          readOnly: true
+        updated_at:
+          type: string
+          description: 項目の作成日。
+          readOnly: true
+        created_by:
+          description: 項目の作成日。
+          readOnly: true
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID
+              readOnly: true
+            email:
+              type: string
+              description: Eメール
+            type:
+              type: string
+              enum: [user, unknown]
+              description: タイプ
+        updated_by:
+          description: 項目の更新者。
+          readOnly: true
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID
+              readOnly: true
+            email:
+              type: string
+              description: Eメール
+            type:
+              type: string
+              enum: [user, unknown]
+              description: タイプ
+      required:
+        - title
+        - type
+        - playlist
+    Quiz:
+      title: Quiz
+      description: クイズ オブジェクト。
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+          readOnly: true
+        project_id:
+          type: string
+          description: ID
+          readOnly: true
+        annotation_id:
+          type: string
+          description: グローバル一意のクイズアノテーション識別子。
+        submitted_at:
+          type: string
+          description: このクイズの回答が提出された時刻。
+        total_question_count:
+          type: number
+          description: クイズ内の総設問数（すべての質問が回答されているとは限りません）。
+        answers:
+          type: array
+          description: 提出された質問と回答。
+          items:
+            properties:
+              question:
+                type: string
+                description: 質問のテキスト。
+              answer:
+                type: string
+                description: 提出された回答のテキスト。
+              is_correct:
+                type: boolean
+                description: 質問が正解だったかどうかの指標。
+              final:
+                type: boolean
+                description: （説明なし）
+            required:
+              - question
+              - answer
+              - is_correct
+              - final
+        created_at:
+          type: string
+          description: 項目の作成日。
+          readOnly: true
+        updated_at:
+          type: string
+          description: 項目の作成日。
+          readOnly: true
+        created_by:
+          type: string
+          description: 項目の作成者。
+          readOnly: true
+        updated_by:
+          type: string
+          description: 項目の更新者。
+          readOnly: true
+      required:
+        - account_id
+        - user_id
+        - project_id
+        - annotation_id
+        - submitted_at
+        - answers
+    Folder:
+      title: Folder
+      description: フォルダー オブジェクト。
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+          readOnly: true
+        name:
+          type: string
+          description: フォルダーの名前。
+        content_type:
+          type: string
+          enum: [project, template, experience]
+          description: フォルダーに格納できるコンテンツの種類。
+        content_count:
+          type: integer
+          format: int32
+          readOnly: true
+        created_at:
+          type: string
+          description: 項目の作成日
+          readOnly: true
+        updated_at:
+          type: string
+          description: 項目の更新日。
+          readOnly: true
+        created_by:
+          type: string
+          description: 項目の作成者ID。
+          readOnly: true
+        updated_by:
+          type: string
+          description: 項目の更新者。
+          readOnly: true
+      required:
+        - name
+        - content_type
+    Count:
+      title: Count
+      description: カウントレスポンスオブジェクト。
+      type: object
+      properties:
+        data:
+          type: number
+          description: 項目数。
+          readOnly: true
+    PopcornProperties:
+      title: Popcorn
+      description: ポップコーンのプロパティ。
+      type: object
+      properties:
+        start:
+          type: number
+        end:
+          type: number
+        mode:
+          type: string
+        duration:
+          type: number
+        environment:
+          type: string
+        _duration:
+          type: number
+        text:
+          type: string
+        transitionClass:
+          type: string
+        left:
+          type: string
+        top:
+          type: string
+        width:
+          type: string
+        columns:
+          type: number
+        expandedState:
+          type: string
+        title:
+          type: string
+        showResults:
+          type: boolean
+        showRetry:
+          type: boolean
+        showReview:
+          type: boolean
+        showSkip:
+          type: boolean
+        quiz:
+          type: object
+          properties:
+            id:
+              type: string
+            pages:
+              type: array
+              items:
+                type: object
+                properties:
+                  text:
+                    type: string
+                  id:
+                    type: number
+                  type:
+                    type: string
+                  answers:
+                    type: array
+                    items:
+                      properties:
+                        text:
+                          type: string
+                        type:
+                          type: string
+            randomizeAnswers:
+              type: boolean
+            showSkip:
+              type: boolean
+            showResults:
+              type: boolean
+            showRetry:
+              type: boolean
+            showReview:
+              type: boolean
+            showHints:
+              type: boolean
+            thankYouText:
+              type: string
+        onClick:
+          type: object
+        original:
+          type: string
+        url:
+          type: string
+        creationEnvironment:
+          type: string
+        height:
+          type: string
+        noSort:
+          type: boolean
+        src:
+          type: string
+        customWidget:
+          type: string
+        drawing:
+          type: object
+        pause:
+          type: number
+        precondition:
+          type: string
+        gate:
+          type: boolean
+        scale:
+          type: boolean
+    customeConfigurations:
+      title: カスタム設定
+      description: アノテーション内のカスタム設定。
+      type: object
+      properties:
+        inactiveColor:
+          type: object
+        fontColor:
+          type: object
+        backgroundColor:
+          type: object
+        activeColor:
+          type: object
+        thumbsDownThreshold:
+          type: object
+        beginning:
+          type: object
+        middle:
+          type: object
+        prompt:
+          type: object
+        end:
+          type: object
+        into:
+          type: object
+        iconGraphic:
+          type: object
+        thumbsUpThreshold:
+          type: object
+        showThumbsUpCount:
+          type: object
+        showThumbsDownCount:
+          type: object
+        outro:
+          type: object
+        pollData:
+          type: object
+        formWidth:
+          type: object
+        icon-picker:
+          type: object
+        formPosition:
+          type: object
+        button-text:
+          type: object
+        font-color:
+          type: object
+        background-color:
+          type: object
+        formSource:
+          type: object
+        disableAnnotationListEdit:
+          type: object
+        title:
+          type: object
+        sub-title:
+          type: object
+        first-name:
+          type: object
+        last-name:
+          type: object
+        user-id:
+          type: object
+        email-address:
+          type: object
+        option-one-text:
+          type: object
+        option-one:
+          type: object
+        text-color:
+          type: object
+        button-background-color:
+          type: object
+        button-text-color:
+          type: object
+        skip:
+          type: object
+        gate:
+          type: object
+        privacy:
+          type: object
+        privacylink:
+          type: object
+  responses:
+    Unauthorized:
+      description: '認証エラー: 認証に失敗しました。'
+    NotFound:
+      description: '未検出: 指定された項目が見つかりませんでした。'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: object
+                properties:
+                  message:
+                    type: string
+    BadRequest:
+      description: '不正リクエスト: バリデーションエラー。'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+    SuccessMessage:
+      description: '成功'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+
+  securitySchemes:
+    BC_OAuth2:
+      type: oauth2
+      description: 'Brightcove OAuth API. See the [support documentation](https://support.brightcove.com/oauth-api) or [Getting Access Tokens](https://support.brightcove.com/oauth-api-sample-get-access-token) to learn more'
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://oauth.brightcove.com/v4/access_token'
+          scopes:
+            video-cloud/interactivity/read: Read
+            video-cloud/interactivity/all: All
